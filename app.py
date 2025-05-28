@@ -45,6 +45,42 @@ agent: Optional[FederalRegistryAgent] = None
 pipeline: Optional[DataPipeline] = None
 pipeline_running = False
 
+async def run_initial_pipeline():
+    """Run the initial pipeline to populate the database"""
+    global pipeline, pipeline_running
+    
+    if pipeline is None:
+        logger.error("❌ Pipeline not initialized, cannot run initial pipeline")
+        return False
+    
+    try:
+        logger.info("🔄 Running initial data pipeline...")
+        pipeline_running = True
+        
+        # Check if database already has documents
+        doc_count = await db_manager.get_document_count()
+        
+        if doc_count > 0:
+            logger.info(f"✅ Database already has {doc_count} documents, skipping initial pipeline")
+            return True
+        
+        # Run the pipeline for the first time
+        success = await pipeline.run_pipeline()
+        
+        if success:
+            final_count = await db_manager.get_document_count()
+            logger.info(f"✅ Initial pipeline completed successfully! Added {final_count} documents")
+            return True
+        else:
+            logger.error("❌ Initial pipeline failed")
+            return False
+            
+    except Exception as e:
+        logger.error(f"❌ Error running initial pipeline: {e}")
+        return False
+    finally:
+        pipeline_running = False
+
 async def initialize_system():
     """Initialize the system components"""
     global agent, pipeline
@@ -60,6 +96,9 @@ async def initialize_system():
         # Initialize pipeline
         pipeline = DataPipeline()
         logger.info("✅ Pipeline initialized")
+        
+        # Run initial pipeline to populate database
+        await run_initial_pipeline()
         
         return True
     except Exception as e:
@@ -100,129 +139,6 @@ if os.path.exists("static"):
 @app.get("/", response_class=HTMLResponse)
 async def get_chat_interface(request: Request):
     """Serve the main chat interface"""
-    if not os.path.exists("templates/chat.html"):
-        # Return a simple HTML interface if template doesn't exist
-        html_content = """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Federal Registry RAG Agent</title>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <style>
-                body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
-                .chat-container { border: 1px solid #ddd; height: 400px; overflow-y: auto; padding: 10px; margin: 10px 0; }
-                .input-group { display: flex; gap: 10px; margin: 10px 0; }
-                .input-group input { flex: 1; padding: 10px; }
-                .input-group button { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; }
-                .message { margin: 10px 0; padding: 10px; border-radius: 5px; }
-                .user-message { background: #e3f2fd; }
-                .bot-message { background: #f5f5f5; }
-                .status { margin: 20px 0; padding: 10px; background: #fff3cd; border-radius: 5px; }
-            </style>
-        </head>
-        <body>
-            <h1>🏛️ Federal Registry RAG Agent</h1>
-            <p>Ask questions about US Federal Registry documents including executive orders, regulations, and government publications.</p>
-            
-            <div id="chat-container" class="chat-container"></div>
-            
-            <div class="input-group">
-                <input type="text" id="message-input" placeholder="Ask about federal documents..." onkeypress="handleEnter(event)">
-                <button onclick="sendMessage()">Send</button>
-            </div>
-            
-            <div class="status">
-                <h3>System Controls</h3>
-                <button onclick="getStatus()">Refresh Status</button>
-                <button onclick="runPipeline()">Update Documents</button>
-                <div id="status-display">Ready</div>
-            </div>
-            
-            <div class="status">
-                <h3>Sample Queries</h3>
-                <button onclick="setQuery('What are the recent executive orders from the last 7 days?')">Recent Executive Orders</button>
-                <button onclick="setQuery('Find documents about artificial intelligence regulations')">AI Regulations</button>
-                <button onclick="setQuery('Show me documents from the Department of Defense')">DoD Documents</button>
-            </div>
-            
-            <script>
-                function handleEnter(event) {
-                    if (event.key === 'Enter') {
-                        sendMessage();
-                    }
-                }
-                
-                function setQuery(query) {
-                    document.getElementById('message-input').value = query;
-                }
-                
-                async function sendMessage() {
-                    const input = document.getElementById('message-input');
-                    const message = input.value.trim();
-                    if (!message) return;
-                    
-                    const chatContainer = document.getElementById('chat-container');
-                    
-                    // Add user message
-                    chatContainer.innerHTML += `<div class="message user-message"><strong>You:</strong> ${message}</div>`;
-                    input.value = '';
-                    
-                    // Add loading message
-                    chatContainer.innerHTML += `<div class="message bot-message" id="loading"><strong>Agent:</strong> Thinking...</div>`;
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
-                    
-                    try {
-                        const response = await fetch('/api/chat', {
-                            method: 'POST',
-                            headers: {'Content-Type': 'application/json'},
-                            body: JSON.stringify({message: message})
-                        });
-                        
-                        const data = await response.json();
-                        
-                        // Remove loading message
-                        document.getElementById('loading').remove();
-                        
-                        // Add bot response
-                        chatContainer.innerHTML += `<div class="message bot-message"><strong>Agent:</strong> ${data.response}</div>`;
-                        chatContainer.scrollTop = chatContainer.scrollHeight;
-                        
-                    } catch (error) {
-                        document.getElementById('loading').innerHTML = '<strong>Agent:</strong> Error: Failed to get response';
-                    }
-                }
-                
-                async function getStatus() {
-                    try {
-                        const response = await fetch('/api/health');
-                        const data = await response.json();
-                        document.getElementById('status-display').innerHTML = JSON.stringify(data, null, 2);
-                    } catch (error) {
-                        document.getElementById('status-display').innerHTML = 'Error getting status';
-                    }
-                }
-                
-                async function runPipeline() {
-                    document.getElementById('status-display').innerHTML = 'Running pipeline...';
-                    try {
-                        const response = await fetch('/api/pipeline/run', {
-                            method: 'POST',
-                            headers: {'Content-Type': 'application/json'},
-                            body: JSON.stringify({})
-                        });
-                        const data = await response.json();
-                        document.getElementById('status-display').innerHTML = data.message;
-                    } catch (error) {
-                        document.getElementById('status-display').innerHTML = 'Error running pipeline';
-                    }
-                }
-            </script>
-        </body>
-        </html>
-        """
-        return HTMLResponse(content=html_content)
-    
     return templates.TemplateResponse("chat.html", {"request": request})
 
 @app.post("/api/chat", response_model=ChatResponse)
