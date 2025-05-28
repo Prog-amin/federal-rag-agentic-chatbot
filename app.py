@@ -8,6 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel
+from contextlib import asynccontextmanager
 import asyncio
 import uvicorn
 from typing import Dict, Any, Optional
@@ -21,20 +22,6 @@ from data_pipeline import DataPipeline
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-# FastAPI app initialization
-app = FastAPI(
-    title="Federal Registry RAG Agent",
-    description="AI Agent for querying US Federal Registry documents",
-    version="1.0.0"
-)
-
-# Templates setup
-templates = Jinja2Templates(directory="templates")
-
-# Static files (for CSS/JS if needed)
-if os.path.exists("static"):
-    app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Pydantic models
 class ChatRequest(BaseModel):
@@ -79,19 +66,36 @@ async def initialize_system():
         logger.error(f"❌ Error initializing system: {e}")
         return False
 
-@app.on_event("startup")
-async def startup_event():
-    """Initialize system on startup"""
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Handle application startup and shutdown"""
+    # Startup
+    logger.info("🚀 Starting up application...")
     success = await initialize_system()
     if success:
-        logger.info("🚀 System initialized successfully")
+        logger.info("✅ System initialized successfully")
     else:
         logger.error("❌ Failed to initialize system")
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    """Cleanup on shutdown"""
+    
+    yield
+    
+    # Shutdown
     logger.info("🔄 Shutting down application")
+
+# FastAPI app initialization with lifespan
+app = FastAPI(
+    title="Federal Registry RAG Agent",
+    description="AI Agent for querying US Federal Registry documents",
+    version="1.0.0",
+    lifespan=lifespan
+)
+
+# Templates setup
+templates = Jinja2Templates(directory="templates")
+
+# Static files (for CSS/JS if needed)
+if os.path.exists("static"):
+    app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 async def get_chat_interface(request: Request):

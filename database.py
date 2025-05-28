@@ -9,7 +9,8 @@ logger = logging.getLogger(__name__)
 
 class DatabaseManager:
     def __init__(self):
-        self.db_path = "federal_registry.db"
+        # Ensure the database is in a writable location for HF Spaces
+        self.db_path = os.path.join("/tmp", "federal_registry.db")
         self._initialized = False
         self._lock = asyncio.Lock()
 
@@ -18,6 +19,23 @@ class DatabaseManager:
         if not self._initialized:
             await self.initialize_database()
 
+    async def _ensure_db_directory(self):
+        """Ensure the database directory exists and is writable"""
+        db_dir = os.path.dirname(self.db_path)
+        if not os.path.exists(db_dir):
+            os.makedirs(db_dir, exist_ok=True)
+        
+        # Test write permissions
+        test_file = os.path.join(db_dir, "test_write.tmp")
+        try:
+            with open(test_file, 'w') as f:
+                f.write("test")
+            os.remove(test_file)
+        except Exception as e:
+            # Fallback to current directory if /tmp is not writable
+            self.db_path = "federal_registry.db"
+            logger.warning(f"Using current directory for database: {e}")
+
     async def initialize_database(self):
         """Initialize SQLite database and create tables"""
         async with self._lock:
@@ -25,9 +43,13 @@ class DatabaseManager:
                 return
             
             try:
+                # Ensure directory exists and is writable
+                await self._ensure_db_directory()
+                
+                # Create tables
                 await self.create_tables()
                 self._initialized = True
-                logger.info("✅ SQLite database initialized successfully")
+                logger.info(f"✅ SQLite database initialized successfully at {self.db_path}")
             except Exception as e:
                 logger.error(f"❌ Error initializing database: {e}")
                 raise
@@ -70,12 +92,17 @@ class DatabaseManager:
         );
         """
 
-        async with aiosqlite.connect(self.db_path) as db:
-            await db.execute(create_documents_table)
-            for index_sql in create_indexes:
-                await db.execute(index_sql)
-            await db.execute(create_pipeline_logs_table)
-            await db.commit()
+        try:
+            async with aiosqlite.connect(self.db_path) as db:
+                await db.execute(create_documents_table)
+                for index_sql in create_indexes:
+                    await db.execute(index_sql)
+                await db.execute(create_pipeline_logs_table)
+                await db.commit()
+                logger.info("✅ Database tables created successfully")
+        except Exception as e:
+            logger.error(f"❌ Error creating tables: {e}")
+            raise
 
     async def insert_document(self, document: Dict) -> bool:
         """Insert or update a federal document"""
@@ -269,6 +296,17 @@ class DatabaseManager:
             logger.error(f"Error getting latest documents: {e}")
             return []
 
+    async def health_check(self) -> bool:
+        """Check if database is accessible"""
+        try:
+            await self._ensure_initialized()
+            async with aiosqlite.connect(self.db_path) as db:
+                await db.execute("SELECT 1")
+            return True
+        except Exception as e:
+            logger.error(f"Database health check failed: {e}")
+            return False
+
 # Global database manager instance
 db_manager = DatabaseManager()
 
@@ -301,6 +339,10 @@ async def test_database():
         # Test count
         count = await db_manager.get_document_count()
         print(f"Count test: {count} documents in database")
+        
+        # Test health check
+        health = await db_manager.health_check()
+        print(f"Health check: {'✅ Healthy' if health else '❌ Unhealthy'}")
         
     except Exception as e:
         print(f"Database test failed: {e}")
