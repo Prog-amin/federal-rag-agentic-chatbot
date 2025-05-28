@@ -5,9 +5,9 @@ from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 import asyncio
 import uvicorn
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import os
-
+import aiosqlite
 from database import db_manager
 from agent import federal_agent
 from data_pipeline import DataPipeline
@@ -36,8 +36,8 @@ class ChatResponse(BaseModel):
     timestamp: float
 
 class PipelineRequest(BaseModel):
-    start_date: str = None
-    end_date: str = None
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
 
 class PipelineResponse(BaseModel):
     status: str
@@ -49,15 +49,13 @@ pipeline_running = False
 @app.on_event("startup")
 async def startup_event():
     """Initialize database connection on startup"""
-    await db_manager.init_pool()
-    await db_manager.create_tables()
+    await db_manager.initialize_database()
     print("Database initialized successfully")
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    """Close database connection on shutdown"""
-    await db_manager.close_pool()
-    print("Database connection closed")
+    """Cleanup on shutdown"""
+    print("Application shutting down")
 
 @app.get("/", response_class=HTMLResponse)
 async def get_chat_interface(request: Request):
@@ -84,7 +82,7 @@ async def chat_with_agent(request: ChatRequest) -> ChatResponse:
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 @app.post("/api/pipeline/run", response_model=PipelineResponse)
-async def run_data_pipeline(request: PipelineRequest = None) -> PipelineResponse:
+async def run_data_pipeline(request: Optional[PipelineRequest] = None) -> PipelineResponse:
     """Run the data pipeline to update federal documents"""
     global pipeline_running
     
@@ -138,15 +136,20 @@ async def health_check():
     """Health check endpoint"""
     try:
         # Test database connection
-        async with db_manager.pool.acquire() as conn:
-            async with conn.cursor() as cursor:
-                await cursor.execute("SELECT 1")
+        health_ok = await db_manager.health_check()
         
-        return {
-            "status": "healthy",
-            "database": "connected",
-            "agent": "ready"
-        }
+        if health_ok:
+            return {
+                "status": "healthy",
+                "database": "connected",
+                "agent": "ready"
+            }
+        else:
+            return {
+                "status": "unhealthy",
+                "database": "disconnected",
+                "agent": "not ready"
+            }
     except Exception as e:
         return {
             "status": "unhealthy",
@@ -157,38 +160,90 @@ async def health_check():
 async def get_database_stats():
     """Get database statistics"""
     try:
-        async with db_manager.pool.acquire() as conn:
-            async with conn.cursor() as cursor:
-                # Get document count
-                await cursor.execute("SELECT COUNT(*) FROM federal_documents")
-                doc_count = (await cursor.fetchone())[0]
-                
-                # Get latest document date
-                await cursor.execute("SELECT MAX(publication_date) FROM federal_documents")
-                latest_date = (await cursor.fetchone())[0]
-                
-                # Get agency count
-                await cursor.execute("SELECT COUNT(DISTINCT agency) FROM federal_documents WHERE agency != ''")
-                agency_count = (await cursor.fetchone())[0]
-                
-                # Get recent pipeline runs
-                await cursor.execute("""
-                    SELECT status, COUNT(*) as count 
-                    FROM pipeline_logs 
-                    WHERE run_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-                    GROUP BY status
-                """)
-                pipeline_stats = await cursor.fetchall()
+        # Get document count
+        doc_count = await db_manager.get_document_count()
+        
+        # Get latest documents to determine date range
+        latest_docs = await db_manager.get_latest_documents(5)
+        latest_date = latest_docs[0]['publication_date'] if latest_docs else None
+        
+        # Get recent documents to count agencies
+        recent_docs = await db_manager.get_recent_documents(days=30, limit=1000)
+        agencies = set()
+        for doc in recent_docs:
+            agency = doc.get('agency', '').strip()
+            if agency:
+                agencies.add(agency)
+        
+        # Get recent pipeline runs using direct SQL
+        async with aiosqlite.connect(db_manager.db_path) as db:
+            db.row_factory = aiosqlite.Row
+            async with db.execute("""
+                SELECT status, COUNT(*) as count 
+                FROM pipeline_logs 
+                WHERE run_date >= date('now', '-7 days')
+                GROUP BY status
+            """) as cursor:
+                pipeline_stats_rows = await cursor.fetchall()
+                pipeline_stats = {row['status']: row['count'] for row in pipeline_stats_rows}
         
         return {
             "total_documents": doc_count,
-            "latest_document_date": latest_date.strftime('%Y-%m-%d') if latest_date else None,
-            "unique_agencies": agency_count,
-            "recent_pipeline_runs": dict(pipeline_stats) if pipeline_stats else {}
+            "latest_document_date": latest_date,
+            "unique_agencies": len(agencies),
+            "recent_pipeline_runs": pipeline_stats
         }
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error getting stats: {str(e)}")
+
+@app.get("/api/search")
+async def search_documents(q: str, limit: int = 10):
+    """Search documents endpoint"""
+    try:
+        if not q.strip():
+            raise HTTPException(status_code=400, detail="Search query cannot be empty")
+        
+        results = await db_manager.search_documents(q, limit)
+        return {
+            "query": q,
+            "results": results,
+            "count": len(results)
+        }
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Search error: {str(e)}")
+
+@app.get("/api/documents/recent")
+async def get_recent_documents(days: int = 7, limit: int = 20):
+    """Get recent documents endpoint"""
+    try:
+        documents = await db_manager.get_recent_documents(days, limit)
+        return {
+            "documents": documents,
+            "count": len(documents),
+            "days": days
+        }
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error getting recent documents: {str(e)}")
+
+@app.get("/api/documents/by-agency")
+async def get_documents_by_agency(agency: str, limit: int = 20):
+    """Get documents by agency endpoint"""
+    try:
+        if not agency.strip():
+            raise HTTPException(status_code=400, detail="Agency name cannot be empty")
+        
+        documents = await db_manager.get_documents_by_agency(agency, limit)
+        return {
+            "agency": agency,
+            "documents": documents,
+            "count": len(documents)
+        }
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error getting documents by agency: {str(e)}")
 
 if __name__ == "__main__":
     uvicorn.run(

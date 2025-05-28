@@ -213,8 +213,9 @@ async def call_llm(prompt, max_tokens=512, temperature=0.7):
                 "Content-Type": "application/json"
             }
             
-            async with aiohttp.ClientSession() as session:
-                async with session.post(url, headers=headers, json=payload, timeout=30) as response:
+            timeout = aiohttp.ClientTimeout(total=30)
+            async with aiohttp.ClientSession(timeout=timeout) as session:
+                async with session.post(url, headers=headers, json=payload) as response:
                     if response.status == 200:
                         result = await response.json()
                         return result['choices'][0]['message']['content']
@@ -239,8 +240,9 @@ async def call_llm(prompt, max_tokens=512, temperature=0.7):
                 "Content-Type": "application/json"
             }
             
-            async with aiohttp.ClientSession() as session:
-                async with session.post(url, headers=headers, json=payload, timeout=30) as response:
+            timeout = aiohttp.ClientTimeout(total=30)
+            async with aiohttp.ClientSession(timeout=timeout) as session:
+                async with session.post(url, headers=headers, json=payload) as response:
                     if response.status == 200:
                         result = await response.json()
                         if isinstance(result, list) and len(result) > 0:
@@ -251,8 +253,11 @@ async def call_llm(prompt, max_tokens=512, temperature=0.7):
                         print(f"HF API Error {response.status}: {error_text}")
                         return None
                         
-    except aiohttp.ClientTimeout:
+    except asyncio.TimeoutError:
         print("API request timed out")
+        return None
+    except aiohttp.ClientError as e:
+        print(f"HTTP client error: {e}")
         return None
     except Exception as e:
         print(f"Error calling LLM: {e}")

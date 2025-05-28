@@ -239,7 +239,8 @@ class DatabaseManager:
             async with aiosqlite.connect(self.db_path) as db:
                 cursor = await db.execute(query, (run_date, status, records_processed, error_message))
                 await db.commit()
-                return cursor.lastrowid
+                # Handle the case where lastrowid might be None
+                return cursor.lastrowid or 0
         except Exception as e:
             logger.error(f"Error logging pipeline run: {e}")
             return 0

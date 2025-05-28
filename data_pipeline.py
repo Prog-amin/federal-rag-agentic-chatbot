@@ -143,6 +143,9 @@ class DataPipeline:
 
         print(f"Starting pipeline for dates: {start_date} to {end_date}")
 
+        # Ensure database is initialized
+        await db_manager.initialize_database()
+
         # Log pipeline start
         log_id = await db_manager.log_pipeline_run(end_date, 'running')
         total_processed = 0
@@ -227,8 +230,7 @@ async def main():
     """Main function to run the pipeline"""
     try:
         # Initialize database
-        await db_manager.init_pool()
-        await db_manager.create_tables()
+        await db_manager.initialize_database()
 
         # Run pipeline
         pipeline = DataPipeline()
@@ -239,12 +241,6 @@ async def main():
     except Exception as e:
         print(f"Error in main: {e}")
         return False
-    finally:
-        # Close database connection
-        try:
-            await db_manager.close_pool()
-        except Exception as e:
-            print(f"Error closing database pool: {e}")
 
 if __name__ == "__main__":
     result = asyncio.run(main())
