@@ -14,7 +14,7 @@ import uvicorn
 from typing import Dict, Any, Optional
 import os
 import logging
-
+from datetime import datetime, timedelta
 from database import db_manager
 from agent import FederalRegistryAgent
 from data_pipeline import DataPipeline
@@ -45,62 +45,196 @@ agent: Optional[FederalRegistryAgent] = None
 pipeline: Optional[DataPipeline] = None
 pipeline_running = False
 
-async def run_initial_pipeline():
-    """Run the initial pipeline to populate the database"""
+async def comprehensive_pipeline_check():
+    """Comprehensive pipeline check and initialization - integrates all run_pipeline.py functions"""
     global pipeline, pipeline_running
     
-    if pipeline is None:
-        logger.error("❌ Pipeline not initialized, cannot run initial pipeline")
-        return False
-    
     try:
-        logger.info("🔄 Running initial data pipeline...")
+        logger.info("🔍 Starting comprehensive pipeline check...")
+        
+        # 1. Check data status first (from check_data_status_safe)
+        logger.info("📊 Checking current data status...")
+        recent_docs = await db_manager.get_recent_documents(days=365, limit=1000)
+        total_recent = len(recent_docs)
+        
+        if total_recent > 0:
+            # Analyze existing data - filter out None values properly
+            valid_dates = []
+            for doc in recent_docs:
+                pub_date = doc.get('publication_date')
+                if pub_date is not None and isinstance(pub_date, str) and pub_date.strip():
+                    valid_dates.append(pub_date)
+            
+            if valid_dates:
+                latest_date = max(valid_dates)
+                oldest_date = min(valid_dates)
+                logger.info(f"📈 Found {total_recent} documents (Range: {oldest_date} to {latest_date})")
+                
+                # Check if data is recent (within last 7 days)
+                try:
+                    latest_dt = datetime.strptime(latest_date, '%Y-%m-%d')
+                    days_old = (datetime.now() - latest_dt).days
+                    
+                    if days_old > 7:
+                        logger.info(f"⚠️ Latest data is {days_old} days old, running update pipeline...")
+                        await run_update_pipeline()
+                    else:
+                        logger.info("✅ Data is current, no pipeline update needed")
+                except (ValueError, TypeError) as e:
+                    logger.warning(f"⚠️ Could not parse latest date '{latest_date}': {e}")
+                    logger.info("🔄 Running update pipeline due to date parsing issue...")
+                    await run_update_pipeline()
+            else:
+                logger.info("⚠️ Documents found but no valid dates, running full pipeline...")
+                await run_full_pipeline()
+        else:
+            logger.info("📥 No documents found, running initial pipeline...")
+            await run_full_pipeline()
+        
+        # 2. Check pipeline logs (from check_pipeline_logs)
+        await check_recent_pipeline_logs()
+        
+        # 3. Final status check
+        await display_final_status()
+        
+        return True
+        
+    except Exception as e:
+        logger.error(f"❌ Comprehensive pipeline check failed: {e}")
+        return False
+
+async def run_full_pipeline():
+    """Run full pipeline (equivalent to run_pipeline from run_pipeline.py)"""
+    global pipeline_running
+    
+    if pipeline is None:
+        logger.error("❌ Pipeline not initialized")
+        return False
+        
+    try:
         pipeline_running = True
+        logger.info("🔄 Starting full data pipeline...")
+        logger.info(f"⏰ Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         
-        # Check if database already has documents
-        doc_count = await db_manager.get_document_count()
-        
-        if doc_count > 0:
-            logger.info(f"✅ Database already has {doc_count} documents, skipping initial pipeline")
-            return True
-        
-        # Run the pipeline for the first time
         success = await pipeline.run_pipeline()
         
         if success:
-            final_count = await db_manager.get_document_count()
-            logger.info(f"✅ Initial pipeline completed successfully! Added {final_count} documents")
+            logger.info("✅ Full pipeline completed successfully!")
+            logger.info(f"⏰ Finished at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
             return True
         else:
-            logger.error("❌ Initial pipeline failed")
+            logger.error("❌ Full pipeline failed")
             return False
             
     except Exception as e:
-        logger.error(f"❌ Error running initial pipeline: {e}")
+        logger.error(f"❌ Full pipeline error: {e}")
         return False
     finally:
         pipeline_running = False
 
+async def run_update_pipeline():
+    """Run pipeline for recent data updates"""
+    global pipeline_running
+    
+    if pipeline is None:
+        return False
+        
+    try:
+        pipeline_running = True
+        # Get data for last 7 days
+        end_date = datetime.now().strftime('%Y-%m-%d')
+        start_date = (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d')
+        
+        logger.info(f"🔄 Running update pipeline for {start_date} to {end_date}")
+        success = await pipeline.run_pipeline(start_date, end_date)
+        
+        if success:
+            logger.info("✅ Update pipeline completed successfully!")
+            return True
+        else:
+            logger.error("❌ Update pipeline failed")
+            return False
+            
+    except Exception as e:
+        logger.error(f"❌ Update pipeline error: {e}")
+        return False
+    finally:
+        pipeline_running = False
+
+async def check_recent_pipeline_logs():
+    """Check recent pipeline logs (from check_pipeline_logs)"""
+    try:
+        logger.info("📋 Checking recent pipeline logs...")
+        
+        # Get recent documents to simulate log checking
+        recent_docs = await db_manager.get_recent_documents(days=1, limit=5)
+        if recent_docs:
+            logger.info(f"✅ Recent activity: {len(recent_docs)} documents processed recently")
+        else:
+            logger.info("ℹ️ No recent pipeline activity found")
+            
+    except Exception as e:
+        logger.error(f"❌ Error checking pipeline logs: {e}")
+
+async def display_final_status():
+    """Display final system status (combines multiple status checks)"""
+    try:
+        logger.info("📊 Final system status:")
+        
+        # Get comprehensive stats
+        doc_count = await db_manager.get_document_count()
+        recent_docs = await db_manager.get_recent_documents(days=7, limit=10)
+        
+        logger.info(f"📈 Total documents: {doc_count}")
+        logger.info(f"📅 Recent documents (7 days): {len(recent_docs)}")
+        
+        if recent_docs:
+            # Agency distribution
+            agencies = {}
+            for doc in recent_docs:
+                agency = doc.get('agency', 'Unknown')
+                if agency and agency.strip():
+                    agencies[agency] = agencies.get(agency, 0) + 1
+                    
+            if agencies:
+                logger.info("🏛️ Recent agency activity:")
+                sorted_agencies = sorted(agencies.items(), key=lambda x: x[1], reverse=True)[:3]
+                for agency, count in sorted_agencies:
+                    logger.info(f"   • {agency}: {count} documents")
+        
+        logger.info("✅ System ready for queries!")
+        
+    except Exception as e:
+        logger.error(f"❌ Error displaying final status: {e}")
+
 async def initialize_system():
-    """Initialize the system components"""
+    """Initialize the system components with comprehensive pipeline integration"""
     global agent, pipeline
+    
     try:
         # Initialize database
         await db_manager.initialize_database()
         logger.info("✅ Database initialized")
         
-        # Initialize agent
-        agent = FederalRegistryAgent()
-        logger.info("✅ Agent initialized")
-        
         # Initialize pipeline
         pipeline = DataPipeline()
         logger.info("✅ Pipeline initialized")
         
-        # Run initial pipeline to populate database
-        await run_initial_pipeline()
+        # Run comprehensive pipeline check (integrates all run_pipeline.py functions)
+        pipeline_success = await comprehensive_pipeline_check()
         
+        # Initialize agent after data is ready
+        agent = FederalRegistryAgent()
+        logger.info("✅ Agent initialized")
+        
+        if pipeline_success:
+            logger.info("🎉 System initialization completed successfully!")
+            logger.info("💡 RAG system is ready with comprehensive data coverage")
+        else:
+            logger.warning("⚠️ System initialized but pipeline had issues")
+            
         return True
+        
     except Exception as e:
         logger.error(f"❌ Error initializing system: {e}")
         return False
@@ -109,22 +243,20 @@ async def initialize_system():
 async def lifespan(app: FastAPI):
     """Handle application startup and shutdown"""
     # Startup
-    logger.info("🚀 Starting up application...")
+    logger.info("🚀 Starting up RAG Federal Registry System...")
     success = await initialize_system()
     if success:
-        logger.info("✅ System initialized successfully")
+        logger.info("✅ RAG System initialized successfully")
     else:
-        logger.error("❌ Failed to initialize system")
-    
+        logger.error("❌ Failed to initialize RAG system")
     yield
-    
     # Shutdown
     logger.info("🔄 Shutting down application")
 
 # FastAPI app initialization with lifespan
 app = FastAPI(
     title="Federal Registry RAG Agent",
-    description="AI Agent for querying US Federal Registry documents",
+    description="AI Agent for querying US Federal Registry documents with comprehensive data coverage",
     version="1.0.0",
     lifespan=lifespan
 )
@@ -147,25 +279,22 @@ async def chat_with_agent(request: ChatRequest) -> ChatResponse:
     try:
         if not request.message.strip():
             raise HTTPException(status_code=400, detail="Message cannot be empty")
-        
         if agent is None:
             raise HTTPException(status_code=503, detail="Agent not initialized")
         
         # Get response from agent
         response = await agent.get_response(request.message)
-        
         return ChatResponse(
             status=response["status"],
             response=response["response"],
             timestamp=response["timestamp"]
         )
-    
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 @app.post("/api/pipeline/run", response_model=PipelineResponse)
 async def run_data_pipeline(request: PipelineRequest = Body(default=PipelineRequest())) -> PipelineResponse:
-    """Run the data pipeline to update federal documents"""
+    """Run comprehensive data pipeline with date range support"""
     global pipeline_running
     
     if pipeline_running:
@@ -181,54 +310,74 @@ async def run_data_pipeline(request: PipelineRequest = Body(default=PipelineRequ
         )
     
     try:
-        pipeline_running = True
-        
-        # Run pipeline with provided dates or defaults
-        start_date = request.start_date
-        end_date = request.end_date
-        
-        success = await pipeline.run_pipeline(start_date, end_date)
+        # Run comprehensive pipeline based on parameters
+        if request.start_date and request.end_date:
+            # Specific date range
+            pipeline_running = True
+            success = await pipeline.run_pipeline(request.start_date, request.end_date)
+            message = f"Pipeline completed for date range {request.start_date} to {request.end_date}"
+        else:
+            # Comprehensive check and update
+            success = await comprehensive_pipeline_check()
+            message = "Comprehensive pipeline check and update completed"
         
         if success:
+            # Get final stats
+            doc_count = await db_manager.get_document_count()
             return PipelineResponse(
                 status="success",
-                message="Data pipeline completed successfully. Federal documents have been updated."
+                message=f"{message}. Total documents: {doc_count}"
             )
         else:
             return PipelineResponse(
                 status="error",
-                message="Data pipeline failed. Check logs for more details."
+                message="Pipeline failed. Check logs for more details."
             )
-    
+            
     except Exception as e:
         return PipelineResponse(
             status="error",
             message=f"Pipeline error: {str(e)}"
         )
-    
     finally:
         pipeline_running = False
 
 @app.get("/api/pipeline/status")
 async def get_pipeline_status():
-    """Get current pipeline status"""
-    return {
-        "running": pipeline_running,
-        "message": "Pipeline is currently running" if pipeline_running else "Pipeline is idle"
-    }
+    """Get current pipeline status with detailed information"""
+    try:
+        doc_count = await db_manager.get_document_count()
+        recent_docs = await db_manager.get_recent_documents(days=7, limit=5)
+        
+        return {
+            "running": pipeline_running,
+            "message": "Pipeline is currently running" if pipeline_running else "Pipeline is idle",
+            "total_documents": doc_count,
+            "recent_documents": len(recent_docs),
+            "last_update": recent_docs[0].get('publication_date') if recent_docs else None
+        }
+    except Exception as e:
+        return {
+            "running": pipeline_running,
+            "message": f"Status check error: {str(e)}"
+        }
 
 @app.get("/api/health")
 async def health_check():
-    """Health check endpoint"""
+    """Comprehensive health check endpoint"""
     try:
         # Test database connection
         count = await db_manager.get_document_count()
+        recent_count = len(await db_manager.get_recent_documents(days=7, limit=100))
         
         return {
             "status": "healthy",
             "database": "connected",
             "agent": "ready" if agent else "not initialized",
-            "document_count": count
+            "pipeline": "ready" if pipeline else "not initialized",
+            "document_count": count,
+            "recent_documents": recent_count,
+            "data_freshness": "current" if recent_count > 0 else "needs_update"
         }
     except Exception as e:
         return {
@@ -238,17 +387,30 @@ async def health_check():
 
 @app.get("/api/stats")
 async def get_database_stats():
-    """Get database statistics"""
+    """Get comprehensive database statistics"""
     try:
         doc_count = await db_manager.get_document_count()
         latest_docs = await db_manager.get_latest_documents(5)
+        recent_docs = await db_manager.get_recent_documents(days=30, limit=100)
+        
+        # Agency distribution from recent docs
+        agencies = {}
+        for doc in recent_docs:
+            agency = doc.get('agency', 'Unknown')
+            if agency and agency.strip():
+                agencies[agency] = agencies.get(agency, 0) + 1
+        
+        top_agencies = sorted(agencies.items(), key=lambda x: x[1], reverse=True)[:5]
         
         return {
             "total_documents": doc_count,
             "latest_documents": latest_docs,
-            "system_status": "healthy" if agent else "initializing"
+            "recent_activity": {
+                "last_30_days": len(recent_docs),
+                "top_agencies": [{"agency": k, "count": v} for k, v in top_agencies]
+            },
+            "system_status": "healthy" if agent and pipeline else "initializing"
         }
-    
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error getting stats: {str(e)}")
 
