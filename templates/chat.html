@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Federal Registry AI Agent</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            width: 100%;
+            max-width: 800px;
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            text-align: right;
+        }
+
+        .message.assistant {
+            text-align: left;
+        }
+
+        .message-content {
+            display: inline-block;
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .message.assistant .message-content {
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .input-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .message-input:focus {
+            border-color: #667eea;
+        }
+
+        .send-button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .send-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .send-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .typing-dots {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 18px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .typing-dots span {
+            height: 8px;
+            width: 8px;
+            background: #667eea;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+            margin-right: 0;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        .stats {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .pipeline-controls {
+            padding: 15px 20px;
+            background: #f0f8ff;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pipeline-button {
+            padding: 8px 16px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s ease;
+        }
+
+        .pipeline-button:hover {
+            background: #218838;
+        }
+
+        .pipeline-button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .pipeline-status {
+            font-size: 12px;
+            color: #666;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                height: 100vh;
+                border-radius: 0;
+            }
+
+            .message-content {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏛️ Federal Registry AI Agent</h1>
+            <p>Ask me about US Federal documents, executive orders, regulations, and more!</p>
+        </div>
+
+        <div class="pipeline-controls">
+            <div class="pipeline-status" id="pipelineStatus">
+                Pipeline Status: Ready
+            </div>
+            <button class="pipeline-button" id="runPipelineBtn" onclick="runPipeline()">
+                Update Data
+            </button>
+        </div>
+
+        <div class="chat-container">
+            <div class="messages" id="messages">
+                <div class="message assistant">
+                    <div class="message-content">
+                        Hello! I'm your Federal Registry AI Assistant. I can help you find and analyze US federal documents including:
+                        <br><br>
+                        • Executive orders and presidential documents
+                        • Federal regulations and notices  
+                        • Agency announcements and rules
+                        • Recent government publications
+                        <br><br>
+                        Try asking me something like "What are the recent executive orders?" or "Find documents about artificial intelligence from the Department of Defense"
+                    </div>
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <form class="input-form" id="chatForm">
+                <input 
+                    type="text" 
+                    class="message-input" 
+                    id="messageInput" 
+                    placeholder="Ask me about federal documents..."
+                    required
+                >
+                <button type="submit" class="send-button" id="sendButton">
+                    Send
+                </button>
+            </form>
+        </div>
+
+        <div class="stats" id="stats">
+            Loading database statistics...
+        </div>
+    </div>
+        <div style="
+        position: fixed;
+        bottom: 15px;
+        right: 20px;
+        font-size: 13px;
+        color: rgba(255,255,255,0.8);
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    ">
+        © Developed by Al Amin
+    </div>
+
+    <script>
+        const messagesContainer = document.getElementById('messages');
+        const chatForm = document.getElementById('chatForm');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const statsDiv = document.getElementById('stats');
+        const pipelineStatus = document.getElementById('pipelineStatus');
+        const runPipelineBtn = document.getElementById('runPipelineBtn');
+
+        // Add message to chat
+        function addMessage(content, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'assistant'}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerHTML = content.replace(/\n/g, '<br>');
+            
+            messageDiv.appendChild(contentDiv);
+            messagesContainer.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Show/hide typing indicator
+        function showTyping(show = true) {
+            typingIndicator.style.display = show ? 'flex' : 'none';
+            if (show) {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        }
+
+        // Handle form submission
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const message = messageInput.value.trim();
+            if (!message) return;
+            
+            // Add user message
+            addMessage(message, true);
+            
+            // Clear input and disable form
+            messageInput.value = '';
+            sendButton.disabled = true;
+            messageInput.disabled = true;
+            
+            // Show typing indicator
+            showTyping(true);
+            
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+                
+                const data = await response.json();
+                
+                // Hide typing indicator
+                showTyping(false);
+                
+                if (data.status === 'success') {
+                    addMessage(data.response);
+                } else {
+                    addMessage(`Error: ${data.response}`);
+                }
+                
+            } catch (error) {
+                showTyping(false);
+                addMessage(`Connection error: ${error.message}`);
+            } finally {
+                // Re-enable form
+                sendButton.disabled = false;
+                messageInput.disabled = false;
+                messageInput.focus();
+            }
+        });
+
+        // Load database statistics
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+                
+                const statsText = `📊 ${data.total_documents || 0} documents • 🏛️ ${data.unique_agencies || 0} agencies • 📅 Latest: ${data.latest_document_date || 'N/A'}`;
+                statsDiv.textContent = statsText;
+            } catch (error) {
+                statsDiv.textContent = '📊 Statistics unavailable';
+            }
+        }
+
+        // Run data pipeline
+        async function runPipeline() {
+            runPipelineBtn.disabled = true;
+            runPipelineBtn.textContent = 'Running...';
+            pipelineStatus.textContent = 'Pipeline Status: Running';
+            
+            try {
+                const response = await fetch('/api/pipeline/run', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({})
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    pipelineStatus.textContent = 'Pipeline Status: Completed';
+                    addMessage('✅ Data pipeline completed successfully! The database has been updated with the latest federal documents.');
+                    loadStats(); // Refresh stats
+                } else {
+                    pipelineStatus.textContent = 'Pipeline Status: Failed';
+                    addMessage(`❌ Pipeline failed: ${data.message}`);
+                }
+                
+            } catch (error) {
+                pipelineStatus.textContent = 'Pipeline Status: Error';
+                addMessage(`❌ Pipeline error: ${error.message}`);
+            } finally {
+                runPipelineBtn.disabled = false;
+                runPipelineBtn.textContent = 'Update Data';
+                
+                setTimeout(() => {
+                    pipelineStatus.textContent = 'Pipeline Status: Ready';
+                }, 3000);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            messageInput.focus();
+            loadStats();
+        });
+
+        // Auto-refresh stats every 5 minutes
+        setInterval(loadStats, 5 * 60 * 1000);
+    </script>
+</body>
+</html>

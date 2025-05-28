@@ -1,0 +1,2544 @@
+{
+  "count": 440,
+  "description": "Documents published from 05/21/2025 to 05/28/2025",
+  "total_pages": 5,
+  "next_page_url": "https://www.federalregister.gov/api/v1/documents?conditions%5Bpublication_date%5D%5Bgte%5D=2025-05-21&conditions%5Bpublication_date%5D%5Blte%5D=2025-05-28&fields%5B%5D=title&fields%5B%5D=abstract&fields%5B%5D=document_number&fields%5B%5D=publication_date&fields%5B%5D=type&fields%5B%5D=agencies&fields%5B%5D=html_url&fields%5B%5D=pdf_url&fields%5B%5D=raw_text_url&format=json&page=5&per_page=100",
+  "previous_page_url": "https://www.federalregister.gov/api/v1/documents?conditions%5Bpublication_date%5D%5Bgte%5D=2025-05-21&conditions%5Bpublication_date%5D%5Blte%5D=2025-05-28&fields%5B%5D=title&fields%5B%5D=abstract&fields%5B%5D=document_number&fields%5B%5D=publication_date&fields%5B%5D=type&fields%5B%5D=agencies&fields%5B%5D=html_url&fields%5B%5D=pdf_url&fields%5B%5D=raw_text_url&format=json&page=3&per_page=100",
+  "results": [
+    {
+      "title": "Agency Information Collection Activities: Comment Request",
+      "abstract": "In accordance with the Paperwork Reduction Act of 1995 (PRA), the Consumer Financial Protection Bureau (CFPB) requests the Office of Management and Budget's (OMB's) extension for the existing information collection titled \"Generic Information Collection Plan for the Collection of Qualitative Feedback on Bureau Service Delivery\" approved under OMB Control Number 3170-0024.",
+      "document_number": "2025-09228",
+      "publication_date": "2025-05-22",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "Consumer Financial Protection Bureau",
+          "name": "Consumer Financial Protection Bureau",
+          "id": 573,
+          "url": "https://www.federalregister.gov/agencies/consumer-financial-protection-bureau",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/573",
+          "parent_id": null,
+          "slug": "consumer-financial-protection-bureau"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-09228/agency-information-collection-activities-comment-request",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-09228.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-09228.txt"
+    },
+    {
+      "title": "Agency Information Collection Activities: Comment Request",
+      "abstract": "In accordance with the Paperwork Reduction Act of 1995 (PRA), the Consumer Financial Protection Bureau (CFPB) requests the Office of Management and Budget's (OMB's) extension of the existing information collection titled \"Consumer Complaint Intake System Company Portal Boarding Form\" approved under OMB Control Number 3170-0054.",
+      "document_number": "2025-09226",
+      "publication_date": "2025-05-22",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "Consumer Financial Protection Bureau",
+          "name": "Consumer Financial Protection Bureau",
+          "id": 573,
+          "url": "https://www.federalregister.gov/agencies/consumer-financial-protection-bureau",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/573",
+          "parent_id": null,
+          "slug": "consumer-financial-protection-bureau"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-09226/agency-information-collection-activities-comment-request",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-09226.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-09226.txt"
+    },
+    {
+      "title": "Pesticide Tolerances; Implementing Registration Review Decisions for Certain Pesticides; Diphenylamine, et al",
+      "abstract": "The Environmental Protection Agency (EPA or Agency) is proposing to implement several tolerance actions under the Federal Food, Drug, and Cosmetic Act (FFDCA) that the Agency previously determined were necessary or appropriate during the registration review conducted under the Federal Insecticide, Fungicide, and Rodenticide Act (FIFRA). During registration review, EPA reviews all aspects of a pesticide case, including existing tolerances, to ensure that the pesticide continues to meet the standard for registration under FIFRA. The pesticide tolerances and active ingredients addressed in this rulemaking are identified and discussed in detail in Unit III. of this document.",
+      "document_number": "2025-09108",
+      "publication_date": "2025-05-22",
+      "type": "Proposed Rule",
+      "agencies": [
+        {
+          "raw_name": "ENVIRONMENTAL PROTECTION AGENCY",
+          "name": "Environmental Protection Agency",
+          "id": 145,
+          "url": "https://www.federalregister.gov/agencies/environmental-protection-agency",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/145",
+          "parent_id": null,
+          "slug": "environmental-protection-agency"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-09108/pesticide-tolerances-implementing-registration-review-decisions-for-certain-pesticides-diphenylamine",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-09108.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-09108.txt"
+    },
+    {
+      "title": "Agency Information Collection Activities: Comment Request",
+      "abstract": "In accordance with the Paperwork Reduction Act of 1995 (PRA), the Consumer Financial Protection Bureau (CFPB) requests the extension of the Office of Management and Budget's (OMB's) approval of a new information collection titled \"ICBA Disclosure Testing: Qualitative Pre-testing of Survey (Testing) Instrument and Modified Disclosure Forms.\"",
+      "document_number": "2025-09227",
+      "publication_date": "2025-05-22",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "Consumer Financial Protection Bureau",
+          "name": "Consumer Financial Protection Bureau",
+          "id": 573,
+          "url": "https://www.federalregister.gov/agencies/consumer-financial-protection-bureau",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/573",
+          "parent_id": null,
+          "slug": "consumer-financial-protection-bureau"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-09227/agency-information-collection-activities-comment-request",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-09227.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-09227.txt"
+    },
+    {
+      "title": "Airworthiness Directives; Airbus SAS Airplanes",
+      "abstract": "The FAA is superseding Airworthiness Directive (AD) 2015-02- 14, which applied to all Airbus SAS Model A318 series airplanes; A319- 111, -112, -113, -114, -115, -131, -132, and -133 airplanes; A320-211, -212, -214, -231, -232, and -233 airplanes; and A321-111, -112, -131, - 211, -212, -213, -231, and -232 airplanes. AD 2015-02-14 required repetitive inspections for cracking, damage, correct installation, and correct adjustment of the main landing gear (MLG) door hinge and actuator fittings on the keel beam, corrective actions if necessary, and revision of the existing maintenance or inspection program, as applicable. Since the FAA issued AD 2015-02-14, a new design of the MLG door keel beam hinge and actuator fitting was developed. This AD continues to require the actions specified in AD 2015-02-14, adds an optional terminating action, and revises the applicability, as specified in a European Union Aviation Safety Agency (EASA) AD, which is incorporated by reference. The FAA is issuing this AD to address the unsafe condition on these products.",
+      "document_number": "2025-09222",
+      "publication_date": "2025-05-22",
+      "type": "Rule",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF TRANSPORTATION",
+          "name": "Transportation Department",
+          "id": 492,
+          "url": "https://www.federalregister.gov/agencies/transportation-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/492",
+          "parent_id": null,
+          "slug": "transportation-department"
+        },
+        {
+          "raw_name": "Federal Aviation Administration",
+          "name": "Federal Aviation Administration",
+          "id": 159,
+          "url": "https://www.federalregister.gov/agencies/federal-aviation-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/159",
+          "parent_id": 492,
+          "slug": "federal-aviation-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-09222/airworthiness-directives-airbus-sas-airplanes",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-09222.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-09222.txt"
+    },
+    {
+      "title": "Airworthiness Directives; Embraer S.A. (Type Certificate Previously Held by Yaborã Indústria Aeronáutica S.A.; Embraer S.A.; Empresa Brasileira de Aeronáutica S.A. (EMBRAER)) Airplanes",
+      "abstract": "The FAA is superseding Airworthiness Directive (AD) 2006-20- 08, which applied to all Embraer S.A. Model EMB-145, -145ER, -145MR, - 145LR, -145XR, -145MP, and -145EP airplanes. AD 2006-20-08 required repetitive inspections to detect cracking or failure of the rod ends and fittings of the aileron power control actuator (PCA), and corrective actions if necessary, and provided an optional terminating action. This AD was prompted by a determination that there was an error in identifying a maintenance task number. This AD continues to require the actions in AD 2006-20-08 and corrects an error in a task number, as specified in an Ag[ecirc]ncia Nacional de Avia[ccedil][atilde]o Civil (ANAC) AD, which is incorporated by reference. The FAA is issuing this AD to address the unsafe condition on these products.",
+      "document_number": "2025-09219",
+      "publication_date": "2025-05-22",
+      "type": "Rule",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF TRANSPORTATION",
+          "name": "Transportation Department",
+          "id": 492,
+          "url": "https://www.federalregister.gov/agencies/transportation-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/492",
+          "parent_id": null,
+          "slug": "transportation-department"
+        },
+        {
+          "raw_name": "Federal Aviation Administration",
+          "name": "Federal Aviation Administration",
+          "id": 159,
+          "url": "https://www.federalregister.gov/agencies/federal-aviation-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/159",
+          "parent_id": 492,
+          "slug": "federal-aviation-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-09219/airworthiness-directives-embraer-sa-type-certificate-previously-held-by-yabor-indstria-aeronutica-sa",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-09219.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-09219.txt"
+    },
+    {
+      "title": "Airworthiness Directives; Airbus SAS Airplanes",
+      "abstract": "The FAA is adopting a new airworthiness directive (AD) for all Airbus SAS Model A321-111, -112, -131, -211, -212, -213, -231, -232, -251N, -252N, -253N, -271N, -272N, -251NX, -252NX, -253NX, -271NX, and -272NX airplanes. This AD was prompted by the identification of an erroneous value of the main landing gear (MLG) tire width in the aircraft data files used for aircraft performance computation. This AD requires revising the existing airplane flight manual (AFM) to incorporate a complementary performance data file (CPDF) update as specified in a European Union Aviation Safety Agency (EASA) AD, which is incorporated by reference. The FAA is issuing this AD to address the unsafe condition on these products.",
+      "document_number": "2025-09225",
+      "publication_date": "2025-05-22",
+      "type": "Rule",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF TRANSPORTATION",
+          "name": "Transportation Department",
+          "id": 492,
+          "url": "https://www.federalregister.gov/agencies/transportation-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/492",
+          "parent_id": null,
+          "slug": "transportation-department"
+        },
+        {
+          "raw_name": "Federal Aviation Administration",
+          "name": "Federal Aviation Administration",
+          "id": 159,
+          "url": "https://www.federalregister.gov/agencies/federal-aviation-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/159",
+          "parent_id": 492,
+          "slug": "federal-aviation-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-09225/airworthiness-directives-airbus-sas-airplanes",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-09225.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-09225.txt"
+    },
+    {
+      "title": "Airworthiness Directives; ATR-GIE Avions de Transport Régional Airplanes",
+      "abstract": "The FAA is superseding Airworthiness Directive (AD) 2023-10- 08, which applied to all ATR--GIE Avions de Transport R[eacute]gional Model ATR42-200, -300, and -320 airplanes. AD 2023-10-08 required revising the existing maintenance or inspection program, as applicable, to incorporate new or more restrictive airworthiness limitations. Since the FAA issued AD 2023-10-08, the FAA has determined that new or more restrictive airworthiness limitations are necessary. This AD continues to require certain actions in AD 2023-10-08 and requires revising the existing maintenance or inspection program, as applicable, to incorporate new or more restrictive airworthiness limitations, as specified in a European Union Aviation Safety Agency (EASA) AD, which is incorporated by reference. The FAA is issuing this AD to address the unsafe condition on these products.",
+      "document_number": "2025-09221",
+      "publication_date": "2025-05-22",
+      "type": "Rule",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF TRANSPORTATION",
+          "name": "Transportation Department",
+          "id": 492,
+          "url": "https://www.federalregister.gov/agencies/transportation-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/492",
+          "parent_id": null,
+          "slug": "transportation-department"
+        },
+        {
+          "raw_name": "Federal Aviation Administration",
+          "name": "Federal Aviation Administration",
+          "id": 159,
+          "url": "https://www.federalregister.gov/agencies/federal-aviation-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/159",
+          "parent_id": 492,
+          "slug": "federal-aviation-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-09221/airworthiness-directives-atr-gie-avions-de-transport-rgional-airplanes",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-09221.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-09221.txt"
+    },
+    {
+      "title": "Airworthiness Directives; Airbus SAS Airplanes",
+      "abstract": "The FAA is adopting a new airworthiness directive (AD) for certain Airbus SAS Model A350-941 and -1041 airplanes. This AD was prompted by a determination that new or more restrictive airworthiness limitations are necessary. This AD requires revising the existing maintenance or inspection program, as applicable, to incorporate new or more restrictive airworthiness limitations, as specified in a European Union Aviation Safety Agency (EASA) AD, which is incorporated by reference. The FAA is issuing this AD to address the unsafe condition on these products.",
+      "document_number": "2025-09223",
+      "publication_date": "2025-05-22",
+      "type": "Rule",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF TRANSPORTATION",
+          "name": "Transportation Department",
+          "id": 492,
+          "url": "https://www.federalregister.gov/agencies/transportation-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/492",
+          "parent_id": null,
+          "slug": "transportation-department"
+        },
+        {
+          "raw_name": "Federal Aviation Administration",
+          "name": "Federal Aviation Administration",
+          "id": 159,
+          "url": "https://www.federalregister.gov/agencies/federal-aviation-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/159",
+          "parent_id": 492,
+          "slug": "federal-aviation-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-09223/airworthiness-directives-airbus-sas-airplanes",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-09223.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-09223.txt"
+    },
+    {
+      "title": "Airworthiness Directives; General Electric Company Engines",
+      "abstract": "The FAA is adopting a new airworthiness directive (AD) for all General Electric Company (GE) Model CF34-10E2A1, CF34-10E5, CF34- 10E5A1, CF34-10E6, CF34-10E6A1, CF34-10E7, and CF34-10E7-B engines with certain part-numbered high-pressure turbine (HPT) shroud/low pressure turbine (LPT) nozzle assemblies installed. This AD was prompted by a report of failed retention features of the inner and outer support air ducts (commonly referred to as spoolies) discovered during engine disassembly. This AD requires a visual inspection of the combustion case for wear and gouges, repair if necessary, and rework of the affected HPT shroud/LPT nozzle assemblies to add a positive retention of the support air duct. The FAA is issuing this AD to address the unsafe condition on these products.",
+      "document_number": "2025-09205",
+      "publication_date": "2025-05-22",
+      "type": "Rule",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF TRANSPORTATION",
+          "name": "Transportation Department",
+          "id": 492,
+          "url": "https://www.federalregister.gov/agencies/transportation-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/492",
+          "parent_id": null,
+          "slug": "transportation-department"
+        },
+        {
+          "raw_name": "Federal Aviation Administration",
+          "name": "Federal Aviation Administration",
+          "id": 159,
+          "url": "https://www.federalregister.gov/agencies/federal-aviation-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/159",
+          "parent_id": 492,
+          "slug": "federal-aviation-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-09205/airworthiness-directives-general-electric-company-engines",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-09205.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-09205.txt"
+    },
+    {
+      "title": "Airworthiness Directives; Airbus Helicopters",
+      "abstract": "The FAA proposes to supersede Airworthiness Directive (AD) 2019-19-13, which applies to certain Airbus Helicopters Model EC225LP helicopters. AD 2019-19-13 requires determining the total hours time- in-service (TIS) of the free wheel shafts of certain main rotor gearboxes (MGBs), replacing the MGB or right-hand side (RH) free wheel shaft, installing placard(s), and revising the Rotorcraft Flight Manual (RFM) for the helicopter. Since the FAA issued AD 2019-19-13, an additional part-numbered MGB has been identified to have the same unsafe condition and the FAA determined that additional changes are necessary. This proposed AD would require the actions of AD 2019-19-13 and, expand the applicability by adding the additional part-numbered MGB, change the requirement to determine the total hours TIS of a certain free wheel shaft, require repetitive replacement of the MGB or the RH free wheel shaft, change the requirements for who can replace parts, and expand the parts installation limitation conditions. The FAA is proposing this AD to address the unsafe condition on these products.",
+      "document_number": "2025-09094",
+      "publication_date": "2025-05-22",
+      "type": "Proposed Rule",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF TRANSPORTATION",
+          "name": "Transportation Department",
+          "id": 492,
+          "url": "https://www.federalregister.gov/agencies/transportation-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/492",
+          "parent_id": null,
+          "slug": "transportation-department"
+        },
+        {
+          "raw_name": "Federal Aviation Administration",
+          "name": "Federal Aviation Administration",
+          "id": 159,
+          "url": "https://www.federalregister.gov/agencies/federal-aviation-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/159",
+          "parent_id": 492,
+          "slug": "federal-aviation-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-09094/airworthiness-directives-airbus-helicopters",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-09094.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-09094.txt"
+    },
+    {
+      "title": "Amendment of Class D and E Airspace Over Hickory and Morganton, NC",
+      "abstract": "This action proposes to amend the Class D and Class E2 surface airspace at Hickory Regional Airport, Hickory, NC, by increasing the radius to 4.6-miles and establishing an extension to the surface area due to standard instrument approach procedure and runway configuration changes. Additionally, this action would amend Class E5 airspace extending upward from 700 feet above the surface for Hickory Regional Airport, Hickory, NC, by increasing the radius to 7.1 miles and adding an extension. Lastly, this action would also amend Class E airspace extending upward from 700 feet above the surface for Foothills Regional Airport, Morganton, NC, ensuring the required protection for standard instrument approach procedures, and would also update the airport's name and geographic coordinates and remove Grace Hospital from the description. Controlled airspace is necessary for the safety and management of instrument flight rules (IFR) operations in the area.",
+      "document_number": "2025-09210",
+      "publication_date": "2025-05-22",
+      "type": "Proposed Rule",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF TRANSPORTATION",
+          "name": "Transportation Department",
+          "id": 492,
+          "url": "https://www.federalregister.gov/agencies/transportation-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/492",
+          "parent_id": null,
+          "slug": "transportation-department"
+        },
+        {
+          "raw_name": "Federal Aviation Administration",
+          "name": "Federal Aviation Administration",
+          "id": 159,
+          "url": "https://www.federalregister.gov/agencies/federal-aviation-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/159",
+          "parent_id": 492,
+          "slug": "federal-aviation-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-09210/amendment-of-class-d-and-e-airspace-over-hickory-and-morganton-nc",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-09210.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-09210.txt"
+    },
+    {
+      "title": "Agency Information Collection Activities; Proposed Renewal; Comment Request; Renewal Without Change of Prohibition on Correspondent Accounts for Foreign Shell Banks; Records Concerning Owners of Foreign Banks and Agents for Service of Legal Process",
+      "abstract": "As part of its continuing effort to reduce paperwork and respondent burden, FinCEN invites comments on the proposed renewal, without change, of certain existing information collection requirements found in Bank Secrecy Act (BSA) regulations applicable to certain covered financial institutions. Under these regulations, among other requirements, a covered financial institution is prohibited from establishing, maintaining, administering, or managing correspondent accounts in the United States for or on behalf of a foreign shell bank. The regulations require that a covered financial institution take reasonable steps to ensure that any correspondent account that it establishes, maintains, administers, or manages in the United States for a foreign bank is not used by the foreign bank to indirectly provide banking services to a foreign shell bank. The regulations also mandate that a covered financial institution that maintains a correspondent account in the United States for a foreign bank retain records in the United States identifying the owners of each such foreign bank whose shares are not publicly traded, unless the foreign bank files a Form FR-Y with the Federal Reserve Board identifying the current owners of the foreign bank, and the name and street address of a person who resides in the United States and is authorized, and has agreed to be an agent to accept service of legal process for records regarding each such correspondent account. This request for comments is made pursuant to the Paperwork Reduction Act of 1995.",
+      "document_number": "2025-09162",
+      "publication_date": "2025-05-22",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF THE TREASURY",
+          "name": "Treasury Department",
+          "id": 497,
+          "url": "https://www.federalregister.gov/agencies/treasury-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/497",
+          "parent_id": null,
+          "slug": "treasury-department"
+        },
+        {
+          "raw_name": "Financial Crimes Enforcement Network",
+          "name": "Financial Crimes Enforcement Network",
+          "id": 194,
+          "url": "https://www.federalregister.gov/agencies/financial-crimes-enforcement-network",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/194",
+          "parent_id": 497,
+          "slug": "financial-crimes-enforcement-network"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-09162/agency-information-collection-activities-proposed-renewal-comment-request-renewal-without-change-of",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-09162.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-09162.txt"
+    },
+    {
+      "title": "Federal Travel Regulation (FTR); Rescinding FTR Bulletins",
+      "abstract": "The U.S. General Services Administration (GSA) is rescinding 36 bulletins due to being outdated, expired, or no longer in effect due to recent executive action.",
+      "document_number": "2025-08954",
+      "publication_date": "2025-05-22",
+      "type": "Rule",
+      "agencies": [
+        {
+          "raw_name": "GENERAL SERVICES ADMINISTRATION",
+          "name": "General Services Administration",
+          "id": 210,
+          "url": "https://www.federalregister.gov/agencies/general-services-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/210",
+          "parent_id": null,
+          "slug": "general-services-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-08954/federal-travel-regulation-ftr-rescinding-ftr-bulletins",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-08954.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-08954.txt"
+    },
+    {
+      "title": "Amendment of United States Area Navigation (RNAV) Routes Q-64, T-414, and T-705; and Establishment of United States RNAV Routes T-461 and T-463; Eastern United States",
+      "abstract": "This action revises an earlier notice of proposed rulemaking (NPRM) that the FAA published in Federal Register on February 27, 2025, by adding the proposed amendment of United States Area Navigation (RNAV) Route T-705 in the eastern United States. Additionally, this SNPRM proposes to add the EEGOR, CT, waypoint (WP) to RNAV Route T-461. This action continues to propose the changes to RNAV routes Q-64 and T- 414, and the establishment of new RNAV route T-463, as described in the original NPRM. This action supports FAA Next Generation Air Transportation System (NextGen) efforts to provide a modern RNAV route structure to improve the safety and efficiency of the National Airspace System (NAS).",
+      "document_number": "2025-09161",
+      "publication_date": "2025-05-22",
+      "type": "Proposed Rule",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF TRANSPORTATION",
+          "name": "Transportation Department",
+          "id": 492,
+          "url": "https://www.federalregister.gov/agencies/transportation-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/492",
+          "parent_id": null,
+          "slug": "transportation-department"
+        },
+        {
+          "raw_name": "Federal Aviation Administration",
+          "name": "Federal Aviation Administration",
+          "id": 159,
+          "url": "https://www.federalregister.gov/agencies/federal-aviation-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/159",
+          "parent_id": 492,
+          "slug": "federal-aviation-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-09161/amendment-of-united-states-area-navigation-rnav-routes-q-64-t-414-and-t-705-and-establishment-of",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-09161.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-09161.txt"
+    },
+    {
+      "title": "Information Collection; Contractor Information Worksheet; GSA Form 850",
+      "abstract": "Under the provisions of the Paperwork Reduction Act, the Regulatory Secretariat Division will be submitting to the Office of Management and Budget (OMB) a request to review and approve an extension to the information collection requirement regarding the Contractor Information Worksheet; GSA Form 850.",
+      "document_number": "2025-09191",
+      "publication_date": "2025-05-22",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "GENERAL SERVICES ADMINISTRATION",
+          "name": "General Services Administration",
+          "id": 210,
+          "url": "https://www.federalregister.gov/agencies/general-services-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/210",
+          "parent_id": null,
+          "slug": "general-services-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-09191/information-collection-contractor-information-worksheet-gsa-form-850",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-09191.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-09191.txt"
+    },
+    {
+      "title": "Information Collection; General Services Administration Acquisition Regulation; Federal Supply Schedule Solicitation Information",
+      "abstract": "Under the provisions of the Paperwork Reduction Act, the Regulatory Secretariat Division will be submitting to the Office of Management and Budget (OMB) a request to review and approve a revision of a previously approved information collection requirement regarding Federal Supply Schedule Solicitation Information.",
+      "document_number": "2025-09190",
+      "publication_date": "2025-05-22",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "GENERAL SERVICES ADMINISTRATION",
+          "name": "General Services Administration",
+          "id": 210,
+          "url": "https://www.federalregister.gov/agencies/general-services-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/210",
+          "parent_id": null,
+          "slug": "general-services-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-09190/information-collection-general-services-administration-acquisition-regulation-federal-supply",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-09190.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-09190.txt"
+    },
+    {
+      "title": "Information Collection; General Services Administration Acquisition Regulation; Construction-Manager-as-Constructor Contracting",
+      "abstract": "In accordance with the Paperwork Reduction Act of 1995, and the Office of Management and Budget (OMB) regulations, GSA invites the public to comment on an extension of a previously approved information collection requirement regarding OMB Control No. 3090-0308, Construction-Manager-as-Constructor Contracting.",
+      "document_number": "2025-09189",
+      "publication_date": "2025-05-22",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "GENERAL SERVICES ADMINISTRATION",
+          "name": "General Services Administration",
+          "id": 210,
+          "url": "https://www.federalregister.gov/agencies/general-services-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/210",
+          "parent_id": null,
+          "slug": "general-services-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/22/2025-09189/information-collection-general-services-administration-acquisition-regulation",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-22/pdf/2025-09189.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/22/2025-09189.txt"
+    },
+    {
+      "title": "Terminology Relating to Sex; Technical Amendments",
+      "abstract": "This document makes nomenclature changes to sections of the Code of Federal Regulations (CFR) administered by the Transportation Security Administration (TSA). This action is necessary to conform with the Executive order of January 20, 2025 (Defending Women from Gender Ideology Extremism and Restoring Biological Truth to the Federal Government).",
+      "document_number": "2025-08920",
+      "publication_date": "2025-05-21",
+      "type": "Rule",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF HOMELAND SECURITY",
+          "name": "Homeland Security Department",
+          "id": 227,
+          "url": "https://www.federalregister.gov/agencies/homeland-security-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/227",
+          "parent_id": null,
+          "slug": "homeland-security-department"
+        },
+        {
+          "raw_name": "Office of the Secretary"
+        },
+        {
+          "raw_name": "Transportation Security Administration",
+          "name": "Transportation Security Administration",
+          "id": 494,
+          "url": "https://www.federalregister.gov/agencies/transportation-security-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/494",
+          "parent_id": 227,
+          "slug": "transportation-security-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-08920/terminology-relating-to-sex-technical-amendments",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-08920.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-08920.txt"
+    },
+    {
+      "title": "Paroling, Recommitting, and Supervising Federal Prisoners: Prisoners Serving Sentences Under the United States and District of Columbia Codes",
+      "abstract": "The U.S. Parole Commission is adopting a final rule to remove and reserve a procedural rule which concerns prisoners serving any combination of U.S. and D.C. Code sentences that have been aggregated by the U.S. Bureau of Prisons (\"mixed code\" offenders) and considered for parole on the basis of a single parole eligibility and mandatory release date on the aggregate sentence.",
+      "document_number": "2025-09140",
+      "publication_date": "2025-05-21",
+      "type": "Rule",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF JUSTICE",
+          "name": "Justice Department",
+          "id": 268,
+          "url": "https://www.federalregister.gov/agencies/justice-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/268",
+          "parent_id": null,
+          "slug": "justice-department"
+        },
+        {
+          "raw_name": "Parole Commission",
+          "name": "Parole Commission",
+          "id": 401,
+          "url": "https://www.federalregister.gov/agencies/parole-commission",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/401",
+          "parent_id": 268,
+          "slug": "parole-commission"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09140/paroling-recommitting-and-supervising-federal-prisoners-prisoners-serving-sentences-under-the-united",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09140.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09140.txt"
+    },
+    {
+      "title": "Drawbridge Operation Regulation; Manitowoc River, Manitowoc, WI",
+      "abstract": "The Coast Guard is issuing a temporary interim rule from the operating schedule that governs the Eighth Street Bridge, mile 0.29 and the Tenth Street Bridge, mile 0.43, over the Manitowoc River, in the town of Manitowoc, Wisconsin. The City of Manitowoc has requested a full review of the current bridge regulations to alleviate vehicle congestion in downtown Manitowoc. The Coast Guard is seeking comments from the public regarding this deviation and specifically on whether we should make this drawbridge operation schedule permanent.",
+      "document_number": "2025-09136",
+      "publication_date": "2025-05-21",
+      "type": "Rule",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF HOMELAND SECURITY",
+          "name": "Homeland Security Department",
+          "id": 227,
+          "url": "https://www.federalregister.gov/agencies/homeland-security-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/227",
+          "parent_id": null,
+          "slug": "homeland-security-department"
+        },
+        {
+          "raw_name": "Coast Guard",
+          "name": "Coast Guard",
+          "id": 53,
+          "url": "https://www.federalregister.gov/agencies/coast-guard",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/53",
+          "parent_id": 227,
+          "slug": "coast-guard"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09136/drawbridge-operation-regulation-manitowoc-river-manitowoc-wi",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09136.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09136.txt"
+    },
+    {
+      "title": "Atlantic Highly Migratory Species; Atlantic Bluefin Tuna Fisheries; Closure of the Angling Category Southern New England Area Trophy Fishery for 2025",
+      "abstract": "NMFS closes the Angling category southern New England area fishery for large medium and giant (\"trophy\" (i.e., measuring 73 inches (185 centimeters (cm)) curved fork length or greater)) Atlantic bluefin tuna (BFT). The southern New England area trophy fishery is defined as south of 42[deg] N lat. and north of 39[deg]18' N lat. This action applies to Highly Migratory Species (HMS) Angling and HMS Charter/Headboat permitted vessels when fishing recreationally.",
+      "document_number": "2025-09075",
+      "publication_date": "2025-05-21",
+      "type": "Rule",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF COMMERCE",
+          "name": "Commerce Department",
+          "id": 54,
+          "url": "https://www.federalregister.gov/agencies/commerce-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/54",
+          "parent_id": null,
+          "slug": "commerce-department"
+        },
+        {
+          "raw_name": "National Oceanic and Atmospheric Administration",
+          "name": "National Oceanic and Atmospheric Administration",
+          "id": 361,
+          "url": "https://www.federalregister.gov/agencies/national-oceanic-and-atmospheric-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/361",
+          "parent_id": 54,
+          "slug": "national-oceanic-and-atmospheric-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09075/atlantic-highly-migratory-species-atlantic-bluefin-tuna-fisheries-closure-of-the-angling-category",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09075.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09075.txt"
+    },
+    {
+      "title": "Submission for OMB Review; Comment Request",
+      "abstract": null,
+      "document_number": "2025-09025",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF AGRICULTURE",
+          "name": "Agriculture Department",
+          "id": 12,
+          "url": "https://www.federalregister.gov/agencies/agriculture-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/12",
+          "parent_id": null,
+          "slug": "agriculture-department"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09025/submission-for-omb-review-comment-request",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09025.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09025.txt"
+    },
+    {
+      "title": "Notice of Public Briefing of the Guam Advisory Committee to the U.S. Commission on Civil Rights; Correction",
+      "abstract": "The Commission on Civil Rights published a notice in the Federal Register on Tuesday, May 13, 2025, concerning a briefing of the Guam Advisory Committee. The briefing time has since changed to 8:00 a.m.-10:00 a.m. ChST (6:00 p.m.-8:00 p.m. ET).",
+      "document_number": "2025-09125",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "COMMISSION ON CIVIL RIGHTS",
+          "name": "Civil Rights Commission",
+          "id": 52,
+          "url": "https://www.federalregister.gov/agencies/civil-rights-commission",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/52",
+          "parent_id": null,
+          "slug": "civil-rights-commission"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09125/notice-of-public-briefing-of-the-guam-advisory-committee-to-the-us-commission-on-civil-rights",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09125.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09125.txt"
+    },
+    {
+      "title": "Foreign-Trade Zone (FTZ) 207; Withdrawal of Notification of Proposed Production Activity; Kaiser Aluminum Fabricated Products, LLC; (Aluminum Products); Richmond, Virginia",
+      "abstract": null,
+      "document_number": "2025-09120",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF COMMERCE",
+          "name": "Commerce Department",
+          "id": 54,
+          "url": "https://www.federalregister.gov/agencies/commerce-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/54",
+          "parent_id": null,
+          "slug": "commerce-department"
+        },
+        {
+          "raw_name": "Foreign-Trade Zones Board",
+          "name": "Foreign-Trade Zones Board",
+          "id": 208,
+          "url": "https://www.federalregister.gov/agencies/foreign-trade-zones-board",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/208",
+          "parent_id": 54,
+          "slug": "foreign-trade-zones-board"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09120/foreign-trade-zone-ftz-207-withdrawal-of-notification-of-proposed-production-activity-kaiser",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09120.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09120.txt"
+    },
+    {
+      "title": "Foreign-Trade Zone (FTZ) 173, Notification of Proposed Production Activity; PINNACLEMOD LLC; Prefabricated Modular Steel Buildings; Aberdeen, Washington",
+      "abstract": null,
+      "document_number": "2025-09119",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF COMMERCE",
+          "name": "Commerce Department",
+          "id": 54,
+          "url": "https://www.federalregister.gov/agencies/commerce-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/54",
+          "parent_id": null,
+          "slug": "commerce-department"
+        },
+        {
+          "raw_name": "Foreign-Trade Zones Board",
+          "name": "Foreign-Trade Zones Board",
+          "id": 208,
+          "url": "https://www.federalregister.gov/agencies/foreign-trade-zones-board",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/208",
+          "parent_id": 54,
+          "slug": "foreign-trade-zones-board"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09119/foreign-trade-zone-ftz-173-notification-of-proposed-production-activity-pinnaclemod-llc",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09119.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09119.txt"
+    },
+    {
+      "title": "Reporting for Calendar Year 2024 on Offsets Agreements Related to Sales of Defense Articles or Defense Services to Foreign Countries or Foreign Firms",
+      "abstract": "This notice is to remind the public that U.S. firms are required to report annually to the Department of Commerce (Commerce) information on contracts for the sale of defense articles or defense services to foreign countries or foreign firms that are subject to offsets agreements exceeding $5,000,000 in value. U.S. firms are also required to report annually to Commerce information on offsets transactions completed in performance of existing offsets commitments for which an offsets credit of $250,000 or more has been claimed from the foreign representative. This year, such reports must include relevant information from calendar year 2024 and must be submitted to Commerce no later than June 15, 2025.",
+      "document_number": "2025-09139",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF COMMERCE",
+          "name": "Commerce Department",
+          "id": 54,
+          "url": "https://www.federalregister.gov/agencies/commerce-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/54",
+          "parent_id": null,
+          "slug": "commerce-department"
+        },
+        {
+          "raw_name": "Bureau of Industry and Security",
+          "name": "Industry and Security Bureau",
+          "id": 241,
+          "url": "https://www.federalregister.gov/agencies/industry-and-security-bureau",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/241",
+          "parent_id": 54,
+          "slug": "industry-and-security-bureau"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09139/reporting-for-calendar-year-2024-on-offsets-agreements-related-to-sales-of-defense-articles-or",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09139.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09139.txt"
+    },
+    {
+      "title": "Materials and Equipment Technical Advisory Committee",
+      "abstract": "The Materials and Equipment Technical Advisory Committee (METAC) advises and assists the Secretary of Commerce and other Federal officials on matters related to export control policies; the METAC will meet to review and discuss these matters. The meeting will be partially closed to the public pursuant to the exemptions under the Federal Advisory Committee Act (FACA) and the Government in the Sunshine Act.",
+      "document_number": "2025-09148",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF COMMERCE",
+          "name": "Commerce Department",
+          "id": 54,
+          "url": "https://www.federalregister.gov/agencies/commerce-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/54",
+          "parent_id": null,
+          "slug": "commerce-department"
+        },
+        {
+          "raw_name": "Bureau of Industry and Security",
+          "name": "Industry and Security Bureau",
+          "id": 241,
+          "url": "https://www.federalregister.gov/agencies/industry-and-security-bureau",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/241",
+          "parent_id": 54,
+          "slug": "industry-and-security-bureau"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09148/materials-and-equipment-technical-advisory-committee",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09148.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09148.txt"
+    },
+    {
+      "title": "Regulations and Procedures Technical Advisory Committee",
+      "abstract": "The Regulations and Procedures Technical Advisory Committee (RPTAC) advises and assists the Secretary of Commerce and other Federal officials on matters related to export control policies; the RPTAC will meet to review and discuss these matters. The meeting will be partially closed to the public pursuant to the exemptions under the Federal Advisory Committee Act (FACA) and the Government in the Sunshine Act.",
+      "document_number": "2025-09147",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF COMMERCE",
+          "name": "Commerce Department",
+          "id": 54,
+          "url": "https://www.federalregister.gov/agencies/commerce-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/54",
+          "parent_id": null,
+          "slug": "commerce-department"
+        },
+        {
+          "raw_name": "Bureau of Industry and Security",
+          "name": "Industry and Security Bureau",
+          "id": 241,
+          "url": "https://www.federalregister.gov/agencies/industry-and-security-bureau",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/241",
+          "parent_id": 54,
+          "slug": "industry-and-security-bureau"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09147/regulations-and-procedures-technical-advisory-committee",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09147.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09147.txt"
+    },
+    {
+      "title": "Silicon Metal From Angola, Australia, the Lao People's Democratic Republic, and Norway: Initiation of Less-Than-Fair-Value Investigations",
+      "abstract": null,
+      "document_number": "2025-09027",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF COMMERCE",
+          "name": "Commerce Department",
+          "id": 54,
+          "url": "https://www.federalregister.gov/agencies/commerce-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/54",
+          "parent_id": null,
+          "slug": "commerce-department"
+        },
+        {
+          "raw_name": "International Trade Administration",
+          "name": "International Trade Administration",
+          "id": 261,
+          "url": "https://www.federalregister.gov/agencies/international-trade-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/261",
+          "parent_id": 54,
+          "slug": "international-trade-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09027/silicon-metal-from-angola-australia-the-lao-peoples-democratic-republic-and-norway-initiation-of",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09027.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09027.txt"
+    },
+    {
+      "title": "Silicon Metal From Australia, the Lao People's Democratic Republic, Norway, and Thailand: Initiation of Countervailing Duty Investigations",
+      "abstract": null,
+      "document_number": "2025-09028",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF COMMERCE",
+          "name": "Commerce Department",
+          "id": 54,
+          "url": "https://www.federalregister.gov/agencies/commerce-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/54",
+          "parent_id": null,
+          "slug": "commerce-department"
+        },
+        {
+          "raw_name": "International Trade Administration",
+          "name": "International Trade Administration",
+          "id": 261,
+          "url": "https://www.federalregister.gov/agencies/international-trade-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/261",
+          "parent_id": 54,
+          "slug": "international-trade-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09028/silicon-metal-from-australia-the-lao-peoples-democratic-republic-norway-and-thailand-initiation-of",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09028.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09028.txt"
+    },
+    {
+      "title": "Stainless Steel Butt-Weld Pipe Fittings From Italy: Rescission of Antidumping Duty Administrative Review; 2024-2025",
+      "abstract": "The U.S. Department of Commerce (Commerce) is rescinding the administrative review of the antidumping duty (AD) order on stainless steel butt-weld pipe fittings from Italy for the period of review (POR) February 1, 2024, through January 31, 2025.",
+      "document_number": "2025-09118",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF COMMERCE",
+          "name": "Commerce Department",
+          "id": 54,
+          "url": "https://www.federalregister.gov/agencies/commerce-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/54",
+          "parent_id": null,
+          "slug": "commerce-department"
+        },
+        {
+          "raw_name": "International Trade Administration",
+          "name": "International Trade Administration",
+          "id": 261,
+          "url": "https://www.federalregister.gov/agencies/international-trade-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/261",
+          "parent_id": 54,
+          "slug": "international-trade-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09118/stainless-steel-butt-weld-pipe-fittings-from-italy-rescission-of-antidumping-duty-administrative",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09118.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09118.txt"
+    },
+    {
+      "title": "Disposable Aluminum Containers, Pans, Trays, and Lids From the People's Republic of China: Final Affirmative Countervailing Duty Determination and Final Affirmative Determination of Critical Circumstances; and Disposable Aluminum Containers, Pans, Trays, and Lids From the People's Republic of China: Antidumping and Countervailing Duty Orders; Correction",
+      "abstract": "The U.S. Department of Commerce (Commerce) published a notice in the Federal Register of March 11, 2025, in which Commerce published the final determination of the countervailing duty (CVD) investigation for disposable aluminum containers, pans, trays, and lids (disposable aluminum containers) from the People's Republic of China (China). In this notice, Commerce did not identify the cross-owned affiliate of Henan Aluminium Corporation in the final determination. Additionally, Commerce published a notice in the Federal Register of May 8, 2025, in which Commerce published the CVD order for disposable aluminum containers from China. In this notice, Commerce did not identify the cross-owned affiliate of Henan Aluminium Corporation, and also misspelled Henan Aluminium Corporation's name in the sections entitled \"Background\" and \"Estimated CVD Subsidy Rates.\"",
+      "document_number": "2025-09123",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF COMMERCE",
+          "name": "Commerce Department",
+          "id": 54,
+          "url": "https://www.federalregister.gov/agencies/commerce-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/54",
+          "parent_id": null,
+          "slug": "commerce-department"
+        },
+        {
+          "raw_name": "International Trade Administration",
+          "name": "International Trade Administration",
+          "id": 261,
+          "url": "https://www.federalregister.gov/agencies/international-trade-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/261",
+          "parent_id": 54,
+          "slug": "international-trade-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09123/disposable-aluminum-containers-pans-trays-and-lids-from-the-peoples-republic-of-china-final",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09123.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09123.txt"
+    },
+    {
+      "title": "Agency Information Collection Activities; Submission to the Office of Management and Budget (OMB) for Review and Approval; Comment Request; Tuna Tracking and Verification Program",
+      "abstract": "The Department of Commerce, in accordance with the Paperwork Reduction Act of 1995 (PRA), invites the general public and other Federal agencies to comment on proposed, and continuing information collections, which helps us assess the impact of our information collection requirements and minimize the public's reporting burden. The purpose of this notice is to allow for 60 days of public comment preceding submission of the collection to OMB.",
+      "document_number": "2025-09084",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF COMMERCE",
+          "name": "Commerce Department",
+          "id": 54,
+          "url": "https://www.federalregister.gov/agencies/commerce-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/54",
+          "parent_id": null,
+          "slug": "commerce-department"
+        },
+        {
+          "raw_name": "National Oceanic and Atmospheric Administration",
+          "name": "National Oceanic and Atmospheric Administration",
+          "id": 361,
+          "url": "https://www.federalregister.gov/agencies/national-oceanic-and-atmospheric-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/361",
+          "parent_id": 54,
+          "slug": "national-oceanic-and-atmospheric-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09084/agency-information-collection-activities-submission-to-the-office-of-management-and-budget-omb-for",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09084.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09084.txt"
+    },
+    {
+      "title": "Takes of Marine Mammals Incidental to Specified Activities; Taking Marine Mammals Incidental to Alaska Railroad Corporation Seward Freight Dock Construction in Seward, Alaska",
+      "abstract": "In accordance with regulations implementing the Marine Mammal Protection Act (MMPA) as amended, notification is hereby given that NMFS has issued an incidental harassment authorization (IHA) to the Alaska Railroad Corporation (ARRC) for authorization to take marine mammals incidental to the Seward Freight Dock construction project in Seward, Alaska.",
+      "document_number": "2025-09070",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF COMMERCE",
+          "name": "Commerce Department",
+          "id": 54,
+          "url": "https://www.federalregister.gov/agencies/commerce-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/54",
+          "parent_id": null,
+          "slug": "commerce-department"
+        },
+        {
+          "raw_name": "National Oceanic and Atmospheric Administration",
+          "name": "National Oceanic and Atmospheric Administration",
+          "id": 361,
+          "url": "https://www.federalregister.gov/agencies/national-oceanic-and-atmospheric-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/361",
+          "parent_id": 54,
+          "slug": "national-oceanic-and-atmospheric-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09070/takes-of-marine-mammals-incidental-to-specified-activities-taking-marine-mammals-incidental-to",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09070.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09070.txt"
+    },
+    {
+      "title": "Agency Information Collection Activities; Submission to the Office of Management and Budget (OMB) for Review and Approval; Comment Request; Applications and Reports for Scientific Research and Enhancement Permits Under the Endangered Species Act",
+      "abstract": null,
+      "document_number": "2025-09083",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF COMMERCE",
+          "name": "Commerce Department",
+          "id": 54,
+          "url": "https://www.federalregister.gov/agencies/commerce-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/54",
+          "parent_id": null,
+          "slug": "commerce-department"
+        },
+        {
+          "raw_name": "National Oceanic and Atmospheric Administration",
+          "name": "National Oceanic and Atmospheric Administration",
+          "id": 361,
+          "url": "https://www.federalregister.gov/agencies/national-oceanic-and-atmospheric-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/361",
+          "parent_id": 54,
+          "slug": "national-oceanic-and-atmospheric-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09083/agency-information-collection-activities-submission-to-the-office-of-management-and-budget-omb-for",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09083.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09083.txt"
+    },
+    {
+      "title": "Takes of Marine Mammals Incidental to Specified Activities; Taking Marine Mammals Incidental to the Lutak Dock Replacement Project, Haines, Alaska",
+      "abstract": "NMFS has received a request from the Haines Borough for the reissuance of a previously issued incidental harassment authorization (IHA) with the only change being effective dates. The initial IHA authorized take of six species of marine mammals, by Level A and Level B harassment, incidental to construction activities associated with the Lutak Dock Replacement project in Haines, Alaska. The project has been delayed by 1 year and none of the work covered in the initial IHA has been conducted. The initial IHA was effective from June 1, 2024 through May 31, 2025. The Haines Borough has requested reissuance with new effective dates of June 1, 2025 through May 31, 2026. The scope of the activities and anticipated effects remain the same, authorized take numbers are not changed, and the required mitigation, monitoring, and reporting remains the same as included in the initial IHA. NMFS is, therefore, issuing a second identical IHA to cover the incidental take analyzed and authorized in the initial IHA.",
+      "document_number": "2025-09073",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF COMMERCE",
+          "name": "Commerce Department",
+          "id": 54,
+          "url": "https://www.federalregister.gov/agencies/commerce-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/54",
+          "parent_id": null,
+          "slug": "commerce-department"
+        },
+        {
+          "raw_name": "National Oceanic and Atmospheric Administration",
+          "name": "National Oceanic and Atmospheric Administration",
+          "id": 361,
+          "url": "https://www.federalregister.gov/agencies/national-oceanic-and-atmospheric-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/361",
+          "parent_id": 54,
+          "slug": "national-oceanic-and-atmospheric-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09073/takes-of-marine-mammals-incidental-to-specified-activities-taking-marine-mammals-incidental-to-the",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09073.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09073.txt"
+    },
+    {
+      "title": "Agency Information Collection Activities; Submission to the Office of Management and Budget for Review and Approval; Comment Request; Patent Review and Derivation Proceedings",
+      "abstract": "The United States Patent and Trademark Office (USPTO), as required by the Paperwork Reduction Act of 1995, invites comments on the extension and revision of an existing information collection: 0651- 0069 (Patent Review and Derivation Proceedings). The purpose of this notice is to allow 60 days for public comments preceding submission of the information collection to the Office of Management and Budget (OMB).",
+      "document_number": "2025-09145",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF COMMERCE",
+          "name": "Commerce Department",
+          "id": 54,
+          "url": "https://www.federalregister.gov/agencies/commerce-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/54",
+          "parent_id": null,
+          "slug": "commerce-department"
+        },
+        {
+          "raw_name": "Patent and Trademark Office",
+          "name": "Patent and Trademark Office",
+          "id": 402,
+          "url": "https://www.federalregister.gov/agencies/patent-and-trademark-office",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/402",
+          "parent_id": 54,
+          "slug": "patent-and-trademark-office"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09145/agency-information-collection-activities-submission-to-the-office-of-management-and-budget-for",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09145.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09145.txt"
+    },
+    {
+      "title": "Agency Information Collection Activities; Submission to the Office of Management and Budget for Review and Approval; Comment Request; Representative and Address Provisions",
+      "abstract": "The United States Patent and Trademark Office (USPTO), as required by the Paperwork Reduction Act of 1995, invites comments on the extension and revision of an existing information collection: 0651- 0035 (Representative and Address Provisions). The purpose of this notice is to allow 60 days for public comments preceding submission of the information collection to the Office of Management and Budget (OMB).",
+      "document_number": "2025-09141",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF COMMERCE",
+          "name": "Commerce Department",
+          "id": 54,
+          "url": "https://www.federalregister.gov/agencies/commerce-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/54",
+          "parent_id": null,
+          "slug": "commerce-department"
+        },
+        {
+          "raw_name": "Patent and Trademark Office",
+          "name": "Patent and Trademark Office",
+          "id": 402,
+          "url": "https://www.federalregister.gov/agencies/patent-and-trademark-office",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/402",
+          "parent_id": 54,
+          "slug": "patent-and-trademark-office"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09141/agency-information-collection-activities-submission-to-the-office-of-management-and-budget-for",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09141.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09141.txt"
+    },
+    {
+      "title": "Agency Information Collection Activities; Submission to the Office of Management and Budget for Review and Approval; Comment Request; EDFacts Data Collection School Years 2025-26, 2026-27, and 2027-28 (With 2024-25 Continuation)",
+      "abstract": "In accordance with the Paperwork Reduction Act (PRA) of 1995, the Department is proposing a revision of a currently approved information collection request (ICR).",
+      "document_number": "2025-09085",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF EDUCATION",
+          "name": "Education Department",
+          "id": 126,
+          "url": "https://www.federalregister.gov/agencies/education-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/126",
+          "parent_id": null,
+          "slug": "education-department"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09085/agency-information-collection-activities-submission-to-the-office-of-management-and-budget-for",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09085.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09085.txt"
+    },
+    {
+      "title": "GR Catalyst One, LLC; Notice of Application Tendered for Filing With the Commission and Soliciting Additional Study Requests and Establishing Procedural Schedule for Relicensing and a Deadline for Submission of Final Amendments",
+      "abstract": null,
+      "document_number": "2025-09105",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF ENERGY",
+          "name": "Energy Department",
+          "id": 136,
+          "url": "https://www.federalregister.gov/agencies/energy-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/136",
+          "parent_id": null,
+          "slug": "energy-department"
+        },
+        {
+          "raw_name": "Federal Energy Regulatory Commission",
+          "name": "Federal Energy Regulatory Commission",
+          "id": 167,
+          "url": "https://www.federalregister.gov/agencies/federal-energy-regulatory-commission",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/167",
+          "parent_id": 136,
+          "slug": "federal-energy-regulatory-commission"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09105/gr-catalyst-one-llc-notice-of-application-tendered-for-filing-with-the-commission-and-soliciting",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09105.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09105.txt"
+    },
+    {
+      "title": "Tower Kleber Limited Partnership; Notice of Availability of Environmental Assessment",
+      "abstract": null,
+      "document_number": "2025-09106",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF ENERGY",
+          "name": "Energy Department",
+          "id": 136,
+          "url": "https://www.federalregister.gov/agencies/energy-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/136",
+          "parent_id": null,
+          "slug": "energy-department"
+        },
+        {
+          "raw_name": "Federal Energy Regulatory Commission",
+          "name": "Federal Energy Regulatory Commission",
+          "id": 167,
+          "url": "https://www.federalregister.gov/agencies/federal-energy-regulatory-commission",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/167",
+          "parent_id": 136,
+          "slug": "federal-energy-regulatory-commission"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09106/tower-kleber-limited-partnership-notice-of-availability-of-environmental-assessment",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09106.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09106.txt"
+    },
+    {
+      "title": "Oncor Electric Delivery Company LLC; Notice of Filing",
+      "abstract": null,
+      "document_number": "2025-09101",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF ENERGY",
+          "name": "Energy Department",
+          "id": 136,
+          "url": "https://www.federalregister.gov/agencies/energy-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/136",
+          "parent_id": null,
+          "slug": "energy-department"
+        },
+        {
+          "raw_name": "Federal Energy Regulatory Commission",
+          "name": "Federal Energy Regulatory Commission",
+          "id": 167,
+          "url": "https://www.federalregister.gov/agencies/federal-energy-regulatory-commission",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/167",
+          "parent_id": 136,
+          "slug": "federal-energy-regulatory-commission"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09101/oncor-electric-delivery-company-llc-notice-of-filing",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09101.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09101.txt"
+    },
+    {
+      "title": "PacifiCorp; Notice of Application for Surrender of License and Issuance of a Conduit Exemption Accepted for Filing, Soliciting Comments, Motions To Intervene, Protests, Recommendations, and Terms and Conditions",
+      "abstract": null,
+      "document_number": "2025-09103",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF ENERGY",
+          "name": "Energy Department",
+          "id": 136,
+          "url": "https://www.federalregister.gov/agencies/energy-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/136",
+          "parent_id": null,
+          "slug": "energy-department"
+        },
+        {
+          "raw_name": "Federal Energy Regulatory Commission",
+          "name": "Federal Energy Regulatory Commission",
+          "id": 167,
+          "url": "https://www.federalregister.gov/agencies/federal-energy-regulatory-commission",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/167",
+          "parent_id": 136,
+          "slug": "federal-energy-regulatory-commission"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09103/pacificorp-notice-of-application-for-surrender-of-license-and-issuance-of-a-conduit-exemption",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09103.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09103.txt"
+    },
+    {
+      "title": "Combined Notice of Filings #1",
+      "abstract": null,
+      "document_number": "2025-09097",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF ENERGY",
+          "name": "Energy Department",
+          "id": 136,
+          "url": "https://www.federalregister.gov/agencies/energy-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/136",
+          "parent_id": null,
+          "slug": "energy-department"
+        },
+        {
+          "raw_name": "Federal Energy Regulatory Commission",
+          "name": "Federal Energy Regulatory Commission",
+          "id": 167,
+          "url": "https://www.federalregister.gov/agencies/federal-energy-regulatory-commission",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/167",
+          "parent_id": 136,
+          "slug": "federal-energy-regulatory-commission"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09097/combined-notice-of-filings-1",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09097.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09097.txt"
+    },
+    {
+      "title": "Brookfield White Pine Hydro LLC; Notice of Application Ready for Environmental Analysis and Soliciting Comments, Recommendations, Terms and Conditions, and Prescriptions",
+      "abstract": null,
+      "document_number": "2025-09104",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF ENERGY",
+          "name": "Energy Department",
+          "id": 136,
+          "url": "https://www.federalregister.gov/agencies/energy-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/136",
+          "parent_id": null,
+          "slug": "energy-department"
+        },
+        {
+          "raw_name": "Federal Energy Regulatory Commission",
+          "name": "Federal Energy Regulatory Commission",
+          "id": 167,
+          "url": "https://www.federalregister.gov/agencies/federal-energy-regulatory-commission",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/167",
+          "parent_id": 136,
+          "slug": "federal-energy-regulatory-commission"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09104/brookfield-white-pine-hydro-llc-notice-of-application-ready-for-environmental-analysis-and",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09104.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09104.txt"
+    },
+    {
+      "title": "Louisiana LNG Infrastructure LLC, Driftwood Pipeline LLC; Notice of Request for Extension of Time",
+      "abstract": null,
+      "document_number": "2025-09100",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF ENERGY",
+          "name": "Energy Department",
+          "id": 136,
+          "url": "https://www.federalregister.gov/agencies/energy-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/136",
+          "parent_id": null,
+          "slug": "energy-department"
+        },
+        {
+          "raw_name": "Federal Energy Regulatory Commission",
+          "name": "Federal Energy Regulatory Commission",
+          "id": 167,
+          "url": "https://www.federalregister.gov/agencies/federal-energy-regulatory-commission",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/167",
+          "parent_id": 136,
+          "slug": "federal-energy-regulatory-commission"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09100/louisiana-lng-infrastructure-llc-driftwood-pipeline-llc-notice-of-request-for-extension-of-time",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09100.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09100.txt"
+    },
+    {
+      "title": "Commission Information Collection Activities (FERC Form No. 60, FERC-61, and FERC-555a); Consolidated Comment Request; Extension; Correction",
+      "abstract": "The Federal Energy Regulatory Commission published in the Federal Register of May 15, 2025, a notice of information collection and request for comments. \"Golden Pass LNG Terminal LLC\" was inadvertently listed in the header section of the notice.",
+      "document_number": "2025-09077",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF ENERGY",
+          "name": "Energy Department",
+          "id": 136,
+          "url": "https://www.federalregister.gov/agencies/energy-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/136",
+          "parent_id": null,
+          "slug": "energy-department"
+        },
+        {
+          "raw_name": "Federal Energy Regulatory Commission",
+          "name": "Federal Energy Regulatory Commission",
+          "id": 167,
+          "url": "https://www.federalregister.gov/agencies/federal-energy-regulatory-commission",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/167",
+          "parent_id": 136,
+          "slug": "federal-energy-regulatory-commission"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09077/commission-information-collection-activities-ferc-form-no-60-ferc-61-and-ferc-555a-consolidated",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09077.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09077.txt"
+    },
+    {
+      "title": "Combined Notice of Filings",
+      "abstract": null,
+      "document_number": "2025-09099",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF ENERGY",
+          "name": "Energy Department",
+          "id": 136,
+          "url": "https://www.federalregister.gov/agencies/energy-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/136",
+          "parent_id": null,
+          "slug": "energy-department"
+        },
+        {
+          "raw_name": "Federal Energy Regulatory Commission",
+          "name": "Federal Energy Regulatory Commission",
+          "id": 167,
+          "url": "https://www.federalregister.gov/agencies/federal-energy-regulatory-commission",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/167",
+          "parent_id": 136,
+          "slug": "federal-energy-regulatory-commission"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09099/combined-notice-of-filings",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09099.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09099.txt"
+    },
+    {
+      "title": "Pacific Gas and Electric Company; Notice of Application Ready for Environmental Analysis and Soliciting Comments, Recommendations, Terms and Conditions, and Prescriptions",
+      "abstract": null,
+      "document_number": "2025-09102",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF ENERGY",
+          "name": "Energy Department",
+          "id": 136,
+          "url": "https://www.federalregister.gov/agencies/energy-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/136",
+          "parent_id": null,
+          "slug": "energy-department"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09102/pacific-gas-and-electric-company-notice-of-application-ready-for-environmental-analysis-and",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09102.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09102.txt"
+    },
+    {
+      "title": "Adoption of Categorical Exclusions from the Tennessee Valley Authority Under the National Environmental Policy Act",
+      "abstract": "The Export-Import Bank of the United States (EXIM) is adopting multiple categorical exclusions (CEs) from the agencies as listed: Tennessee Valley Authority CEs 49 and 50. This notice identifies the categories of proposed actions and describes the consultation between the agencies.",
+      "document_number": "2025-09062",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "EXPORT-IMPORT BANK",
+          "name": "Export-Import Bank",
+          "id": 151,
+          "url": "https://www.federalregister.gov/agencies/export-import-bank",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/151",
+          "parent_id": null,
+          "slug": "export-import-bank"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09062/adoption-of-categorical-exclusions-from-the-tennessee-valley-authority-under-the-national",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09062.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09062.txt"
+    },
+    {
+      "title": "Notice of Request for Comment on an Exposure Draft Titled Implementation Guidance for SFFAS 49, Public-Private Partnerships",
+      "abstract": "Notice is hereby given that the Accounting Standards Implementation Board (ASIC), a subcommittee of the Federal Accounting Standards Advisory Board (FASAB), has released for public comment an exposure draft of a proposed Technical Release titled Implementation Guidance for SFFAS 49, Public-Private Partnerships. Respondents are encouraged to comment on any part of the exposure draft.",
+      "document_number": "2025-09112",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "Federal Accounting Standards Advisory Board",
+          "name": "Federal Accounting Standards Advisory Board",
+          "id": 158,
+          "url": "https://www.federalregister.gov/agencies/federal-accounting-standards-advisory-board",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/158",
+          "parent_id": null,
+          "slug": "federal-accounting-standards-advisory-board"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09112/notice-of-request-for-comment-on-an-exposure-draft-titled-implementation-guidance-for-sffas-49",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09112.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09112.txt"
+    },
+    {
+      "title": "Notice of Agreements Filed",
+      "abstract": null,
+      "document_number": "2025-09126",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "FEDERAL MARITIME COMMISSION",
+          "name": "Federal Maritime Commission",
+          "id": 178,
+          "url": "https://www.federalregister.gov/agencies/federal-maritime-commission",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/178",
+          "parent_id": null,
+          "slug": "federal-maritime-commission"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09126/notice-of-agreements-filed",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09126.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09126.txt"
+    },
+    {
+      "title": "Agency Information Collection Activities: Proposed Collection; Comment Request",
+      "abstract": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information (including each proposed extension or reinstatement of an existing collection of information) and to allow 60 days for public comment on the proposed action. Interested persons are invited to send comments regarding our burden estimates or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
+      "document_number": "2025-09138",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF HEALTH AND HUMAN SERVICES",
+          "name": "Health and Human Services Department",
+          "id": 221,
+          "url": "https://www.federalregister.gov/agencies/health-and-human-services-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/221",
+          "parent_id": null,
+          "slug": "health-and-human-services-department"
+        },
+        {
+          "raw_name": "Centers for Medicare & Medicaid Services",
+          "name": "Centers for Medicare & Medicaid Services",
+          "id": 45,
+          "url": "https://www.federalregister.gov/agencies/centers-for-medicare-medicaid-services",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/45",
+          "parent_id": 221,
+          "slug": "centers-for-medicare-medicaid-services"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09138/agency-information-collection-activities-proposed-collection-comment-request",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09138.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09138.txt"
+    },
+    {
+      "title": "Agency Information Collection Activities: Submission for OMB Review; Comment Request",
+      "abstract": "The Centers for Medicare & Medicaid Services (CMS) is announcing an opportunity for the public to comment on CMS' intention to collect information from the public. Under the Paperwork Reduction Act of 1995 (PRA), federal agencies are required to publish notice in the Federal Register concerning each proposed collection of information, including each proposed extension or reinstatement of an existing collection of information, and to allow a second opportunity for public comment on the notice. Interested persons are invited to send comments regarding the burden estimate or any other aspect of this collection of information, including the necessity and utility of the proposed information collection for the proper performance of the agency's functions, the accuracy of the estimated burden, ways to enhance the quality, utility, and clarity of the information to be collected, and the use of automated collection techniques or other forms of information technology to minimize the information collection burden.",
+      "document_number": "2025-09144",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF HEALTH AND HUMAN SERVICES",
+          "name": "Health and Human Services Department",
+          "id": 221,
+          "url": "https://www.federalregister.gov/agencies/health-and-human-services-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/221",
+          "parent_id": null,
+          "slug": "health-and-human-services-department"
+        },
+        {
+          "raw_name": "Centers for Medicare & Medicaid Services",
+          "name": "Centers for Medicare & Medicaid Services",
+          "id": 45,
+          "url": "https://www.federalregister.gov/agencies/centers-for-medicare-medicaid-services",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/45",
+          "parent_id": 221,
+          "slug": "centers-for-medicare-medicaid-services"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09144/agency-information-collection-activities-submission-for-omb-review-comment-request",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09144.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09144.txt"
+    },
+    {
+      "title": "Proposed Information Collection and Submission for Office of Management and Budget Review; Fiscal Responsibility Act TANF Pilot Program 2025 Information Collection",
+      "abstract": "The Administration for Children and Families (ACF) is proposing to reissue an information collection to request information from interested states for the Fiscal Responsibility Act of 2023 (FRA) Temporary Assistance for Needy Families (TANF) pilot program. This request is proposed under Office of Management and Budget (OMB) #: 0970-0531 and is a reissuing of a previously approved information collection to select states for the FRA pilot program.",
+      "document_number": "2025-09098",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF HEALTH AND HUMAN SERVICES",
+          "name": "Health and Human Services Department",
+          "id": 221,
+          "url": "https://www.federalregister.gov/agencies/health-and-human-services-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/221",
+          "parent_id": null,
+          "slug": "health-and-human-services-department"
+        },
+        {
+          "raw_name": "Administration for Children and Families",
+          "name": "Children and Families Administration",
+          "id": 49,
+          "url": "https://www.federalregister.gov/agencies/children-and-families-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/49",
+          "parent_id": 221,
+          "slug": "children-and-families-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09098/proposed-information-collection-and-submission-for-office-of-management-and-budget-review-fiscal",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09098.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09098.txt"
+    },
+    {
+      "title": "Revocation of Emergency Use of a Drug Product During the COVID-19 Pandemic; Availability",
+      "abstract": "The Food and Drug Administration (FDA) is announcing the revocation of the Emergency Use Authorizations (EUAs) (the Authorizations) issued to Fresenius Medical Care North America (Fresenius) for multiFiltrate PRO System and multiBic/multiPlus solutions (EUA 048), and to Baxter Healthcare Corp. (Baxter) for REGIOCIT (EUA 068). FDA revoked the Authorizations on January 16, 2025, under the Federal Food, Drug, and Cosmetic Act (FD&C Act). The revocations, including an explanation of the reasons for the revocations, are reprinted in this document.",
+      "document_number": "2025-09065",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF HEALTH AND HUMAN SERVICES",
+          "name": "Health and Human Services Department",
+          "id": 221,
+          "url": "https://www.federalregister.gov/agencies/health-and-human-services-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/221",
+          "parent_id": null,
+          "slug": "health-and-human-services-department"
+        },
+        {
+          "raw_name": "Food and Drug Administration",
+          "name": "Food and Drug Administration",
+          "id": 199,
+          "url": "https://www.federalregister.gov/agencies/food-and-drug-administration",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/199",
+          "parent_id": 221,
+          "slug": "food-and-drug-administration"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09065/revocation-of-emergency-use-of-a-drug-product-during-the-covid-19-pandemic-availability",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09065.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09065.txt"
+    },
+    {
+      "title": "Agency Information Collection Request; 60-Day Public Comment Request",
+      "abstract": "In compliance with the requirement of the Paperwork Reduction Act of 1995, the Office of the Secretary (OS), Department of Health and Human Services, is publishing the following summary of a proposed collection for public comment.",
+      "document_number": "2025-09001",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF HEALTH AND HUMAN SERVICES",
+          "name": "Health and Human Services Department",
+          "id": 221,
+          "url": "https://www.federalregister.gov/agencies/health-and-human-services-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/221",
+          "parent_id": null,
+          "slug": "health-and-human-services-department"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09001/agency-information-collection-request-60-day-public-comment-request",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09001.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09001.txt"
+    },
+    {
+      "title": "Agency Information Collection Request; 60-Day Public Comment Request",
+      "abstract": "In compliance with the requirement of the Paperwork Reduction Act of 1995, the Office of the Secretary (OS), Department of Health and Human Services, is publishing the following summary of a proposed collection for public comment.",
+      "document_number": "2025-09004",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF HEALTH AND HUMAN SERVICES",
+          "name": "Health and Human Services Department",
+          "id": 221,
+          "url": "https://www.federalregister.gov/agencies/health-and-human-services-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/221",
+          "parent_id": null,
+          "slug": "health-and-human-services-department"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09004/agency-information-collection-request-60-day-public-comment-request",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09004.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09004.txt"
+    },
+    {
+      "title": "Center for Scientific Review; Notice of Closed Meetings",
+      "abstract": null,
+      "document_number": "2025-09074",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF HEALTH AND HUMAN SERVICES",
+          "name": "Health and Human Services Department",
+          "id": 221,
+          "url": "https://www.federalregister.gov/agencies/health-and-human-services-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/221",
+          "parent_id": null,
+          "slug": "health-and-human-services-department"
+        },
+        {
+          "raw_name": "National Institutes of Health",
+          "name": "National Institutes of Health",
+          "id": 353,
+          "url": "https://www.federalregister.gov/agencies/national-institutes-of-health",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/353",
+          "parent_id": 221,
+          "slug": "national-institutes-of-health"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09074/center-for-scientific-review-notice-of-closed-meetings",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09074.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09074.txt"
+    },
+    {
+      "title": "Center for Scientific Review; Amended Notice of Meeting",
+      "abstract": null,
+      "document_number": "2025-09121",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF HEALTH AND HUMAN SERVICES",
+          "name": "Health and Human Services Department",
+          "id": 221,
+          "url": "https://www.federalregister.gov/agencies/health-and-human-services-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/221",
+          "parent_id": null,
+          "slug": "health-and-human-services-department"
+        },
+        {
+          "raw_name": "National Institutes of Health",
+          "name": "National Institutes of Health",
+          "id": 353,
+          "url": "https://www.federalregister.gov/agencies/national-institutes-of-health",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/353",
+          "parent_id": 221,
+          "slug": "national-institutes-of-health"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09121/center-for-scientific-review-amended-notice-of-meeting",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09121.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09121.txt"
+    },
+    {
+      "title": "Center for Scientific Review; Amended Notice of Meeting",
+      "abstract": null,
+      "document_number": "2025-09122",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF HEALTH AND HUMAN SERVICES",
+          "name": "Health and Human Services Department",
+          "id": 221,
+          "url": "https://www.federalregister.gov/agencies/health-and-human-services-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/221",
+          "parent_id": null,
+          "slug": "health-and-human-services-department"
+        },
+        {
+          "raw_name": "National Institutes of Health",
+          "name": "National Institutes of Health",
+          "id": 353,
+          "url": "https://www.federalregister.gov/agencies/national-institutes-of-health",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/353",
+          "parent_id": 221,
+          "slug": "national-institutes-of-health"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09122/center-for-scientific-review-amended-notice-of-meeting",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09122.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09122.txt"
+    },
+    {
+      "title": "Center for Scientific Review; Amended Notice of Meeting",
+      "abstract": null,
+      "document_number": "2025-09076",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF HEALTH AND HUMAN SERVICES",
+          "name": "Health and Human Services Department",
+          "id": 221,
+          "url": "https://www.federalregister.gov/agencies/health-and-human-services-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/221",
+          "parent_id": null,
+          "slug": "health-and-human-services-department"
+        },
+        {
+          "raw_name": "National Institutes of Health",
+          "name": "National Institutes of Health",
+          "id": 353,
+          "url": "https://www.federalregister.gov/agencies/national-institutes-of-health",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/353",
+          "parent_id": 221,
+          "slug": "national-institutes-of-health"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09076/center-for-scientific-review-amended-notice-of-meeting",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09076.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09076.txt"
+    },
+    {
+      "title": "60-Day Notice of Proposed Information Collection: Choice Neighborhoods Post-Award; OMB Control No.: 2577-0269",
+      "abstract": "HUD is seeking approval from the Office of Management and Budget (OMB) for the information collection described below. In accordance with the Paperwork Reduction Act, HUD is requesting comments from all interested parties on the proposed collection of information. The purpose of this notice is to allow for 60 days of public comment.",
+      "document_number": "2025-09124",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF HOUSING AND URBAN DEVELOPMENT",
+          "name": "Housing and Urban Development Department",
+          "id": 228,
+          "url": "https://www.federalregister.gov/agencies/housing-and-urban-development-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/228",
+          "parent_id": null,
+          "slug": "housing-and-urban-development-department"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09124/60-day-notice-of-proposed-information-collection-choice-neighborhoods-post-award-omb-control-no",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09124.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09124.txt"
+    },
+    {
+      "title": "Submission to the Office of Management and Budget for Review and Approval; Petition Process for Designation of Federal Lands as Unsuitable for All or Certain Types of Surface Coal Mining Operations and for Termination of Previous Designations",
+      "abstract": "In accordance with the Paperwork Reduction Act of 1995, we, the Office of Surface Mining Reclamation and Enforcement (OSMRE), are proposing to renew an information collection.",
+      "document_number": "2025-09128",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF THE INTERIOR",
+          "name": "Interior Department",
+          "id": 253,
+          "url": "https://www.federalregister.gov/agencies/interior-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/253",
+          "parent_id": null,
+          "slug": "interior-department"
+        },
+        {
+          "raw_name": "Office of Surface Mining Reclamation and Enforcement",
+          "name": "Surface Mining Reclamation and Enforcement Office",
+          "id": 480,
+          "url": "https://www.federalregister.gov/agencies/surface-mining-reclamation-and-enforcement-office",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/480",
+          "parent_id": 253,
+          "slug": "surface-mining-reclamation-and-enforcement-office"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09128/submission-to-the-office-of-management-and-budget-for-review-and-approval-petition-process-for",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09128.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09128.txt"
+    },
+    {
+      "title": "Agency Information Collection Activities; Permanent Regulatory Program Requirements-Standards for Certification of Blasters",
+      "abstract": "In accordance with the Paperwork Reduction Act of 1995, we, the Office of Surface Mining Reclamation and Enforcement (OSMRE), are proposing to renew an information collection.",
+      "document_number": "2025-09026",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF THE INTERIOR",
+          "name": "Interior Department",
+          "id": 253,
+          "url": "https://www.federalregister.gov/agencies/interior-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/253",
+          "parent_id": null,
+          "slug": "interior-department"
+        },
+        {
+          "raw_name": "Office of Surface Mining Reclamation and Enforcement",
+          "name": "Surface Mining Reclamation and Enforcement Office",
+          "id": 480,
+          "url": "https://www.federalregister.gov/agencies/surface-mining-reclamation-and-enforcement-office",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/480",
+          "parent_id": 253,
+          "slug": "surface-mining-reclamation-and-enforcement-office"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09026/agency-information-collection-activities-permanent-regulatory-program-requirements-standards-for",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09026.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09026.txt"
+    },
+    {
+      "title": "Welded Stainless Steel Pressure Pipe From China, Malaysia, Thailand, and Vietnam",
+      "abstract": null,
+      "document_number": "2025-09110",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "INTERNATIONAL TRADE COMMISSION",
+          "name": "International Trade Commission",
+          "id": 262,
+          "url": "https://www.federalregister.gov/agencies/international-trade-commission",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/262",
+          "parent_id": null,
+          "slug": "international-trade-commission"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09110/welded-stainless-steel-pressure-pipe-from-china-malaysia-thailand-and-vietnam",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09110.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09110.txt"
+    },
+    {
+      "title": "Agency Information Collection Activities; Submission for OMB Review; Comment Request; Temporary Labor Camps Standard",
+      "abstract": "The Department of Labor (DOL) is submitting this Occupational Safety & Health Administration (OSHA)-sponsored information collection request (ICR) to the Office of Management and Budget (OMB) for review and approval in accordance with the Paperwork Reduction Act of 1995 (PRA). Public comments on the ICR are invited.",
+      "document_number": "2025-09089",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF LABOR",
+          "name": "Labor Department",
+          "id": 271,
+          "url": "https://www.federalregister.gov/agencies/labor-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/271",
+          "parent_id": null,
+          "slug": "labor-department"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09089/agency-information-collection-activities-submission-for-omb-review-comment-request-temporary-labor",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09089.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09089.txt"
+    },
+    {
+      "title": "Agency Information Collection Activities; Submission for OMB Review; Comment Request; Explosive Materials and Blasting Units (Pertains Only to Underground Metal and Category III Nonmetal Mines Deemed To Be Gassy)",
+      "abstract": "The Department of Labor (DOL) is submitting this Mine Safety and Health Administration (MSHA)-sponsored information collection request (ICR) to the Office of Management and Budget (OMB) for review and approval in accordance with the Paperwork Reduction Act of 1995 (PRA). Public comments on the ICR are invited.",
+      "document_number": "2025-09088",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "DEPARTMENT OF LABOR",
+          "name": "Labor Department",
+          "id": 271,
+          "url": "https://www.federalregister.gov/agencies/labor-department",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/271",
+          "parent_id": null,
+          "slug": "labor-department"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09088/agency-information-collection-activities-submission-for-omb-review-comment-request-explosive",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09088.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09088.txt"
+    },
+    {
+      "title": "Sunshine Act Meetings",
+      "abstract": null,
+      "document_number": "2025-09206",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "LEGAL SERVICES CORPORATION",
+          "name": "Legal Services Corporation",
+          "id": 276,
+          "url": "https://www.federalregister.gov/agencies/legal-services-corporation",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/276",
+          "parent_id": null,
+          "slug": "legal-services-corporation"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09206/sunshine-act-meetings",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09206.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09206.txt"
+    },
+    {
+      "title": "New Postal Products",
+      "abstract": "The Commission is noticing a recent Postal Service filing for the Commission's consideration concerning a negotiated service agreement. This notice informs the public of the filing, invites public comment, and takes other administrative steps.",
+      "document_number": "2025-09111",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL REGULATORY COMMISSION",
+          "name": "Postal Regulatory Commission",
+          "id": 409,
+          "url": "https://www.federalregister.gov/agencies/postal-regulatory-commission",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/409",
+          "parent_id": null,
+          "slug": "postal-regulatory-commission"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09111/new-postal-products",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09111.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09111.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail and USPS Ground Advantage Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09037",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09037/product-change-priority-mail-and-usps-ground-advantage-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09037.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09037.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail and USPS Ground Advantage Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09056",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09056/product-change-priority-mail-and-usps-ground-advantage-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09056.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09056.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail Express, Priority Mail, and USPS Ground Advantage Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09049",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09049/product-change-priority-mail-express-priority-mail-and-usps-ground-advantage-negotiated-service",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09049.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09049.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09032",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09032/product-change-priority-mail-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09032.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09032.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail and USPS Ground Advantage Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09043",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09043/product-change-priority-mail-and-usps-ground-advantage-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09043.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09043.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09033",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09033/product-change-priority-mail-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09033.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09033.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail and USPS Ground Advantage Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09041",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09041/product-change-priority-mail-and-usps-ground-advantage-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09041.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09041.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail and USPS Ground Advantage Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09038",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09038/product-change-priority-mail-and-usps-ground-advantage-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09038.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09038.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail and USPS Ground Advantage Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09045",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09045/product-change-priority-mail-and-usps-ground-advantage-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09045.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09045.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail and USPS Ground Advantage Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09057",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09057/product-change-priority-mail-and-usps-ground-advantage-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09057.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09057.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09054",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09054/product-change-priority-mail-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09054.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09054.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail and USPS Ground Advantage Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09044",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09044/product-change-priority-mail-and-usps-ground-advantage-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09044.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09044.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail and USPS Ground Advantage Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09040",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09040/product-change-priority-mail-and-usps-ground-advantage-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09040.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09040.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail and USPS Ground Advantage Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09058",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09058/product-change-priority-mail-and-usps-ground-advantage-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09058.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09058.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09050",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09050/product-change-priority-mail-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09050.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09050.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09053",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09053/product-change-priority-mail-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09053.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09053.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail and USPS Ground Advantage Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09046",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09046/product-change-priority-mail-and-usps-ground-advantage-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09046.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09046.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail and USPS Ground Advantage Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09047",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09047/product-change-priority-mail-and-usps-ground-advantage-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09047.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09047.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail Express, Priority Mail, and USPS Ground Advantage Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09048",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09048/product-change-priority-mail-express-priority-mail-and-usps-ground-advantage-negotiated-service",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09048.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09048.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail and USPS Ground Advantage Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09039",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09039/product-change-priority-mail-and-usps-ground-advantage-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09039.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09039.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail and USPS Ground Advantage Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09059",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09059/product-change-priority-mail-and-usps-ground-advantage-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09059.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09059.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09051",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09051/product-change-priority-mail-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09051.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09051.txt"
+    },
+    {
+      "title": "International Product Change-Priority Mail Express International, Priority Mail International & First-Class Package International Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a Priority Mail Express International, Priority Mail International & First-Class Package International Service contract to the list of Negotiated Service Agreements in the Competitive Product List in the Mail Classification Schedule.",
+      "document_number": "2025-09087",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09087/international-product-change-priority-mail-express-international-priority-mail-international-and",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09087.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09087.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09036",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09036/product-change-priority-mail-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09036.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09036.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09052",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09052/product-change-priority-mail-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09052.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09052.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09035",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09035/product-change-priority-mail-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09035.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09035.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail and USPS Ground Advantage Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09042",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09042/product-change-priority-mail-and-usps-ground-advantage-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09042.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09042.txt"
+    },
+    {
+      "title": "Sunshine Act Meetings",
+      "abstract": null,
+      "document_number": "2025-09204",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09204/sunshine-act-meetings",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09204.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09204.txt"
+    },
+    {
+      "title": "Product Change-Priority Mail Negotiated Service Agreement",
+      "abstract": "The Postal Service gives notice of filing a request with the Postal Regulatory Commission to add a domestic shipping services contract to the list of Negotiated Service Agreements in the Mail Classification Schedule's Competitive Products List.",
+      "document_number": "2025-09034",
+      "publication_date": "2025-05-21",
+      "type": "Notice",
+      "agencies": [
+        {
+          "raw_name": "POSTAL SERVICE",
+          "name": "Postal Service",
+          "id": 410,
+          "url": "https://www.federalregister.gov/agencies/postal-service",
+          "json_url": "https://www.federalregister.gov/api/v1/agencies/410",
+          "parent_id": null,
+          "slug": "postal-service"
+        }
+      ],
+      "html_url": "https://www.federalregister.gov/documents/2025/05/21/2025-09034/product-change-priority-mail-negotiated-service-agreement",
+      "pdf_url": "https://www.govinfo.gov/content/pkg/FR-2025-05-21/pdf/2025-09034.pdf",
+      "raw_text_url": "https://www.federalregister.gov/documents/full_text/text/2025/05/21/2025-09034.txt"
+    }
+  ]
+}

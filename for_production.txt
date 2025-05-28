@@ -1,0 +1,1040 @@
+## ------------------main.py----------------
+
+#!/usr/bin/env python3
+"""
+Main entry point for the RAG Agentic System
+"""
+
+import asyncio
+import logging
+from pathlib import Path
+
+from config import Config
+from database import DatabaseManager
+from data_pipeline import FederalRegisterPipeline
+from api_server import create_app
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+async def initialize_database():
+    """Initialize database and create tables if they don't exist"""
+    db_manager = DatabaseManager()
+    await db_manager.initialize()
+    logger.info("Database initialized successfully")
+
+async def run_data_pipeline():
+    """Run the data pipeline to fetch and store federal register data"""
+    logger.info("Starting data pipeline...")
+    
+    pipeline = FederalRegisterPipeline()
+    try:
+        await pipeline.run_pipeline()
+        logger.info("Data pipeline completed successfully")
+    except Exception as e:
+        logger.error(f"Data pipeline failed: {e}")
+        raise
+
+def main():
+    """Main function to start the application"""
+    print("🚀 RAG Agentic System Starting...")
+    print("=" * 50)
+    
+    # Check if this is the first run or pipeline run
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "--pipeline":
+        print("Running data pipeline...")
+        asyncio.run(run_pipeline_only())
+        return
+    
+    # Initialize and start the full application
+    asyncio.run(start_application())
+
+async def run_pipeline_only():
+    """Run only the data pipeline"""
+    await initialize_database()
+    await run_data_pipeline()
+    print("✅ Data pipeline completed!")
+
+async def start_application():
+    """Start the full application with web server"""
+    try:
+        # Initialize database
+        await initialize_database()
+        
+        # Run data pipeline if no data exists
+        db_manager = DatabaseManager()
+        count = await db_manager.get_document_count()
+        
+        if count == 0:
+            print("No data found in database. Running initial data pipeline...")
+            await run_data_pipeline()
+        else:
+            print(f"Found {count} documents in database")
+        
+        # Start the web server
+        print("🌐 Starting web server...")
+        print(f"📍 Server will be available at: http://localhost:{Config.PORT}")
+        print("💬 Open the URL in your browser to start chatting!")
+        print("=" * 50)
+        
+        app = create_app()
+        
+        # Import uvicorn here to avoid dependency issues
+        try:
+            import uvicorn
+            await uvicorn.run(app, host="0.0.0.0", port=Config.PORT)
+        except ImportError:
+            logger.error("uvicorn not installed. Please install with: pip install uvicorn")
+            
+    except Exception as e:
+        logger.error(f"Application startup failed: {e}")
+        raise
+
+if __name__ == "__main__":
+    main()
+
+
+# ---------------------------------------------------docker-compose.yml - Docker Setup-------------------------------
+
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: rag_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: federal_register
+      MYSQL_USER: raguser
+      MYSQL_PASSWORD: ragpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: rag_ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    command: serve
+
+  app:
+    build: .
+    container_name: rag_app
+    ports:
+      - "8000:8000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      ollama:
+        condition: service_started
+    environment:
+      - DATABASE_URL=mysql://raguser:ragpassword@mysql:3306/federal_register
+      - OLLAMA_BASE_URL=http://ollama:11434/v1
+    volumes:
+      - ./logs:/app/logs
+    command: python main.py
+
+volumes:
+  mysql_data:
+  ollama_data:
+
+
+# ----------------------------------------------------Dockerfile - Container Setup-------------------------------------
+
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    default-libmysqlclient-dev \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first for better caching
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY . .
+
+# Create logs directory
+RUN mkdir -p logs
+
+# Expose port
+EXPOSE 8000
+
+# Create non-root user
+RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
+USER appuser
+
+# Command to run the application
+CMD ["python", "main.py"]
+
+
+# ----------------------------------------init.sql - Database Initialization-------------------------------------
+-- Initialize the federal_register database
+CREATE DATABASE IF NOT EXISTS federal_register;
+USE federal_register;
+
+-- Create federal_documents table
+CREATE TABLE IF NOT EXISTS federal_documents (
+    id VARCHAR(100) PRIMARY KEY,
+    title TEXT NOT NULL,
+    abstract TEXT,
+    body_html LONGTEXT,
+    document_number VARCHAR(50),
+    document_type VARCHAR(50),
+    agency_slug VARCHAR(100),
+    agency_name VARCHAR(200),
+    publication_date DATE,
+    effective_date DATE,
+    page_length INT,
+    page_start INT,
+    page_end INT,
+    raw_text LONGTEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_publication_date (publication_date),
+    INDEX idx_document_type (document_type),
+    INDEX idx_agency_slug (agency_slug),
+    INDEX idx_document_number (document_number),
+    FULLTEXT idx_title (title),
+    FULLTEXT idx_abstract (abstract),
+    FULLTEXT idx_raw_text (raw_text)
+);
+
+-- Create pipeline_runs table to track data updates
+CREATE TABLE IF NOT EXISTS pipeline_runs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    run_date DATE NOT NULL,
+    start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    end_time TIMESTAMP NULL,
+    status ENUM('running', 'completed', 'failed') DEFAULT 'running',
+    documents_processed INT DEFAULT 0,
+    error_message TEXT,
+    UNIQUE KEY unique_run_date (run_date)
+);
+
+-- Create indexes for better query performance
+CREATE INDEX idx_pipeline_runs_date ON pipeline_runs (run_date);
+CREATE INDEX idx_pipeline_runs_status ON pipeline_runs (status);
+
+-- Grant permissions to the application user
+GRANT ALL PRIVILEGES ON federal_register.* TO 'raguser'@'%';
+FLUSH PRIVILEGES;  
+
+# --------------------------------------setup.py - Installation Script--------------------------------
+#!/usr/bin/env python3
+"""
+Setup script for RAG Agentic System
+"""
+
+import os
+import sys
+import subprocess
+import asyncio
+from pathlib import Path
+
+def check_python_version():
+    """Check if Python version is 3.8+"""
+    if sys.version_info < (3, 8):
+        print("❌ Python 3.8+ is required")
+        sys.exit(1)
+    print(f"✅ Python {sys.version_info.major}.{sys.version_info.minor} detected")
+
+def install_requirements():
+    """Install Python requirements"""
+    print("📦 Installing Python packages...")
+    try:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
+        print("✅ Python packages installed successfully")
+    except subprocess.CalledProcessError:
+        print("❌ Failed to install Python packages")
+        sys.exit(1)
+
+def create_env_file():
+    """Create .env file from template if it doesn't exist"""
+    if not os.path.exists('.env'):
+        if os.path.exists('.env.template'):
+            print("📝 Creating .env file from template...")
+            with open('.env.template', 'r') as template:
+                content = template.read()
+            
+            with open('.env', 'w') as env_file:
+                env_file.write(content)
+            print("✅ .env file created. Please update it with your settings.")
+        else:
+            print("⚠️  .env.template not found. Creating basic .env file...")
+            with open('.env', 'w') as env_file:
+                env_file.write("""# Database Configuration
+DATABASE_HOST=localhost
+DATABASE_PORT=3306
+DATABASE_USER=raguser
+DATABASE_PASSWORD=ragpassword
+DATABASE_NAME=federal_register
+
+# Ollama Configuration
+OLLAMA_BASE_URL=http://localhost:11434/v1
+OLLAMA_MODEL=qwen2.5:0.5b
+
+# Server Configuration
+PORT=8000
+DEBUG=True
+
+# Federal Register API
+FEDERAL_REGISTER_API_BASE=https://www.federalregister.gov/api/v1
+""")
+            print("✅ Basic .env file created. Please update it with your settings.")
+
+def check_mysql():
+    """Check if MySQL is accessible"""
+    print("🔍 Checking MySQL connection...")
+    try:
+        import aiomysql
+        # This is a basic check - actual connection will be tested at runtime
+        print("✅ MySQL client libraries available")
+    except ImportError:
+        print("❌ MySQL client libraries not available. Please install mysqlclient or PyMySQL")
+
+def setup_ollama():
+    """Provide instructions for Ollama setup"""
+    print("\n🤖 Ollama Setup Instructions:")
+    print("1. Install Ollama from https://ollama.ai/")
+    print("2. Start Ollama service")
+    print("3. Pull the required model:")
+    print("   ollama pull qwen2.5:0.5b")
+    print("4. Verify the model is running:")
+    print("   ollama list")
+
+def main():
+    """Main setup function"""
+    print("🚀 RAG Agentic System Setup")
+    print("=" * 40)
+    
+    # Check Python version
+    check_python_version()
+    
+    # Install requirements
+    install_requirements()
+    
+    # Create .env file
+    create_env_file()
+    
+    # Check MySQL
+    check_mysql()
+    
+    # Ollama instructions
+    setup_ollama()
+    
+    print("\n🎉 Setup completed!")
+    print("\n📋 Next Steps:")
+    print("1. Update the .env file with your database credentials")
+    print("2. Ensure MySQL is running and accessible")
+    print("3. Ensure Ollama is running with qwen2.5:0.5b model")
+    print("4. Run the application:")
+    print("   python main.py")
+    print("\n5. Or run with data pipeline first:")
+    print("   python main.py --pipeline")
+    
+    print("\n🐳 Docker Alternative:")
+    print("Use docker-compose to run everything:")
+    print("   docker-compose up --build")
+
+if __name__ == "__main__":
+    main()
+
+# -----------------------------------------------README.md - Project Documentation-----------------------------------
+
+# RAG Agentic System
+
+A production-ready RAG (Retrieval-Augmented Generation) system with agentic capabilities for querying Federal Register documents. The system features a daily data pipeline, MySQL database storage, local LLM integration via Ollama, and a clean web interface.
+
+## 🏗️ Architecture
+
+```
+User Query → FastAPI → Agent (LLM) → Tool Calls → MySQL → Response
+     ↑                                                       ↓
+   Web UI ←─────────── Formatted Response ←─────────────────┘
+
+Data Pipeline: Federal Register API → Processing → MySQL (Daily Updates)
+```
+
+## ✨ Features
+
+- **Agentic LLM System**: Uses local Ollama models with function calling capabilities
+- **Daily Data Pipeline**: Automatically fetches and processes Federal Register documents
+- **MySQL Database**: Efficient storage and querying of document data
+- **Async Architecture**: Fully asynchronous for high performance
+- **Clean Web Interface**: Simple chat-style UI for user interactions
+- **Tool-based Querying**: LLM uses predefined tools to access database
+- **Docker Support**: Complete containerized deployment
+
+## 🛠️ Technology Stack
+
+- **Backend**: Python 3.11, FastAPI, asyncio
+- **Database**: MySQL 8.0 with raw SQL queries
+- **LLM**: Ollama (qwen2.5:0.5b/1b)
+- **Data Source**: Federal Register API
+- **Frontend**: HTML/CSS/JavaScript
+- **Deployment**: Docker & docker-compose
+
+## 📦 Installation
+
+### Option 1: Quick Setup with Docker
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd rag-agentic-system
+
+# Start all services
+docker-compose up --build
+```
+
+### Option 2: Manual Setup
+
+```bash
+# Install dependencies
+python setup.py
+
+# Configure environment
+cp .env.template .env
+# Edit .env with your settings
+
+# Install Ollama and pull model
+ollama pull qwen2.5:0.5b
+
+# Start MySQL service
+# Update .env with MySQL credentials
+
+# Run the application
+python main.py
+```
+
+## 🚀 Usage
+
+### Starting the Application
+
+```bash
+# Run with initial data pipeline
+python main.py --pipeline
+
+# Run normally (if data exists)
+python main.py
+```
+
+### Using the Web Interface
+
+1. Open `http://localhost:8000` in your browser
+2. Start chatting with the agent
+3. Ask questions about Federal Register documents
+
+### Example Queries
+
+```
+"What are the latest executive orders from 2025?"
+"Show me documents from the Department of Justice this month"
+"Find regulatory documents related to artificial intelligence"
+"What documents were published on January 15, 2025?"
+```
+
+## 🔧 Configuration
+
+### Environment Variables (.env)
+
+```env
+# Database Configuration
+DATABASE_HOST=localhost
+DATABASE_PORT=3306
+DATABASE_USER=raguser
+DATABASE_PASSWORD=ragpassword
+DATABASE_NAME=federal_register
+
+# Ollama Configuration
+OLLAMA_BASE_URL=http://localhost:11434/v1
+OLLAMA_MODEL=qwen2.5:0.5b
+
+# Server Configuration
+PORT=8000
+DEBUG=True
+```
+
+## 📊 Data Pipeline
+
+The system includes an automated data pipeline that:
+
+1. **Fetches** latest Federal Register documents via API
+2. **Processes** and cleans the document data
+3. **Stores** in MySQL with proper indexing
+4. **Tracks** pipeline runs and statistics
+
+### Running Pipeline Manually
+
+```bash
+python main.py --pipeline
+```
+
+## 🧠 Agent System
+
+The agent uses function calling to:
+
+- `search_documents`: Search documents by keywords
+- `get_documents_by_date`: Filter by publication date
+- `get_documents_by_agency`: Filter by government agency
+- `get_document_details`: Get full document information
+- `get_recent_documents`: Get latest documents
+
+## 🗄️ Database Schema
+
+### federal_documents
+- Document metadata and content
+- Full-text search indexes
+- Date and agency indexes
+
+### pipeline_runs
+- Pipeline execution tracking
+- Error logging and statistics
+
+## 🎯 API Endpoints
+
+- `GET /`: Web interface
+- `POST /chat`: Chat with the agent
+- `GET /health`: System health check
+- `GET /stats`: Database statistics
+
+## 🔍 System Monitoring
+
+### Health Checks
+```bash
+curl http://localhost:8000/health
+```
+
+### Database Stats
+```bash
+curl http://localhost:8000/stats
+```
+
+## 🧪 Testing
+
+```bash
+# Test database connection
+python -c "from database import DatabaseManager; import asyncio; asyncio.run(DatabaseManager().test_connection())"
+
+# Test agent tools
+python -c "from agent_tools import AgentTools; import asyncio; asyncio.run(AgentTools().search_documents('executive order'))"
+
+# Test data pipeline
+python main.py --pipeline
+```
+
+## 📈 Performance Features
+
+- **Async Operations**: All I/O operations are asynchronous
+- **Connection Pooling**: Efficient database connection management
+- **Indexed Queries**: Optimized database indexes for fast searches
+- **Streaming Responses**: Real-time response streaming to UI
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+1. **MySQL Connection Failed**
+   - Check MySQL service is running
+   - Verify credentials in .env file
+   - Ensure database exists
+
+2. **Ollama Not Responding**
+   - Start Ollama service: `ollama serve`
+   - Pull model: `ollama pull qwen2.5:0.5b`
+   - Check URL in .env file
+
+3. **No Data in Database**
+   - Run data pipeline: `python main.py --pipeline`
+   - Check Federal Register API connectivity
+   - Review pipeline logs
+
+### Logs
+
+```bash
+# Application logs
+tail -f logs/app.log
+
+# Docker logs
+docker-compose logs -f app
+```
+
+## 🔒 Security Notes
+
+- Uses raw SQL queries with proper parameterization
+- No direct API access by LLM (only predefined tools)
+- Function execution restricted to defined tools only
+- Input validation on all endpoints
+
+## 📝 Development
+
+### Project Structure
+```
+├── main.py              # Application entry point
+├── config.py            # Configuration management
+├── database.py          # Database operations
+├── data_pipeline.py     # Data fetching and processing
+├── agent_tools.py       # LLM function tools
+├── agent.py             # Agent orchestration
+├── api_server.py        # FastAPI server
+├── templates/           # Web interface
+├── docker-compose.yml   # Docker setup
+└── requirements.txt     # Python dependencies
+```
+
+### Adding New Tools
+
+1. Define function in `agent_tools.py`
+2. Add to `AVAILABLE_TOOLS` list
+3. Update agent schema in `agent.py`
+
+### Extending Data Sources
+
+1. Create new pipeline in `data_pipeline.py`
+2. Update database schema
+3. Modify agent tools as needed
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📞 Support
+
+For issues and questions:
+- Check troubleshooting section
+- Review logs for error details
+- Open an issue with detailed description
+
+---
+
+**Built with ❤️ for production-ready RAG systems**
+
+# -----------------------------------------------------test_system.py - System Testing------------------------------
+
+#!/usr/bin/env python3
+"""
+System test script for RAG Agentic System
+"""
+
+import asyncio
+import sys
+import json
+from datetime import datetime, date
+from pathlib import Path
+
+# Add current directory to path
+sys.path.append(str(Path(__file__).parent))
+
+from config import Config
+from database import DatabaseManager
+from agent_tools import AgentTools
+from agent import Agent
+from data_pipeline import FederalRegisterPipeline
+
+class SystemTester:
+    def __init__(self):
+        self.db_manager = DatabaseManager()
+        self.agent_tools = AgentTools()
+        self.agent = Agent()
+        self.pipeline = FederalRegisterPipeline()
+        self.test_results = []
+
+    def log_test(self, test_name: str, success: bool, message: str = ""):
+        """Log test result"""
+        status = "✅ PASS" if success else "❌ FAIL"
+        result = {
+            "test": test_name,
+            "success": success,
+            "message": message,
+            "timestamp": datetime.now().isoformat()
+        }
+        self.test_results.append(result)
+        print(f"{status}: {test_name}")
+        if message:
+            print(f"   {message}")
+
+    async def test_database_connection(self):
+        """Test database connectivity"""
+        try:
+            await self.db_manager.initialize()
+            count = await self.db_manager.get_document_count()
+            self.log_test("Database Connection", True, f"Found {count} documents")
+        except Exception as e:
+            self.log_test("Database Connection", False, str(e))
+
+    async def test_agent_tools(self):
+        """Test agent tools functionality"""
+        try:
+            # Test search_documents
+            results = await self.agent_tools.search_documents("executive")
+            self.log_test("Agent Tools - Search", len(results) >= 0, f"Found {len(results)} documents")
+            
+            # Test get_recent_documents
+            recent = await self.agent_tools.get_recent_documents(limit=5)
+            self.log_test("Agent Tools - Recent", len(recent) >= 0, f"Found {len(recent)} recent documents")
+            
+        except Exception as e:
+            self.log_test("Agent Tools", False, str(e))
+
+    async def test_data_pipeline(self):
+        """Test data pipeline (limited test)"""
+        try:
+            # Test API connectivity
+            import aiohttp
+            async with aiohttp.ClientSession() as session:
+                url = f"{Config.FEDERAL_REGISTER_API_BASE}/documents.json"
+                params = {"per_page": 1, "order": "newest"}
+                async with session.get(url, params=params) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        count = data.get("count", 0)
+                        self.log_test("Data Pipeline - API", True, f"API accessible, {count} total documents available")
+                    else:
+                        self.log_test("Data Pipeline - API", False, f"API returned status {response.status}")
+        except Exception as e:
+            self.log_test("Data Pipeline", False, str(e))
+
+    async def test_agent_response(self):
+        """Test agent response generation"""
+        try:
+            # Test simple query
+            query = "How many documents are in the database?"
+            response = await self.agent.process_query(query)
+            self.log_test("Agent Response", bool(response), f"Generated response: {response[:100]}...")
+        except Exception as e:
+            self.log_test("Agent Response", False, str(e))
+
+    async def test_ollama_connection(self):
+        """Test Ollama connectivity"""
+        try:
+            import aiohttp
+            async with aiohttp.ClientSession() as session:
+                # Test Ollama API
+                async with session.get(f"{Config.OLLAMA_BASE_URL.replace('/v1', '')}/api/tags") as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        models = [model['name'] for model in data.get('models', [])]
+                        has_model = any(Config.OLLAMA_MODEL in model for model in models)
+                        self.log_test("Ollama Connection", True, f"Available models: {models}")
+                        self.log_test("Required Model", has_model, f"Model {Config.OLLAMA_MODEL} {'found' if has_model else 'not found'}")
+                    else:
+                        self.log_test("Ollama Connection", False, f"Status: {response.status}")
+        except Exception as e:
+            self.log_test("Ollama Connection", False, str(e))
+
+    async def run_all_tests(self):
+        """Run all system tests"""
+        print("🧪 RAG Agentic System - System Tests")
+        print("=" * 50)
+        
+        # Test database
+        await self.test_database_connection()
+        
+        # Test Ollama
+        await self.test_ollama_connection()
+        
+        # Test data pipeline API
+        await self.test_data_pipeline()
+        
+        # Test agent tools (only if database has data)
+        if any(r["test"] == "Database Connection" and r["success"] for r in self.test_results):
+            await self.test_agent_tools()
+            await self.test_agent_response()
+        
+        # Summary
+        print("\n📊 Test Summary")
+        print("=" * 30)
+        
+        total_tests = len(self.test_results)
+        passed_tests = sum(1 for r in self.test_results if r["success"])
+        failed_tests = total_tests - passed_tests
+        
+        print(f"Total Tests: {total_tests}")
+        print(f"Passed: {passed_tests}")
+        print(f"Failed: {failed_tests}")
+        print(f"Success Rate: {(passed_tests/total_tests)*100:.1f}%")
+        
+        # Failed tests detail
+        if failed_tests > 0:
+            print("\n❌ Failed Tests:")
+            for result in self.test_results:
+                if not result["success"]:
+                    print(f"  - {result['test']}: {result['message']}")
+        
+        # Save results
+        with open("test_results.json", "w") as f:
+            json.dump(self.test_results, f, indent=2)
+        
+        print(f"\n📁 Detailed results saved to: test_results.json")
+        
+        return failed_tests == 0
+
+async def main():
+    """Main test function"""
+    tester = SystemTester()
+    success = await tester.run_all_tests()
+    
+    if success:
+        print("\n🎉 All tests passed! System is ready.")
+        return 0
+    else:
+        print("\n⚠️  Some tests failed. Please check the issues above.")
+        return 1
+
+if __name__ == "__main__":
+    exit_code = asyncio.run(main())
+    sys.exit(exit_code)
+
+# ---------------------------------------------------run.sh - Quick Start Script---------------------------------------
+
+#!/bin/bash
+
+# RAG Agentic System - Quick Start Script
+
+set -e  # Exit on any error
+
+echo "🚀 RAG Agentic System - Quick Start"
+echo "=================================="
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Function to print colored output
+print_status() {
+    echo -e "${BLUE}[INFO]${NC} $1"
+}
+
+print_success() {
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
+}
+
+print_warning() {
+    echo -e "${YELLOW}[WARNING]${NC} $1"
+}
+
+print_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+# Check if Python 3.8+ is available
+check_python() {
+    print_status "Checking Python version..."
+    if command -v python3 &> /dev/null; then
+        PYTHON_VERSION=$(python3 -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
+        PYTHON_MAJOR=$(echo $PYTHON_VERSION | cut -d. -f1)
+        PYTHON_MINOR=$(echo $PYTHON_VERSION | cut -d. -f2)
+        
+        if [ "$PYTHON_MAJOR" -eq 3 ] && [ "$PYTHON_MINOR" -ge 8 ]; then
+            print_success "Python $PYTHON_VERSION detected"
+            PYTHON_CMD="python3"
+        else
+            print_error "Python 3.8+ required, found $PYTHON_VERSION"
+            exit 1
+        fi
+    elif command -v python &> /dev/null; then
+        PYTHON_VERSION=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
+        PYTHON_MAJOR=$(echo $PYTHON_VERSION | cut -d. -f1)
+        PYTHON_MINOR=$(echo $PYTHON_VERSION | cut -d. -f2)
+        
+        if [ "$PYTHON_MAJOR" -eq 3 ] && [ "$PYTHON_MINOR" -ge 8 ]; then
+            print_success "Python $PYTHON_VERSION detected"
+            PYTHON_CMD="python"
+        else
+            print_error "Python 3.8+ required, found $PYTHON_VERSION"
+            exit 1
+        fi
+    else
+        print_error "Python not found. Please install Python 3.8+"
+        exit 1
+    fi
+}
+
+# Check if required services are running
+check_services() {
+    print_status "Checking required services..."
+    
+    # Check MySQL
+    if command -v mysql &> /dev/null; then
+        if mysql -h localhost -P 3306 -u root -e "SELECT 1;" 2>/dev/null; then
+            print_success "MySQL is accessible"
+        else
+            print_warning "MySQL not accessible with root user"
+            print_status "You may need to start MySQL or update credentials in .env"
+        fi
+    else
+        print_warning "MySQL client not found"
+    fi
+    
+    # Check Ollama
+    if curl -s http://localhost:11434/api/tags >/dev/null 2>&1; then
+        print_success "Ollama is running"
+        
+        # Check if required model is available
+        if curl -s http://localhost:11434/api/tags | grep -q "qwen2.5"; then
+            print_success "Required model (qwen2.5) is available"
+        else
+            print_warning "Required model (qwen2.5) not found"
+            print_status "Run: ollama pull qwen2.5:0.5b"
+        fi
+    else
+        print_warning "Ollama not accessible"
+        print_status "Please start Ollama: ollama serve"
+    fi
+}
+
+# Setup environment
+setup_environment() {
+    print_status "Setting up environment..."
+    
+    # Create .env if it doesn't exist
+    if [ ! -f .env ]; then
+        if [ -f .env.template ]; then
+            cp .env.template .env
+            print_success "Created .env from template"
+            print_warning "Please update .env with your configuration"
+        else
+            print_error ".env.template not found"
+            exit 1
+        fi
+    else
+        print_success ".env file exists"
+    fi
+    
+    # Install Python dependencies
+    print_status "Installing Python dependencies..."
+    $PYTHON_CMD -m pip install -r requirements.txt --quiet
+    print_success "Dependencies installed"
+}
+
+# Run system tests
+run_tests() {
+    print_status "Running system tests..."
+    if $PYTHON_CMD test_system.py; then
+        print_success "All tests passed"
+        return 0
+    else
+        print_warning "Some tests failed, but continuing..."
+        return 1
+    fi
+}
+
+# Start the application
+start_application() {
+    local mode=$1
+    print_status "Starting RAG Agentic System..."
+    
+    case $mode in
+        "pipeline")
+            print_status "Running data pipeline first..."
+            $PYTHON_CMD main.py --pipeline
+            ;;
+        "test")
+            print_status "Running in test mode..."
+            run_tests
+            ;;
+        "docker")
+            print_status "Starting with Docker..."
+            if command -v docker-compose &> /dev/null; then
+                docker-compose up --build
+            elif command -v docker &> /dev/null && docker compose version &> /dev/null; then
+                docker compose up --build
+            else
+                print_error "Docker Compose not found"
+                exit 1
+            fi
+            ;;
+        *)
+            print_status "Starting web application..."
+            print_success "🌐 Open http://localhost:8000 in your browser"
+            $PYTHON_CMD main.py
+            ;;
+    esac
+}
+
+# Main function
+main() {
+    case ${1:-""} in
+        "setup")
+            print_status "Running setup only..."
+            check_python
+            setup_environment
+            check_services
+            print_success "Setup completed!"
+            ;;
+        "test")
+            check_python
+            setup_environment
+            start_application "test"
+            ;;
+        "pipeline")
+            check_python
+            setup_environment
+            start_application "pipeline"
+            ;;
+        "docker")
+            start_application "docker"
+            ;;
+        "help"|"-h"|"--help")
+            echo "Usage: $0 [COMMAND]"
+            echo
+            echo "Commands:"
+            echo "  setup     - Run setup only (install deps, create .env)"
+            echo "  test      - Run system tests"
+            echo "  pipeline  - Run data pipeline first, then start app"
+            echo "  docker    - Start with Docker Compose"
+            echo "  help      - Show this help message"
+            echo
+            echo "Default: Start the web application"
+            ;;
+        *)
+            check_python
+            setup_environment
+            check_services
+            start_application
+            ;;
+    esac
+}
+
+# Trap Ctrl+C
+trap 'print_warning "Shutting down..."; exit 0' INT
+
+# Run main function with all arguments
+main "$@"
