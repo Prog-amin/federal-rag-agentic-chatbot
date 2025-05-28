@@ -1,24 +1,62 @@
 #!/usr/bin/env python3
 """
-Main Gradio app for Hugging Face Spaces deployment
+Main FastAPI app for Hugging Face Spaces deployment
 RAG Agentic System for Federal Registry Documents
 """
-import gradio as gr
+from fastapi import FastAPI, HTTPException, Request, Body
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse, JSONResponse
+from pydantic import BaseModel
 import asyncio
+import uvicorn
+from typing import Dict, Any, Optional
 import os
 import logging
-from typing import List, Tuple
-from agent import FederalRegistryAgent
+
 from database import db_manager
+from agent import FederalRegistryAgent
 from data_pipeline import DataPipeline
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Global agent instance
-agent = None
-pipeline = None
+# FastAPI app initialization
+app = FastAPI(
+    title="Federal Registry RAG Agent",
+    description="AI Agent for querying US Federal Registry documents",
+    version="1.0.0"
+)
+
+# Templates setup
+templates = Jinja2Templates(directory="templates")
+
+# Static files (for CSS/JS if needed)
+if os.path.exists("static"):
+    app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Pydantic models
+class ChatRequest(BaseModel):
+    message: str
+
+class ChatResponse(BaseModel):
+    status: str
+    response: str
+    timestamp: float
+
+class PipelineRequest(BaseModel):
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+
+class PipelineResponse(BaseModel):
+    status: str
+    message: str
+
+# Global state
+agent: Optional[FederalRegistryAgent] = None
+pipeline: Optional[DataPipeline] = None
+pipeline_running = False
 
 async def initialize_system():
     """Initialize the system components"""
@@ -41,278 +79,264 @@ async def initialize_system():
         logger.error(f"❌ Error initializing system: {e}")
         return False
 
-def run_async(coro):
-    """Helper to run async functions in Gradio"""
-    try:
-        loop = asyncio.get_event_loop()
-    except RuntimeError:
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-    
-    return loop.run_until_complete(coro)
+@app.on_event("startup")
+async def startup_event():
+    """Initialize system on startup"""
+    success = await initialize_system()
+    if success:
+        logger.info("🚀 System initialized successfully")
+    else:
+        logger.error("❌ Failed to initialize system")
 
-def chat_with_agent(message: str, history: List[Tuple[str, str]]) -> Tuple[str, List[Tuple[str, str]]]:
-    """Handle chat interaction with the agent"""
-    if not message.strip():
-        return "", history
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Cleanup on shutdown"""
+    logger.info("🔄 Shutting down application")
+
+@app.get("/", response_class=HTMLResponse)
+async def get_chat_interface(request: Request):
+    """Serve the main chat interface"""
+    if not os.path.exists("templates/chat.html"):
+        # Return a simple HTML interface if template doesn't exist
+        html_content = """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Federal Registry RAG Agent</title>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <style>
+                body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
+                .chat-container { border: 1px solid #ddd; height: 400px; overflow-y: auto; padding: 10px; margin: 10px 0; }
+                .input-group { display: flex; gap: 10px; margin: 10px 0; }
+                .input-group input { flex: 1; padding: 10px; }
+                .input-group button { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; }
+                .message { margin: 10px 0; padding: 10px; border-radius: 5px; }
+                .user-message { background: #e3f2fd; }
+                .bot-message { background: #f5f5f5; }
+                .status { margin: 20px 0; padding: 10px; background: #fff3cd; border-radius: 5px; }
+            </style>
+        </head>
+        <body>
+            <h1>🏛️ Federal Registry RAG Agent</h1>
+            <p>Ask questions about US Federal Registry documents including executive orders, regulations, and government publications.</p>
+            
+            <div id="chat-container" class="chat-container"></div>
+            
+            <div class="input-group">
+                <input type="text" id="message-input" placeholder="Ask about federal documents..." onkeypress="handleEnter(event)">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+            
+            <div class="status">
+                <h3>System Controls</h3>
+                <button onclick="getStatus()">Refresh Status</button>
+                <button onclick="runPipeline()">Update Documents</button>
+                <div id="status-display">Ready</div>
+            </div>
+            
+            <div class="status">
+                <h3>Sample Queries</h3>
+                <button onclick="setQuery('What are the recent executive orders from the last 7 days?')">Recent Executive Orders</button>
+                <button onclick="setQuery('Find documents about artificial intelligence regulations')">AI Regulations</button>
+                <button onclick="setQuery('Show me documents from the Department of Defense')">DoD Documents</button>
+            </div>
+            
+            <script>
+                function handleEnter(event) {
+                    if (event.key === 'Enter') {
+                        sendMessage();
+                    }
+                }
+                
+                function setQuery(query) {
+                    document.getElementById('message-input').value = query;
+                }
+                
+                async function sendMessage() {
+                    const input = document.getElementById('message-input');
+                    const message = input.value.trim();
+                    if (!message) return;
+                    
+                    const chatContainer = document.getElementById('chat-container');
+                    
+                    // Add user message
+                    chatContainer.innerHTML += `<div class="message user-message"><strong>You:</strong> ${message}</div>`;
+                    input.value = '';
+                    
+                    // Add loading message
+                    chatContainer.innerHTML += `<div class="message bot-message" id="loading"><strong>Agent:</strong> Thinking...</div>`;
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                    
+                    try {
+                        const response = await fetch('/api/chat', {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({message: message})
+                        });
+                        
+                        const data = await response.json();
+                        
+                        // Remove loading message
+                        document.getElementById('loading').remove();
+                        
+                        // Add bot response
+                        chatContainer.innerHTML += `<div class="message bot-message"><strong>Agent:</strong> ${data.response}</div>`;
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                        
+                    } catch (error) {
+                        document.getElementById('loading').innerHTML = '<strong>Agent:</strong> Error: Failed to get response';
+                    }
+                }
+                
+                async function getStatus() {
+                    try {
+                        const response = await fetch('/api/health');
+                        const data = await response.json();
+                        document.getElementById('status-display').innerHTML = JSON.stringify(data, null, 2);
+                    } catch (error) {
+                        document.getElementById('status-display').innerHTML = 'Error getting status';
+                    }
+                }
+                
+                async function runPipeline() {
+                    document.getElementById('status-display').innerHTML = 'Running pipeline...';
+                    try {
+                        const response = await fetch('/api/pipeline/run', {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({})
+                        });
+                        const data = await response.json();
+                        document.getElementById('status-display').innerHTML = data.message;
+                    } catch (error) {
+                        document.getElementById('status-display').innerHTML = 'Error running pipeline';
+                    }
+                }
+            </script>
+        </body>
+        </html>
+        """
+        return HTMLResponse(content=html_content)
     
-    if agent is None:
-        error_msg = "❌ System not initialized. Please wait for initialization to complete."
-        history.append((message, error_msg))
-        return "", history
-    
+    return templates.TemplateResponse("chat.html", {"request": request})
+
+@app.post("/api/chat", response_model=ChatResponse)
+async def chat_with_agent(request: ChatRequest) -> ChatResponse:
+    """Chat endpoint for interacting with the federal registry agent"""
     try:
+        if not request.message.strip():
+            raise HTTPException(status_code=400, detail="Message cannot be empty")
+        
+        if agent is None:
+            raise HTTPException(status_code=503, detail="Agent not initialized")
+        
         # Get response from agent
-        response_data = run_async(agent.get_response(message))
+        response = await agent.get_response(request.message)
         
-        if response_data["status"] == "success":
-            response = response_data["response"]
-        else:
-            response = f"❌ Error: {response_data['response']}"
-        
-        # Add to history
-        history.append((message, response))
-        
-    except Exception as e:
-        error_response = f"❌ Error processing your request: {str(e)}"
-        history.append((message, error_response))
+        return ChatResponse(
+            status=response["status"],
+            response=response["response"],
+            timestamp=response["timestamp"]
+        )
     
-    return "", history
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
-def run_data_pipeline() -> str:
-    """Run the data pipeline to update documents"""
+@app.post("/api/pipeline/run", response_model=PipelineResponse)
+async def run_data_pipeline(request: PipelineRequest = Body(default=PipelineRequest())) -> PipelineResponse:
+    """Run the data pipeline to update federal documents"""
+    global pipeline_running
+    
+    if pipeline_running:
+        return PipelineResponse(
+            status="error",
+            message="Pipeline is already running. Please wait for it to complete."
+        )
+    
     if pipeline is None:
-        return "❌ Pipeline not initialized"
+        return PipelineResponse(
+            status="error",
+            message="Pipeline not initialized"
+        )
     
     try:
-        logger.info("🔄 Starting data pipeline...")
-        success = run_async(pipeline.run_pipeline())
+        pipeline_running = True
+        
+        # Run pipeline with provided dates or defaults
+        start_date = request.start_date
+        end_date = request.end_date
+        
+        success = await pipeline.run_pipeline(start_date, end_date)
         
         if success:
-            return "✅ Data pipeline completed successfully! New documents have been loaded."
+            return PipelineResponse(
+                status="success",
+                message="Data pipeline completed successfully. Federal documents have been updated."
+            )
         else:
-            return "❌ Data pipeline failed. Check logs for details."
-    except Exception as e:
-        logger.error(f"Pipeline error: {e}")
-        return f"❌ Error running pipeline: {str(e)}"
-
-def get_system_status() -> str:
-    """Get current system status"""
-    status_info = []
+            return PipelineResponse(
+                status="error",
+                message="Data pipeline failed. Check logs for more details."
+            )
     
-    # Check database
+    except Exception as e:
+        return PipelineResponse(
+            status="error",
+            message=f"Pipeline error: {str(e)}"
+        )
+    
+    finally:
+        pipeline_running = False
+
+@app.get("/api/pipeline/status")
+async def get_pipeline_status():
+    """Get current pipeline status"""
+    return {
+        "running": pipeline_running,
+        "message": "Pipeline is currently running" if pipeline_running else "Pipeline is idle"
+    }
+
+@app.get("/api/health")
+async def health_check():
+    """Health check endpoint"""
     try:
-        doc_count = run_async(get_document_count())
-        status_info.append(f"📊 Documents in database: {doc_count}")
+        # Test database connection
+        count = await db_manager.get_document_count()
+        
+        return {
+            "status": "healthy",
+            "database": "connected",
+            "agent": "ready" if agent else "not initialized",
+            "document_count": count
+        }
     except Exception as e:
-        status_info.append(f"❌ Database error: {str(e)}")
-    
-    # Check agent
-    if agent:
-        status_info.append("🤖 Agent: Ready")
-    else:
-        status_info.append("❌ Agent: Not initialized")
-    
-    # Check pipeline
-    if pipeline:
-        status_info.append("⚙️ Pipeline: Ready")
-    else:
-        status_info.append("❌ Pipeline: Not initialized")
-    
-    return "\n".join(status_info)
+        return {
+            "status": "unhealthy",
+            "error": str(e)
+        }
 
-async def get_document_count() -> int:
-    """Get total document count from database"""
+@app.get("/api/stats")
+async def get_database_stats():
+    """Get database statistics"""
     try:
-        await db_manager._ensure_initialized()
-        pool = db_manager.pool
-        if pool is None:
-            return 0
+        doc_count = await db_manager.get_document_count()
+        latest_docs = await db_manager.get_latest_documents(5)
         
-        async with pool.acquire() as conn:
-            async with conn.cursor() as cursor:
-                await cursor.execute("SELECT COUNT(*) FROM federal_documents")
-                result = await cursor.fetchone()
-                return result[0] if result else 0
+        return {
+            "total_documents": doc_count,
+            "latest_documents": latest_docs,
+            "system_status": "healthy" if agent else "initializing"
+        }
+    
     except Exception as e:
-        logger.error(f"Error getting document count: {e}")
-        return 0
-
-# Sample queries for users
-SAMPLE_QUERIES = [
-    "What are the recent executive orders from the last 7 days?",
-    "Find documents about artificial intelligence regulations",
-    "Show me documents from the Department of Defense",
-    "Search for documents about climate change policies",
-    "What documents were published in January 2025?",
-]
-
-def create_interface():
-    """Create the Gradio interface"""
-    
-    with gr.Blocks(
-        title="Federal Registry RAG Agent",
-        theme=gr.themes.Soft(),
-        css="""
-        .gradio-container {
-            max-width: 1200px !important;
-        }
-        .chat-message {
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 8px;
-        }
-        """
-    ) as demo:
-        
-        gr.Markdown("""
-        # 🏛️ Federal Registry RAG Agent
-        
-        Ask questions about US Federal Registry documents including executive orders, regulations, and government publications.
-        The system uses AI to search through a database of federal documents and provide comprehensive answers.
-        """)
-        
-        with gr.Row():
-            with gr.Column(scale=3):
-                # Chat interface
-                chatbot = gr.Chatbot(
-                    value=[],
-                    height=400,
-                    show_copy_button=True,
-                    bubble_full_width=False,
-                    avatar_images=("👤", "🤖"),
-                    label="Chat with Federal Registry Agent"
-                )
-                
-                msg = gr.Textbox(
-                    placeholder="Ask about federal documents...",
-                    show_label=False,
-                    scale=4,
-                    container=False
-                )
-                
-                with gr.Row():
-                    clear_btn = gr.Button("🗑️ Clear Chat", variant="secondary", size="sm")
-                    submit_btn = gr.Button("📤 Send", variant="primary", size="sm")
-                
-                # Sample queries
-                gr.Markdown("### 💡 Sample Queries:")
-                for query in SAMPLE_QUERIES:
-                    sample_btn = gr.Button(
-                        query, 
-                        variant="secondary", 
-                        size="sm",
-                        scale=1
-                    )
-                    sample_btn.click(
-                        lambda q=query: q,
-                        outputs=msg
-                    )
-            
-            with gr.Column(scale=1):
-                # System controls
-                gr.Markdown("### ⚙️ System Controls")
-                
-                status_display = gr.Textbox(
-                    label="System Status",
-                    value="Initializing system...",
-                    interactive=False,
-                    lines=6
-                )
-                
-                refresh_status_btn = gr.Button("🔄 Refresh Status", variant="secondary")
-                
-                gr.Markdown("### 📊 Data Management")
-                
-                pipeline_output = gr.Textbox(
-                    label="Pipeline Status",
-                    value="Ready to run data pipeline",
-                    interactive=False,
-                    lines=3
-                )
-                
-                run_pipeline_btn = gr.Button("🔄 Update Documents", variant="primary")
-                
-                gr.Markdown("""
-                ### ℹ️ How to Use
-                1. **Chat**: Ask questions about federal documents
-                2. **Update**: Run pipeline to get latest documents  
-                3. **Status**: Check system health
-                
-                ### 📋 Example Queries
-                - Recent executive orders
-                - Agency-specific documents
-                - Topic-based searches
-                - Date range queries
-                """)
-        
-        # Event handlers
-        def submit_message(message, history):
-            return chat_with_agent(message, history)
-        
-        def clear_chat():
-            return []
-        
-        # Connect events
-        msg.submit(
-            submit_message,
-            inputs=[msg, chatbot],
-            outputs=[msg, chatbot]
-        )
-        
-        submit_btn.click(
-            submit_message,
-            inputs=[msg, chatbot],
-            outputs=[msg, chatbot]
-        )
-        
-        clear_btn.click(
-            clear_chat,
-            outputs=chatbot
-        )
-        
-        refresh_status_btn.click(
-            get_system_status,
-            outputs=status_display
-        )
-        
-        run_pipeline_btn.click(
-            run_data_pipeline,
-            outputs=pipeline_output
-        )
-        
-        # Initialize status on load
-        demo.load(
-            get_system_status,
-            outputs=status_display
-        )
-    
-    return demo
-
-def main():
-    """Main function to run the application"""
-    print("🚀 Initializing Federal Registry RAG Agent...")
-    
-    # Initialize system
-    init_success = run_async(initialize_system())
-    
-    if not init_success:
-        print("❌ Failed to initialize system")
-        return
-    
-    print("✅ System initialized successfully!")
-    
-    # Create and launch interface
-    demo = create_interface()
-    
-    # Launch with appropriate settings for HF Spaces
-    demo.launch(
-        server_name="0.0.0.0",
-        server_port=7860,
-        share=False,
-        show_error=True,
-        debug=False
-    )
+        raise HTTPException(status_code=500, detail=f"Error getting stats: {str(e)}")
 
 if __name__ == "__main__":
-    main()
+    uvicorn.run(
+        "app:app",
+        host="0.0.0.0",
+        port=7860,
+        reload=False,
+        log_level="info"
+    )

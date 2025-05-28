@@ -9,26 +9,16 @@ DB_CONFIG = {
     'db_path': 'federal_registry.db'
 }
 
-# LLM Configuration (Using Hugging Face Inference API)
-LLM_CONFIG = {
-    'base_url': 'https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium',
-    'model': os.getenv('HF_MODEL', 'microsoft/DialoGPT-medium'),
-    'api_key': os.getenv('HUGGINGFACE_API_TOKEN', ''),
-    'use_openai_format': False,  # HF API has different format
-    'fallback_model': 'microsoft/DialoGPT-medium'
-}
-
-# Alternative: If you have OpenAI API key, you can use GPT models
-OPENAI_CONFIG = {
-    'base_url': 'https://api.openai.com/v1',
-    'model': 'gpt-3.5-turbo',
-    'api_key': os.getenv('OPENAI_API_KEY', ''),
+# Local LLM Configuration (llama.cpp server)
+LOCAL_LLM_CONFIG = {
+    'base_url': os.getenv('LLM_BASE_URL', 'http://localhost:7861/v1'),  # Fixed port
+    'model': os.getenv('LLM_MODEL', 'TinyLlama'),
+    'api_key': os.getenv('LLM_API_KEY', 'not-needed'),
     'use_openai_format': True
 }
 
-# Use OpenAI if API key is available, otherwise use HF
-USE_OPENAI = bool(os.getenv('OPENAI_API_KEY'))
-ACTIVE_LLM_CONFIG = OPENAI_CONFIG if USE_OPENAI else LLM_CONFIG
+# Use local LLM configuration
+LLM_CONFIG = LOCAL_LLM_CONFIG
 
 # Federal Registry API Configuration
 FEDERAL_REGISTRY_API = {
@@ -46,17 +36,6 @@ PIPELINE_CONFIG = {
     'max_pages_per_run': 10,  # Limit to avoid timeout
     'batch_size': 50,
     'request_timeout': 30
-}
-
-# Gradio Configuration
-GRADIO_CONFIG = {
-    'server_name': '0.0.0.0',
-    'server_port': 7860,
-    'show_error': True,
-    'debug': False,
-    'share': False,
-    'enable_queue': True,
-    'max_threads': 4
 }
 
 # Logging Configuration
@@ -86,13 +65,9 @@ def validate_config():
     """Validate configuration settings"""
     issues = []
     
-    # Check HF token
-    if not get_hf_token() and not USE_OPENAI:
-        issues.append("No Hugging Face API token found")
-    
-    # Check OpenAI key if using OpenAI
-    if USE_OPENAI and not OPENAI_CONFIG['api_key']:
-        issues.append("OpenAI API key not found but USE_OPENAI is True")
+    # Check if we have valid LLM configuration
+    if not LOCAL_LLM_CONFIG['base_url']:
+        issues.append("LLM base URL not configured")
     
     if issues:
         print("⚠️  Configuration issues:")
@@ -105,10 +80,8 @@ def validate_config():
 if __name__ == "__main__":
     print("🔧 Configuration Status:")
     print(f"   - Database: {DB_CONFIG['type']}")
-    print(f"   - LLM Provider: {'OpenAI' if USE_OPENAI else 'Hugging Face'}")
-    print(f"   - Model: {ACTIVE_LLM_CONFIG['model']}")
-    print(f"   - HF Token: {'✅ Found' if get_hf_token() else '❌ Missing'}")
-    print(f"   - OpenAI Key: {'✅ Found' if os.getenv('OPENAI_API_KEY') else '❌ Missing'}")
+    print(f"   - LLM Model: {LLM_CONFIG['model']}")
+    print(f"   - LLM Base URL: {LLM_CONFIG['base_url']}")
     
     is_valid = validate_config()
     print(f"   - Config Valid: {'✅ Yes' if is_valid else '❌ No'}")

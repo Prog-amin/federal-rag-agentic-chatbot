@@ -39,7 +39,7 @@ An AI-powered Retrieval-Augmented Generation (RAG) system that provides intellig
 - **Agent System**: OpenAI-compatible LLM with function calling capabilities
 - **Data Pipeline**: Asynchronous processing of Federal Register API data
 - **Database**: SQLite for document storage and retrieval
-- **Interface**: Gradio-based web interface with real-time chat
+<!-- - **Interface**: Gradio-based web interface with real-time chat -->
 
 ## Configuration
 
