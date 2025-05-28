@@ -1,6 +1,7 @@
 import os
 import aiohttp
 import json
+from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -58,11 +59,38 @@ FEDERAL_REGISTRY_API = {
     'rate_limit_delay': 1.0
 }
 
+def get_data_directories():
+    """Get data directories with fallback options"""
+    # Try to use /app/data for Docker, fallback to current directory
+    base_dirs = [
+        '/app/data',  # Docker container path
+        './data',     # Local development
+        os.path.expanduser('~/data'),  # User home directory
+        '/tmp/data'   # Last resort
+    ]
+    
+    for base_dir in base_dirs:
+        try:
+            Path(base_dir).mkdir(parents=True, exist_ok=True)
+            # Test write permission
+            test_file = Path(base_dir) / 'test_write.tmp'
+            test_file.write_text('test')
+            test_file.unlink()
+            return base_dir
+        except (PermissionError, OSError):
+            continue
+    
+    # If all fail, use current directory
+    return './data'
+
+# Get the best available data directory
+DATA_BASE_DIR = get_data_directories()
+
 # Data Pipeline Configuration
 PIPELINE_CONFIG = {
-    'data_dir': '/tmp/data',
-    'raw_data_dir': '/tmp/data/raw',
-    'processed_data_dir': '/tmp/data/processed',
+    'data_dir': DATA_BASE_DIR,
+    'raw_data_dir': f'{DATA_BASE_DIR}/raw',
+    'processed_data_dir': f'{DATA_BASE_DIR}/processed',
     'retention_days': 7,
     'max_pages_per_run': 10,
     'batch_size': 50,
@@ -85,6 +113,25 @@ HF_SPACES_CONFIG = {
     'temp_dir': '/tmp'
 }
 
+def ensure_directories():
+    """Ensure all required directories exist with proper permissions"""
+    directories = [
+        PIPELINE_CONFIG['data_dir'],
+        PIPELINE_CONFIG['raw_data_dir'],
+        PIPELINE_CONFIG['processed_data_dir'],
+        'templates',
+        'static'
+    ]
+    
+    for directory in directories:
+        try:
+            Path(directory).mkdir(parents=True, exist_ok=True, mode=0o755)
+            print(f"✅ Directory ready: {directory}")
+        except PermissionError:
+            print(f"⚠️  Permission issue with directory: {directory}")
+        except Exception as e:
+            print(f"❌ Error creating directory {directory}: {e}")
+
 def get_hf_token():
     """Get Hugging Face token from environment"""
     token = os.getenv('HUGGINGFACE_API_TOKEN') or os.getenv('HF_TOKEN')
@@ -102,12 +149,51 @@ def validate_config():
     if LLM_CONFIG['provider'] == 'huggingface' and not get_hf_token():
         issues.append("Hugging Face token not configured")
     
+    # Test directory permissions
+    try:
+        test_file = Path(PIPELINE_CONFIG['processed_data_dir']) / 'permission_test.tmp'
+        test_file.write_text('test')
+        test_file.unlink()
+    except Exception as e:
+        issues.append(f"Cannot write to processed data directory: {e}")
+    
     if issues:
         print("⚠️  Configuration issues:")
         for issue in issues:
             print(f"   - {issue}")
     
     return len(issues) == 0
+
+def safe_save_json(data, filepath):
+    """Safely save JSON data with error handling and fallbacks"""
+    filepath = Path(filepath)
+    
+    # Ensure directory exists
+    try:
+        filepath.parent.mkdir(parents=True, exist_ok=True)
+    except PermissionError:
+        print(f"⚠️  Cannot create directory {filepath.parent}")
+    
+    # Try to save to the intended location
+    try:
+        with open(filepath, 'w') as f:
+            json.dump(data, f, indent=2)
+        print(f"✅ Saved: {filepath}")
+        return str(filepath)
+    except PermissionError:
+        # Fallback to current directory
+        fallback_path = f"./processed_{filepath.name}"
+        try:
+            with open(fallback_path, 'w') as f:
+                json.dump(data, f, indent=2)
+            print(f"⚠️  Permission denied for {filepath}, saved to {fallback_path}")
+            return fallback_path
+        except Exception as e:
+            print(f"❌ Error saving to fallback location: {e}")
+            return None
+    except Exception as e:
+        print(f"❌ Error saving {filepath}: {e}")
+        return None
 
 # Simplified LLM API call function
 async def call_llm(prompt, max_tokens=512, temperature=0.7):
@@ -190,6 +276,10 @@ if __name__ == "__main__":
     print(f"   - LLM Provider: {LLM_CONFIG['provider']}")
     print(f"   - LLM Model: {LLM_CONFIG['model']}")
     print(f"   - LLM Base URL: {LLM_CONFIG['base_url']}")
+    print(f"   - Data Directory: {DATA_BASE_DIR}")
+    
+    # Ensure directories exist
+    ensure_directories()
     
     is_valid = validate_config()
     print(f"   - Config Valid: {'✅ Yes' if is_valid else '❌ No'}")
