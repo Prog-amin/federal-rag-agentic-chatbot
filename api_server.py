@@ -160,22 +160,16 @@ async def health_check():
 async def get_database_stats():
     """Get database statistics"""
     try:
-        # Get document count
+        # Get total document count using direct method
         doc_count = await db_manager.get_document_count()
         
-        # Get latest documents to determine date range
-        latest_docs = await db_manager.get_latest_documents(5)
-        latest_date = latest_docs[0]['publication_date'] if latest_docs else None
+        # Get total unique agency count using direct method
+        agency_count = await db_manager.get_agency_count()
         
-        # Get recent documents to count agencies
-        recent_docs = await db_manager.get_recent_documents(days=30, limit=1000)
-        agencies = set()
-        for doc in recent_docs:
-            agency = doc.get('agency', '').strip()
-            if agency:
-                agencies.add(agency)
+        # Get latest publication date using direct method
+        latest_date = await db_manager.get_latest_publication_date()
         
-        # Get recent pipeline runs using direct SQL
+        # Get recent pipeline runs using direct SQL (keeping your existing approach)
         async with aiosqlite.connect(db_manager.db_path) as db:
             db.row_factory = aiosqlite.Row
             async with db.execute("""
@@ -190,7 +184,7 @@ async def get_database_stats():
         return {
             "total_documents": doc_count,
             "latest_document_date": latest_date,
-            "unique_agencies": len(agencies),
+            "unique_agencies": agency_count,
             "recent_pipeline_runs": pipeline_stats
         }
     
