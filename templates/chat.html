@@ -18,7 +18,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 10px;
         }
 
         .container {
@@ -27,29 +27,72 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             width: 100%;
-            max-width: 800px;
-            height: 600px;
+            max-width: 900px;
+            height: 90vh;
+            min-height: 600px;
+            max-height: 800px;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            position: relative;
         }
 
         .header {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             color: white;
-            padding: 20px;
+            padding: 15px 20px;
             text-align: center;
+            flex-shrink: 0;
         }
 
         .header h1 {
-            font-size: 24px;
+            font-size: clamp(18px, 4vw, 24px);
             font-weight: 600;
             margin-bottom: 5px;
         }
 
         .header p {
             opacity: 0.9;
-            font-size: 14px;
+            font-size: clamp(12px, 2.5vw, 14px);
+            line-height: 1.3;
+        }
+
+        .pipeline-controls {
+            padding: 10px 15px;
+            background: #f0f8ff;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .pipeline-button {
+            padding: 8px 16px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: clamp(11px, 2vw, 12px);
+            transition: background 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .pipeline-button:hover {
+            background: #218838;
+        }
+
+        .pipeline-button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .pipeline-status {
+            font-size: clamp(10px, 2vw, 12px);
+            color: #666;
         }
 
         .chat-container {
@@ -57,17 +100,19 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            min-height: 0;
         }
 
         .messages {
             flex: 1;
             overflow-y: auto;
-            padding: 20px;
+            padding: 15px;
             background: #f8f9fa;
+            min-height: 0;
         }
 
         .message {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             animation: fadeIn 0.3s ease-in;
         }
 
@@ -86,12 +131,13 @@
 
         .message-content {
             display: inline-block;
-            max-width: 80%;
+            max-width: min(85%, 600px);
             padding: 12px 16px;
             border-radius: 18px;
-            font-size: 14px;
+            font-size: clamp(13px, 2.5vw, 14px);
             line-height: 1.4;
             word-wrap: break-word;
+            word-break: break-word;
         }
 
         .message.user .message-content {
@@ -107,14 +153,16 @@
         }
 
         .input-container {
-            padding: 20px;
+            padding: 15px;
             background: white;
             border-top: 1px solid #e0e0e0;
+            flex-shrink: 0;
         }
 
         .input-form {
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            align-items: flex-end;
         }
 
         .message-input {
@@ -122,9 +170,12 @@
             padding: 12px 16px;
             border: 2px solid #e0e0e0;
             border-radius: 25px;
-            font-size: 14px;
+            font-size: clamp(13px, 2.5vw, 14px);
             outline: none;
             transition: border-color 0.3s ease;
+            resize: none;
+            min-height: 44px;
+            max-height: 120px;
         }
 
         .message-input:focus {
@@ -132,18 +183,20 @@
         }
 
         .send-button {
-            padding: 12px 24px;
+            padding: 12px 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
             border-radius: 25px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: clamp(12px, 2.5vw, 14px);
             font-weight: 600;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            white-space: nowrap;
+            min-height: 44px;
         }
 
-        .send-button:hover {
+        .send-button:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
@@ -159,6 +212,7 @@
             display: none;
             align-items: center;
             margin: 10px 0;
+            padding: 0 15px;
         }
 
         .typing-dots {
@@ -202,56 +256,224 @@
         }
 
         .stats {
-            font-size: 12px;
+            font-size: clamp(10px, 2vw, 12px);
             color: #666;
             text-align: center;
-            padding: 10px;
+            padding: 8px 10px;
             background: #f8f9fa;
             border-top: 1px solid #e0e0e0;
+            flex-shrink: 0;
+            line-height: 1.3;
         }
 
-        .pipeline-controls {
-            padding: 15px 20px;
-            background: #f0f8ff;
-            border-top: 1px solid #e0e0e0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .developer-credit {
+            position: fixed;
+            bottom: 10px;
+            right: 15px;
+            font-size: clamp(11px, 2vw, 13px);
+            color: rgba(255,255,255,0.8);
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            z-index: 1000;
         }
 
-        .pipeline-button {
-            padding: 8px 16px;
-            background: #28a745;
-            color: white;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: background 0.3s ease;
-        }
+        /* Mobile-first responsive breakpoints */
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
 
-        .pipeline-button:hover {
-            background: #218838;
-        }
-
-        .pipeline-button:disabled {
-            background: #6c757d;
-            cursor: not-allowed;
-        }
-
-        .pipeline-status {
-            font-size: 12px;
-            color: #666;
-        }
-
-        @media (max-width: 600px) {
             .container {
                 height: 100vh;
                 border-radius: 0;
+                max-height: none;
+            }
+
+            .header {
+                padding: 12px 15px;
+            }
+
+            .pipeline-controls {
+                padding: 8px 10px;
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .pipeline-button {
+                width: 100%;
+                margin-top: 5px;
+            }
+
+            .messages {
+                padding: 10px;
             }
 
             .message-content {
-                max-width: 90%;
+                max-width: 95%;
+                padding: 10px 14px;
+            }
+
+            .input-container {
+                padding: 10px;
+            }
+
+            .input-form {
+                gap: 6px;
+            }
+
+            .message-input {
+                padding: 10px 14px;
+                border-radius: 20px;
+            }
+
+            .send-button {
+                padding: 10px 16px;
+                border-radius: 20px;
+            }
+
+            .stats {
+                padding: 6px 8px;
+                font-size: 10px;
+            }
+
+            .developer-credit {
+                bottom: 5px;
+                right: 10px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .message-content {
+                max-width: 98%;
+                padding: 8px 12px;
+            }
+
+            .input-form {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .send-button {
+                width: 100%;
+            }
+        }
+
+        /* Tablet landscape */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .container {
+                max-width: 95%;
+                height: 85vh;
+            }
+        }
+
+        /* Large desktop */
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1000px;
+            }
+
+            .message-content {
+                max-width: 80%;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            }
+
+            .container {
+                background: rgba(26, 32, 44, 0.95);
+                color: #e2e8f0;
+            }
+
+            .messages {
+                background: #2d3748;
+            }
+
+            .message.assistant .message-content {
+                background: #4a5568;
+                color: #e2e8f0;
+                border-color: #718096;
+            }
+
+            .input-container {
+                background: #4a5568;
+                border-top-color: #718096;
+            }
+
+            .message-input {
+                background: #2d3748;
+                color: #e2e8f0;
+                border-color: #718096;
+            }
+
+            .message-input::placeholder {
+                color: #a0aec0;
+            }
+
+            .stats {
+                background: #2d3748;
+                color: #a0aec0;
+                border-top-color: #718096;
+            }
+
+            .pipeline-controls {
+                background: #4a5568;
+                border-top-color: #718096;
+            }
+
+            .pipeline-status {
+                color: #a0aec0;
+            }
+        }
+
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .message-input {
+                border-width: 3px;
+            }
+
+            .send-button {
+                border: 2px solid transparent;
+            }
+
+            .send-button:focus {
+                outline: 3px solid #667eea;
+                outline-offset: 2px;
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01s !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01s !important;
+            }
+
+            .send-button:hover {
+                transform: none;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .container {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+
+            .input-container,
+            .pipeline-controls,
+            .developer-credit {
+                display: none;
             }
         }
     </style>
@@ -279,8 +501,11 @@
                         Hello! I'm your Federal Registry AI Assistant. I can help you find and analyze US federal documents including:
                         <br><br>
                         • Executive orders and presidential documents
+                        <br>
                         • Federal regulations and notices  
+                        <br>
                         • Agency announcements and rules
+                        <br>
                         • Recent government publications
                         <br><br>
                         Try asking me something like "What are the recent executive orders?" or "Find documents about artificial intelligence from the Department of Defense"
@@ -316,14 +541,8 @@
             Loading database statistics...
         </div>
     </div>
-        <div style="
-        position: fixed;
-        bottom: 15px;
-        right: 20px;
-        font-size: 13px;
-        color: rgba(255,255,255,0.8);
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    ">
+
+    <div class="developer-credit">
         © Developed by Al Amin
     </div>
 
@@ -470,6 +689,24 @@
 
         // Auto-refresh stats every 5 minutes
         setInterval(loadStats, 5 * 60 * 1000);
+
+        // Handle window resize for better mobile experience
+        window.addEventListener('resize', () => {
+            // Scroll to bottom on resize to maintain chat position
+            setTimeout(() => {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 100);
+        });
+
+        // Prevent zoom on input focus on iOS
+        if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+            messageInput.addEventListener('focus', function() {
+                messageInput.style.fontSize = '16px';
+            });
+            messageInput.addEventListener('blur', function() {
+                messageInput.style.fontSize = '';
+            });
+        }
     </script>
 </body>
 </html>
