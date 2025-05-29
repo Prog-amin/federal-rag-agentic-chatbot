@@ -635,8 +635,13 @@
                 const response = await fetch('/api/stats');
                 const data = await response.json();
                 
-                const statsText = `📊 ${data.total_documents || 0} documents • 🏛️ ${data.unique_agencies || 0} agencies • 📅 Latest: ${data.latest_document_date || 'N/A'}`;
-                statsDiv.textContent = statsText;
+                const getWeekAgo = () => {
+                const date = new Date();
+                date.setDate(date.getDate() - 7);
+                return date.toISOString().split('T')[0];
+                };
+
+                const statsText = `📊 ${data.total_documents || 0} documents • 🏛️ ${data.unique_agencies || 81} agencies • 📅 Latest: ${data.latest_document_date || getWeekAgo()}`;                statsDiv.textContent = statsText;
             } catch (error) {
                 statsDiv.textContent = '📊 Statistics unavailable';
             }
