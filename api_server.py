@@ -152,14 +152,9 @@ async def health_check():
 async def get_database_stats():
     """Get database statistics"""
     try:
-        # Get document count
         doc_count = await db_manager.get_document_count()
-        
-        # Get latest document date
-        latest_date = await db_manager.get_latest_publication_date()
-        
-        # Get agency count
         agency_count = await db_manager.get_agency_count()
+        latest_date = await db_manager.get_latest_publication_date()
         
         return {
             "total_documents": doc_count,

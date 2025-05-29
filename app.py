@@ -231,13 +231,13 @@ async def display_final_status():
         # Get comprehensive stats
         doc_count = await db_manager.get_document_count()
         agency_count = await db_manager.get_agency_count()
-        recent_docs = await db_manager.get_recent_documents(days=7, limit=100)
         latest_date = await db_manager.get_latest_publication_date()
+        recent_docs = await db_manager.get_recent_documents(days=7, limit=100)
         
         logger.info(f"📈 Total documents: {doc_count}")
         logger.info(f"🏛️ Total agencies: {agency_count}")
-        logger.info(f"📅 Recent documents (7 days): {len(recent_docs)}")
         logger.info(f"📆 Latest publication: {latest_date}")
+        logger.info(f"📅 Recent documents (7 days): {len(recent_docs)}")
         
         if recent_docs:
             # Agency distribution

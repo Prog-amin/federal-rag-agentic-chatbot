@@ -630,20 +630,25 @@
         });
 
         // Load database statistics
+        // Fixed stats loading function for chathtml.py
         async function loadStats() {
             try {
                 const response = await fetch('/api/stats');
                 const data = await response.json();
                 
-                const getWeekAgo = () => {
-                const date = new Date();
-                date.setDate(date.getDate() - 7);
-                return date.toISOString().split('T')[0];
-                };
-
-                const statsText = `📊 ${data.total_documents || 0} documents • 🏛️ ${data.unique_agencies || 0} agencies • 📅 Latest: ${data.latest_document_date || 0}`;                
+                // Use the correct field names from app.py SystemStats model
+                const statsText = `📊 ${data.total_documents || 0} documents • 🏛️ ${data.agency_count || 0} agencies • 📅 Latest: ${data.latest_publication_date || 'N/A'}`;
+                
                 statsDiv.textContent = statsText;
+                
+                // Optional: Add additional stats display
+                if (data.recent_documents) {
+                    const recentStats = `📈 Recent (30 days): ${data.recent_documents}`;
+                    // You could add this to another element or append to statsDiv
+                }
+                
             } catch (error) {
+                console.error('Stats loading error:', error);
                 statsDiv.textContent = '📊 Statistics unavailable';
             }
         }
