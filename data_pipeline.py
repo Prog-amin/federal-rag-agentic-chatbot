@@ -40,7 +40,7 @@ class DataDownloader:
         }
 
         url = f"{self.base_url}{self.documents_endpoint}"
-
+        
         try:
             async with self.session.get(url, params=params) as response:
                 if response.status == 200:
@@ -59,11 +59,11 @@ class DataDownloader:
         """Fetch raw text content from document URL"""
         if not self.session:
             raise RuntimeError("DataDownloader must be used as async context manager")
-
+        
         try:
             if not raw_text_url:
                 return ""
-
+            
             async with self.session.get(raw_text_url) as response:
                 if response.status == 200:
                     return await response.text()
@@ -76,19 +76,23 @@ class DataDownloader:
             return ""
 
 class DataProcessor:
+    def __init__(self):
+        pass
+    
     @staticmethod
     def clean_document(document: Dict) -> Dict:
         """Clean and process document data"""
         # Extract agency names from the agencies array
         agencies = document.get('agencies', [])
         agency_names = []
+        
         if agencies:
             for agency in agencies:
                 if isinstance(agency, dict):
                     agency_names.append(agency.get('name', ''))
                 elif isinstance(agency, str):
                     agency_names.append(agency)
-
+        
         agency_str = ', '.join(filter(None, agency_names))
 
         processed_doc = {
@@ -103,7 +107,7 @@ class DataProcessor:
             'pdf_url': document.get('pdf_url', ''),
             'raw_text': document.get('raw_text', '')
         }
-
+        
         return processed_doc
 
     @staticmethod
@@ -112,7 +116,7 @@ class DataProcessor:
         try:
             os.makedirs(PIPELINE_CONFIG['raw_data_dir'], exist_ok=True)
             filepath = os.path.join(PIPELINE_CONFIG['raw_data_dir'], filename)
-
+            
             async with aiofiles.open(filepath, 'w', encoding='utf-8') as f:
                 await f.write(json.dumps(data, indent=2, ensure_ascii=False))
         except Exception as e:
@@ -124,7 +128,7 @@ class DataProcessor:
         try:
             os.makedirs(PIPELINE_CONFIG['processed_data_dir'], exist_ok=True)
             filepath = os.path.join(PIPELINE_CONFIG['processed_data_dir'], filename)
-
+            
             async with aiofiles.open(filepath, 'w', encoding='utf-8') as f:
                 await f.write(json.dumps(data, indent=2, ensure_ascii=False))
         except Exception as e:
@@ -142,9 +146,14 @@ class DataPipeline:
             start_date = (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d')
 
         print(f"Starting pipeline for dates: {start_date} to {end_date}")
-
+        
         # Ensure database is initialized
-        await db_manager.initialize_database()
+        try:
+            await db_manager.initialize_database()
+            print("✅ Database initialized successfully")
+        except Exception as e:
+            print(f"❌ Failed to initialize database: {e}")
+            return False
 
         # Log pipeline start
         log_id = await db_manager.log_pipeline_run(end_date, 'running')
@@ -159,7 +168,7 @@ class DataPipeline:
                 while True:
                     print(f"Fetching page {page}...")
                     data = await downloader.fetch_documents(start_date, end_date, page)
-
+                    
                     if not data or 'results' not in data:
                         print(f"No more data found at page {page}")
                         break
@@ -190,6 +199,9 @@ class DataPipeline:
                             success = await db_manager.insert_document(processed_doc)
                             if success:
                                 total_processed += 1
+                            else:
+                                print(f"Failed to insert document: {processed_doc.get('document_number', 'unknown')}")
+                                
                         except Exception as e:
                             print(f"Error processing document {i}: {e}")
                             continue
@@ -200,7 +212,7 @@ class DataPipeline:
                     processed_filename = f"federal_docs_processed_{end_date}_page_{page}.json"
                     await self.processor.save_processed_data(processed_docs, processed_filename)
 
-                    print(f"Processed {len(processed_docs)} documents from page {page}")
+                    print(f"Processed {len(processed_docs)} documents from page {page} (Total processed: {total_processed})")
 
                     # Check if we have more pages
                     if not data.get('next_page_url'):
@@ -208,13 +220,23 @@ class DataPipeline:
                         break
 
                     page += 1
-
+                    
                     # Add small delay to be respectful to the API
                     await asyncio.sleep(1)
+                    
+                    # Safety break for testing
+                    if page > 10:  # Limit to 10 pages for testing
+                        print("Reached page limit for testing")
+                        break
 
                 # Update pipeline log with success
                 await db_manager.update_pipeline_log(log_id, 'completed', total_processed)
                 print(f"Pipeline completed successfully. Processed {total_processed} documents.")
+                
+                # Verify database has data
+                doc_count = await db_manager.get_document_count()
+                print(f"Total documents in database: {doc_count}")
+                
                 return True
 
         except Exception as e:
@@ -231,13 +253,23 @@ async def main():
     try:
         # Initialize database
         await db_manager.initialize_database()
-
+        
         # Run pipeline
         pipeline = DataPipeline()
         success = await pipeline.run_pipeline()
-
+        
+        if success:
+            # Print some stats
+            doc_count = await db_manager.get_document_count()
+            agency_count = await db_manager.get_agency_count()
+            latest_date = await db_manager.get_latest_publication_date()
+            
+            print(f"\n📊 Pipeline Summary:")
+            print(f"📄 Total Documents: {doc_count}")
+            print(f"🏛️ Unique Agencies: {agency_count}")
+            print(f"📅 Latest Publication: {latest_date}")
+        
         return success
-
     except Exception as e:
         print(f"Error in main: {e}")
         return False

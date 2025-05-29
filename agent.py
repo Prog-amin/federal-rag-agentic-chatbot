@@ -3,23 +3,15 @@ import asyncio
 from typing import Dict, List, Any, Optional, Union, Callable
 import aiohttp
 from config import LLM_CONFIG
-# Note: agent_tools will be imported when needed
 
 class FederalRegistryAgent:
     def __init__(self):
         self.base_url = LLM_CONFIG['base_url']
         self.model = LLM_CONFIG['model']
         self.api_key = LLM_CONFIG['api_key']
-        
-        # Import agent tools dynamically to avoid circular imports
-        try:
-            from agent_tools import AGENT_TOOLS_SCHEMA, TOOL_FUNCTIONS
-            self.tools: List[Dict[str, Any]] = AGENT_TOOLS_SCHEMA
-            self.tool_functions: Dict[str, Callable] = TOOL_FUNCTIONS
-        except ImportError as e:
-            print(f"Warning: Could not import agent tools: {e}")
-            self.tools: List[Dict[str, Any]] = []
-            self.tool_functions: Dict[str, Callable] = {}
+        self.tools: List[Dict[str, Any]] = []
+        self.tool_functions: Dict[str, Callable] = {}
+        self._tools_initialized = False
         
         self.system_prompt = """You are a helpful assistant that provides information about US Federal Registry documents. You have access to a database of federal documents including executive orders, regulations, notices, and other government publications.
 
@@ -41,6 +33,32 @@ Guidelines:
 
 You must use the provided tools to answer questions - do not provide information from your training data about specific federal documents, as the database contains the most up-to-date information."""
 
+    async def _initialize_tools(self):
+        """Initialize tools with proper database setup"""
+        if self._tools_initialized:
+            return
+            
+        try:
+            # Ensure database is initialized first
+            from database import db_manager
+            await db_manager.initialize_database()
+            
+            # Import agent tools after database is ready
+            from agent_tools import AGENT_TOOLS_SCHEMA, TOOL_FUNCTIONS
+            self.tools = AGENT_TOOLS_SCHEMA
+            self.tool_functions = TOOL_FUNCTIONS
+            self._tools_initialized = True
+            print("✅ Agent tools initialized successfully")
+            
+        except ImportError as e:
+            print(f"Warning: Could not import agent tools: {e}")
+            self.tools = []
+            self.tool_functions = {}
+        except Exception as e:
+            print(f"Error initializing tools: {e}")
+            self.tools = []
+            self.tool_functions = {}
+
     async def call_llm(self, messages: List[Dict[str, Any]], tools: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
         """Call the local LLM server using OpenAI-compatible API"""
         try:
@@ -54,7 +72,7 @@ You must use the provided tools to answer questions - do not provide information
             if tools is not None and len(tools) > 0:
                 payload["tools"] = tools
                 payload["tool_choice"] = "auto"
-            
+
             async with aiohttp.ClientSession() as session:
                 async with session.post(
                     f"{self.base_url}/chat/completions",
@@ -65,7 +83,6 @@ You must use the provided tools to answer questions - do not provide information
                     },
                     timeout=aiohttp.ClientTimeout(total=60)
                 ) as response:
-                    
                     if response.status == 200:
                         result = await response.json()
                         return result
@@ -73,7 +90,6 @@ You must use the provided tools to answer questions - do not provide information
                         error_text = await response.text()
                         print(f"LLM API error {response.status}: {error_text}")
                         return {"error": f"API error: {response.status}"}
-                        
         except asyncio.TimeoutError:
             return {"error": "Request timeout"}
         except Exception as e:
@@ -93,13 +109,13 @@ You must use the provided tools to answer questions - do not provide information
                 "status": "error",
                 "message": f"Invalid JSON in function arguments: {function_args_str}"
             })
-        
+
         if function_name not in self.tool_functions:
             return json.dumps({
                 "status": "error",
                 "message": f"Unknown function: {function_name}"
             })
-        
+
         try:
             result = await self.tool_functions[function_name](**function_args)
             return result
@@ -111,17 +127,19 @@ You must use the provided tools to answer questions - do not provide information
 
     async def process_user_query(self, user_message: str) -> str:
         """Process user query and return response"""
+        # Ensure tools are initialized
+        await self._initialize_tools()
+        
         messages: List[Dict[str, Any]] = [
             {"role": "system", "content": self.system_prompt},
             {"role": "user", "content": user_message}
         ]
-        
+
         max_iterations = 5
         iteration = 0
-        
+
         while iteration < max_iterations:
             iteration += 1
-            
             try:
                 # Call LLM with tools if available
                 tools_to_use = self.tools if self.tools else None
@@ -129,28 +147,26 @@ You must use the provided tools to answer questions - do not provide information
                 
                 if "error" in response:
                     return f"Error from LLM: {response['error']}"
-                
+
                 choices = response.get("choices", [])
                 if not choices:
                     return "No response received from LLM."
-                
+
                 message = choices[0].get("message", {})
                 content = message.get("content", "")
                 tool_calls = message.get("tool_calls", [])
-                
+
                 if tool_calls and isinstance(tool_calls, list):
                     # Add assistant message with tool calls
                     assistant_message: Dict[str, Any] = {
                         "role": "assistant",
                         "content": content or ""
                     }
-                    
                     # Only add tool_calls if they exist
                     if tool_calls:
                         assistant_message["tool_calls"] = tool_calls
-                    
                     messages.append(assistant_message)
-                    
+
                     # Execute tool calls
                     for tool_call in tool_calls:
                         if isinstance(tool_call, dict):
@@ -161,15 +177,14 @@ You must use the provided tools to answer questions - do not provide information
                                 "content": tool_result
                             }
                             messages.append(tool_message)
-                    
                     continue
                 else:
                     # No tool calls, return final response
                     return content or "I couldn't generate a response to your query."
-                    
+
             except Exception as e:
                 return f"Error processing request: {str(e)}"
-        
+
         return "Maximum processing steps reached. Please try rephrasing your question."
 
     async def get_response(self, user_message: str) -> Dict[str, Any]:

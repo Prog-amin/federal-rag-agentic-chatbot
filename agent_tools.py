@@ -30,14 +30,22 @@ class AgentTools:
             # Format results for LLM
             formatted_results = []
             for doc in results:
+                # Handle publication_date properly (it's stored as TEXT in SQLite)
+                pub_date = doc.get('publication_date')
+                if pub_date and isinstance(pub_date, str):
+                    # Already in YYYY-MM-DD format from SQLite
+                    formatted_date = pub_date
+                else:
+                    formatted_date = None
+                
                 formatted_doc = {
-                    "title": doc['title'],
-                    "document_number": doc['document_number'],
-                    "publication_date": doc['publication_date'].strftime('%Y-%m-%d') if doc['publication_date'] else None,
-                    "type": doc['type'],
-                    "agency": doc['agency'],
-                    "abstract": doc['abstract'][:500] + "..." if doc['abstract'] and len(doc['abstract']) > 500 else doc['abstract'],
-                    "url": doc['html_url']
+                    "title": doc.get('title', ''),
+                    "document_number": doc.get('document_number', ''),
+                    "publication_date": formatted_date,
+                    "type": doc.get('type', ''),
+                    "agency": doc.get('agency', ''),
+                    "abstract": doc.get('abstract', '')[:500] + "..." if doc.get('abstract') and len(doc.get('abstract', '')) > 500 else doc.get('abstract', ''),
+                    "url": doc.get('html_url', '')
                 }
                 formatted_results.append(formatted_doc)
             
@@ -79,14 +87,21 @@ class AgentTools:
             
             formatted_results = []
             for doc in results:
+                # Handle publication_date properly
+                pub_date = doc.get('publication_date')
+                if pub_date and isinstance(pub_date, str):
+                    formatted_date = pub_date
+                else:
+                    formatted_date = None
+                
                 formatted_doc = {
-                    "title": doc['title'],
-                    "document_number": doc['document_number'],
-                    "publication_date": doc['publication_date'].strftime('%Y-%m-%d') if doc['publication_date'] else None,
-                    "type": doc['type'],
-                    "agency": doc['agency'],
-                    "abstract": doc['abstract'][:500] + "..." if doc['abstract'] and len(doc['abstract']) > 500 else doc['abstract'],
-                    "url": doc['html_url']
+                    "title": doc.get('title', ''),
+                    "document_number": doc.get('document_number', ''),
+                    "publication_date": formatted_date,
+                    "type": doc.get('type', ''),
+                    "agency": doc.get('agency', ''),
+                    "abstract": doc.get('abstract', '')[:500] + "..." if doc.get('abstract') and len(doc.get('abstract', '')) > 500 else doc.get('abstract', ''),
+                    "url": doc.get('html_url', '')
                 }
                 formatted_results.append(formatted_doc)
             
@@ -128,14 +143,21 @@ class AgentTools:
             
             formatted_results = []
             for doc in results:
+                # Handle publication_date properly
+                pub_date = doc.get('publication_date')
+                if pub_date and isinstance(pub_date, str):
+                    formatted_date = pub_date
+                else:
+                    formatted_date = None
+                
                 formatted_doc = {
-                    "title": doc['title'],
-                    "document_number": doc['document_number'],
-                    "publication_date": doc['publication_date'].strftime('%Y-%m-%d') if doc['publication_date'] else None,
-                    "type": doc['type'],
-                    "agency": doc['agency'],
-                    "abstract": doc['abstract'][:500] + "..." if doc['abstract'] and len(doc['abstract']) > 500 else doc['abstract'],
-                    "url": doc['html_url']
+                    "title": doc.get('title', ''),
+                    "document_number": doc.get('document_number', ''),
+                    "publication_date": formatted_date,
+                    "type": doc.get('type', ''),
+                    "agency": doc.get('agency', ''),
+                    "abstract": doc.get('abstract', '')[:500] + "..." if doc.get('abstract') and len(doc.get('abstract', '')) > 500 else doc.get('abstract', ''),
+                    "url": doc.get('html_url', '')
                 }
                 formatted_results.append(formatted_doc)
             
@@ -178,14 +200,21 @@ class AgentTools:
             
             formatted_results = []
             for doc in results:
+                # Handle publication_date properly
+                pub_date = doc.get('publication_date')
+                if pub_date and isinstance(pub_date, str):
+                    formatted_date = pub_date
+                else:
+                    formatted_date = None
+                
                 formatted_doc = {
-                    "title": doc['title'],
-                    "document_number": doc['document_number'],
-                    "publication_date": doc['publication_date'].strftime('%Y-%m-%d') if doc['publication_date'] else None,
-                    "type": doc['type'],
-                    "agency": doc['agency'],
-                    "abstract": doc['abstract'][:500] + "..." if doc['abstract'] and len(doc['abstract']) > 500 else doc['abstract'],
-                    "url": doc['html_url']
+                    "title": doc.get('title', ''),
+                    "document_number": doc.get('document_number', ''),
+                    "publication_date": formatted_date,
+                    "type": doc.get('type', ''),
+                    "agency": doc.get('agency', ''),
+                    "abstract": doc.get('abstract', '')[:500] + "..." if doc.get('abstract') and len(doc.get('abstract', '')) > 500 else doc.get('abstract', ''),
+                    "url": doc.get('html_url', '')
                 }
                 formatted_results.append(formatted_doc)
             
@@ -202,6 +231,34 @@ class AgentTools:
                 "status": "error",
                 "message": f"Error getting recent documents: {str(e)}",
                 "results": []
+            })
+
+    @staticmethod
+    async def get_database_stats() -> str:
+        """
+        Get database statistics including document count, agency count, and latest publication date.
+        Returns:
+            JSON string with database statistics
+        """
+        try:
+            doc_count = await db_manager.get_document_count()
+            agency_count = await db_manager.get_agency_count()
+            latest_date = await db_manager.get_latest_publication_date()
+            
+            return json.dumps({
+                "status": "success",
+                "statistics": {
+                    "total_documents": doc_count,
+                    "unique_agencies": agency_count,
+                    "latest_publication_date": latest_date
+                }
+            }, indent=2)
+            
+        except Exception as e:
+            return json.dumps({
+                "status": "error",
+                "message": f"Error getting database statistics: {str(e)}",
+                "statistics": {}
             })
 
 # Tool definitions for LLM function calling
@@ -308,6 +365,18 @@ AGENT_TOOLS_SCHEMA = [
                 "required": []
             }
         }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_database_stats",
+            "description": "Get database statistics including total document count, unique agency count, and latest publication date.",
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": []
+            }
+        }
     }
 ]
 
@@ -316,5 +385,6 @@ TOOL_FUNCTIONS = {
     "search_federal_documents": AgentTools.search_federal_documents,
     "get_documents_by_date_range": AgentTools.get_documents_by_date_range,
     "get_documents_by_agency": AgentTools.get_documents_by_agency,
-    "get_recent_documents": AgentTools.get_recent_documents
+    "get_recent_documents": AgentTools.get_recent_documents,
+    "get_database_stats": AgentTools.get_database_stats
 }

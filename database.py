@@ -77,6 +77,8 @@ class DatabaseManager:
             "CREATE INDEX IF NOT EXISTS idx_publication_date ON federal_documents(publication_date);",
             "CREATE INDEX IF NOT EXISTS idx_agency ON federal_documents(agency);",
             "CREATE INDEX IF NOT EXISTS idx_type ON federal_documents(type);",
+            "CREATE INDEX IF NOT EXISTS idx_title ON federal_documents(title);",
+            "CREATE INDEX IF NOT EXISTS idx_abstract ON federal_documents(abstract);"
         ]
         
         create_pipeline_logs_table = """
@@ -91,7 +93,7 @@ class DatabaseManager:
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
         """
-
+        
         try:
             async with aiosqlite.connect(self.db_path) as db:
                 await db.execute(create_documents_table)
@@ -135,24 +137,37 @@ class DatabaseManager:
             return False
 
     async def search_documents(self, query: str, limit: int = 10) -> List[Dict]:
-        """Search documents using SQLite FTS or LIKE"""
+        """Search documents using SQLite LIKE with better search logic"""
         await self._ensure_initialized()
         
-        # Simple text search using LIKE (not as advanced as MySQL FULLTEXT but works)
-        search_query = """
+        # Split query into words for better matching
+        words = query.lower().split()
+        
+        # Build dynamic WHERE clause for multiple word search
+        where_conditions = []
+        params = []
+        
+        for word in words:
+            word_pattern = f"%{word}%"
+            where_conditions.append("(LOWER(title) LIKE ? OR LOWER(abstract) LIKE ? OR LOWER(raw_text) LIKE ?)")
+            params.extend([word_pattern, word_pattern, word_pattern])
+        
+        where_clause = " AND ".join(where_conditions) if where_conditions else "1=1"
+        
+        search_query = f"""
         SELECT id, title, abstract, document_number, publication_date, type, agency, html_url
         FROM federal_documents 
-        WHERE title LIKE ? OR abstract LIKE ? OR raw_text LIKE ?
+        WHERE {where_clause}
         ORDER BY publication_date DESC
         LIMIT ?
         """
         
-        search_term = f"%{query}%"
+        params.append(limit)
         
         try:
             async with aiosqlite.connect(self.db_path) as db:
                 db.row_factory = aiosqlite.Row
-                async with db.execute(search_query, (search_term, search_term, search_term, limit)) as cursor:
+                async with db.execute(search_query, params) as cursor:
                     rows = await cursor.fetchall()
                     return [dict(row) for row in rows]
         except Exception as e:
@@ -188,7 +203,7 @@ class DatabaseManager:
         query = """
         SELECT id, title, abstract, document_number, publication_date, type, agency, html_url
         FROM federal_documents 
-        WHERE agency LIKE ?
+        WHERE LOWER(agency) LIKE LOWER(?)
         ORDER BY publication_date DESC
         LIMIT ?
         """
@@ -239,7 +254,6 @@ class DatabaseManager:
             async with aiosqlite.connect(self.db_path) as db:
                 cursor = await db.execute(query, (run_date, status, records_processed, error_message))
                 await db.commit()
-                # Handle the case where lastrowid might be None
                 return cursor.lastrowid or 0
         except Exception as e:
             logger.error(f"Error logging pipeline run: {e}")
@@ -276,6 +290,24 @@ class DatabaseManager:
             logger.error(f"Error getting document count: {e}")
             return 0
 
+    async def get_agency_count(self) -> int:
+        """Get count of unique agencies"""
+        await self._ensure_initialized()
+        
+        try:
+            async with aiosqlite.connect(self.db_path) as db:
+                query = """
+                SELECT COUNT(DISTINCT agency) 
+                FROM federal_documents 
+                WHERE agency IS NOT NULL AND agency != ''
+                """
+                async with db.execute(query) as cursor:
+                    result = await cursor.fetchone()
+                    return result[0] if result else 0
+        except Exception as e:
+            logger.error(f"Error getting agency count: {e}")
+            return 0
+
     async def get_latest_documents(self, limit: int = 5) -> List[Dict]:
         """Get latest documents for status display"""
         await self._ensure_initialized()
@@ -283,6 +315,7 @@ class DatabaseManager:
         query = """
         SELECT title, publication_date, agency, type
         FROM federal_documents 
+        WHERE publication_date IS NOT NULL
         ORDER BY publication_date DESC
         LIMIT ?
         """
@@ -296,6 +329,26 @@ class DatabaseManager:
         except Exception as e:
             logger.error(f"Error getting latest documents: {e}")
             return []
+
+    async def get_latest_publication_date(self) -> Optional[str]:
+        """Get the most recent publication date"""
+        await self._ensure_initialized()
+        
+        try:
+            async with aiosqlite.connect(self.db_path) as db:
+                query = """
+                SELECT publication_date 
+                FROM federal_documents 
+                WHERE publication_date IS NOT NULL
+                ORDER BY publication_date DESC 
+                LIMIT 1
+                """
+                async with db.execute(query) as cursor:
+                    result = await cursor.fetchone()
+                    return result[0] if result else None
+        except Exception as e:
+            logger.error(f"Error getting latest publication date: {e}")
+            return None
 
     async def health_check(self) -> bool:
         """Check if database is accessible"""
@@ -340,6 +393,14 @@ async def test_database():
         # Test count
         count = await db_manager.get_document_count()
         print(f"Count test: {count} documents in database")
+        
+        # Test agency count
+        agency_count = await db_manager.get_agency_count()
+        print(f"Agency count test: {agency_count} unique agencies")
+        
+        # Test latest date
+        latest_date = await db_manager.get_latest_publication_date()
+        print(f"Latest publication date: {latest_date}")
         
         # Test health check
         health = await db_manager.health_check()
