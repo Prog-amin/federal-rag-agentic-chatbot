@@ -5,7 +5,7 @@ colorFrom: pink
 colorTo: red
 sdk: docker
 pinned: false
-license: GNU AGPLv3
+license: cc-by-nc-nd-4.0
 short_description: RAG Agentic System for US Federal Registry
 ---
 
