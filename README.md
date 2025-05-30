@@ -5,7 +5,7 @@ colorFrom: pink
 colorTo: red
 sdk: docker
 pinned: false
-license: mit
+license: Proprietary
 short_description: RAG Agentic System for US Federal Registry
 ---
 
