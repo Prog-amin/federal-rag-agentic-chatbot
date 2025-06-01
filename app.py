@@ -2,7 +2,7 @@
 """
 Main FastAPI app for Hugging Face Spaces deployment
 RAG Agentic System for Federal Registry Documents
-Enhanced version with comprehensive features from both Streamlit and FastAPI implementations
+Enhanced version with comprehensive features and usage tracking
 """
 from fastapi import FastAPI, HTTPException, Request, Body, BackgroundTasks
 from fastapi.staticfiles import StaticFiles
@@ -10,13 +10,18 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
 from contextlib import asynccontextmanager
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.types import ASGIApp
 import asyncio
 import uvicorn
 from typing import Dict, Any, Optional, List
 import os
 import logging
 import json
+import time
+import uuid
 from datetime import datetime, timedelta
+from functools import wraps
 from database import db_manager
 from agent import FederalRegistryAgent
 from data_pipeline import DataPipeline
@@ -27,6 +32,21 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
+# Enhanced logging configuration for usage tracking
+usage_logger = logging.getLogger("usage_tracker")
+usage_handler = logging.FileHandler('usage_tracking.log')
+usage_formatter = logging.Formatter(
+    '%(asctime)s - USAGE - %(levelname)s - %(message)s'
+)
+usage_handler.setFormatter(usage_formatter)
+usage_logger.addHandler(usage_handler)
+usage_logger.setLevel(logging.INFO)
+
+# Also log to console for HF Spaces visibility
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(usage_formatter)
+usage_logger.addHandler(console_handler)
 
 # Enhanced Pydantic models
 class ChatRequest(BaseModel):
@@ -58,6 +78,276 @@ class SystemStats(BaseModel):
     latest_publication_date: Optional[str]
     data_freshness_days: Optional[int]
     top_agencies: List[Dict[str, Any]]
+
+# Usage Tracking Middleware
+class UsageTrackingMiddleware(BaseHTTPMiddleware):
+    """Middleware to track all API requests"""
+    
+    def __init__(self, app: ASGIApp):
+        super().__init__(app)
+        self.session_storage = {}  # In-memory session tracking
+    
+    async def dispatch(self, request: Request, call_next):
+        # Generate session ID if not exists
+        session_id = request.headers.get('x-session-id', str(uuid.uuid4()))
+        
+        # Track request start
+        start_time = time.time()
+        timestamp = datetime.now().isoformat()
+        
+        # Extract client information
+        client_info = self.extract_client_info(request)
+        
+        # Log request start
+        request_data = {
+            "event_type": "request_start",
+            "timestamp": timestamp,
+            "session_id": session_id,
+            "method": request.method,
+            "url": str(request.url),
+            "path": request.url.path,
+            "query_params": dict(request.query_params),
+            "headers": dict(request.headers),
+            "client_info": client_info
+        }
+        
+        usage_logger.info(f"REQUEST_START: {json.dumps(request_data, default=str)}")
+        
+        # Process request
+        try:
+            response = await call_next(request)
+            
+            # Calculate processing time
+            processing_time = time.time() - start_time
+            
+            # Log successful response
+            response_data = {
+                "event_type": "request_complete",
+                "timestamp": datetime.now().isoformat(),
+                "session_id": session_id,
+                "method": request.method,
+                "path": request.url.path,
+                "status_code": response.status_code,
+                "processing_time_seconds": round(processing_time, 3),
+                "response_headers": dict(response.headers)
+            }
+            
+            usage_logger.info(f"REQUEST_COMPLETE: {json.dumps(response_data, default=str)}")
+            
+            # Update session tracking
+            self.update_session_stats(session_id, request.url.path, processing_time)
+            
+            return response
+            
+        except Exception as e:
+            # Log error
+            error_data = {
+                "event_type": "request_error",
+                "timestamp": datetime.now().isoformat(),
+                "session_id": session_id,
+                "method": request.method,
+                "path": request.url.path,
+                "error": str(e),
+                "processing_time_seconds": round(time.time() - start_time, 3)
+            }
+            
+            usage_logger.error(f"REQUEST_ERROR: {json.dumps(error_data, default=str)}")
+            raise
+    
+    def extract_client_info(self, request: Request) -> dict:
+        """Extract client information from request"""
+        return {
+            "user_agent": request.headers.get("user-agent", "Unknown"),
+            "host": request.headers.get("host", "Unknown"),
+            "origin": request.headers.get("origin", "Unknown"),
+            "referer": request.headers.get("referer", "Unknown"),
+            "accept_language": request.headers.get("accept-language", "Unknown"),
+            "x_forwarded_for": request.headers.get("x-forwarded-for", "Unknown"),
+            "x_real_ip": request.headers.get("x-real-ip", "Unknown"),
+            "cf_connecting_ip": request.headers.get("cf-connecting-ip", "Unknown"),  # Cloudflare
+        }
+    
+    def update_session_stats(self, session_id: str, path: str, processing_time: float):
+        """Update session statistics"""
+        if session_id not in self.session_storage:
+            self.session_storage[session_id] = {
+                "first_request": datetime.now().isoformat(),
+                "request_count": 0,
+                "total_processing_time": 0.0,
+                "endpoints_used": set(),
+                "last_activity": datetime.now().isoformat()
+            }
+        
+        session = self.session_storage[session_id]
+        session["request_count"] += 1
+        session["total_processing_time"] += processing_time
+        session["endpoints_used"].add(path)
+        session["last_activity"] = datetime.now().isoformat()
+        
+        # Log session update periodically
+        if session["request_count"] % 5 == 0:  # Every 5 requests
+            session_data = {
+                "event_type": "session_update",
+                "session_id": session_id,
+                "request_count": session["request_count"],
+                "total_processing_time": round(session["total_processing_time"], 3),
+                "endpoints_used": list(session["endpoints_used"]),
+                "session_duration_minutes": self.calculate_session_duration(session["first_request"]),
+                "timestamp": datetime.now().isoformat()
+            }
+            usage_logger.info(f"SESSION_UPDATE: {json.dumps(session_data, default=str)}")
+    
+    def calculate_session_duration(self, first_request: str) -> float:
+        """Calculate session duration in minutes"""
+        try:
+            first_time = datetime.fromisoformat(first_request.replace('Z', '+00:00'))
+            return round((datetime.now() - first_time.replace(tzinfo=None)).total_seconds() / 60, 2)
+        except:
+            return 0.0
+
+# Usage tracking decorators
+def log_chat_interaction(func):
+    """Decorator specifically for chat interactions"""
+    @wraps(func)
+    async def wrapper(*args, **kwargs):
+        start_time = time.time()
+        
+        # Extract request data
+        request_data = None
+        for arg in args:
+            if hasattr(arg, 'message'):
+                request_data = arg
+                break
+        
+        # Log chat start
+        chat_data = {
+            "event_type": "chat_interaction_start",
+            "timestamp": datetime.now().isoformat(),
+            "message_length": len(request_data.message) if request_data else 0,
+            "include_sources": getattr(request_data, 'include_sources', None) if request_data else None
+        }
+        
+        usage_logger.info(f"CHAT_START: {json.dumps(chat_data, default=str)}")
+        
+        try:
+            # Execute the chat function
+            result = await func(*args, **kwargs)
+            
+            processing_time = time.time() - start_time
+            
+            # Log chat completion
+            completion_data = {
+                "event_type": "chat_interaction_complete",
+                "timestamp": datetime.now().isoformat(),
+                "processing_time_seconds": round(processing_time, 3),
+                "response_length": len(result.response) if hasattr(result, 'response') else 0,
+                "status": getattr(result, 'status', 'unknown'),
+                "sources_included": len(result.sources) if hasattr(result, 'sources') and result.sources else 0
+            }
+            
+            usage_logger.info(f"CHAT_COMPLETE: {json.dumps(completion_data, default=str)}")
+            
+            return result
+            
+        except Exception as e:
+            processing_time = time.time() - start_time
+            
+            # Log chat error
+            error_data = {
+                "event_type": "chat_interaction_error",
+                "timestamp": datetime.now().isoformat(),
+                "processing_time_seconds": round(processing_time, 3),
+                "error": str(e),
+                "error_type": type(e).__name__
+            }
+            
+            usage_logger.error(f"CHAT_ERROR: {json.dumps(error_data, default=str)}")
+            raise
+    
+    return wrapper
+
+def log_pipeline_operation(func):
+    """Decorator for pipeline operations"""
+    @wraps(func)
+    async def wrapper(*args, **kwargs):
+        start_time = time.time()
+        
+        # Log pipeline start
+        pipeline_data = {
+            "event_type": "pipeline_operation_start",
+            "timestamp": datetime.now().isoformat(),
+            "function_name": func.__name__,
+            "args_count": len(args),
+            "kwargs": list(kwargs.keys()) if kwargs else []
+        }
+        
+        usage_logger.info(f"PIPELINE_START: {json.dumps(pipeline_data, default=str)}")
+        
+        try:
+            result = await func(*args, **kwargs)
+            processing_time = time.time() - start_time
+            
+            # Log pipeline completion
+            completion_data = {
+                "event_type": "pipeline_operation_complete",
+                "timestamp": datetime.now().isoformat(),
+                "function_name": func.__name__,
+                "processing_time_seconds": round(processing_time, 3),
+                "success": True
+            }
+            
+            usage_logger.info(f"PIPELINE_COMPLETE: {json.dumps(completion_data, default=str)}")
+            
+            return result
+            
+        except Exception as e:
+            processing_time = time.time() - start_time
+            
+            # Log pipeline error
+            error_data = {
+                "event_type": "pipeline_operation_error",
+                "timestamp": datetime.now().isoformat(),
+                "function_name": func.__name__,
+                "processing_time_seconds": round(processing_time, 3),
+                "error": str(e),
+                "error_type": type(e).__name__
+            }
+            
+            usage_logger.error(f"PIPELINE_ERROR: {json.dumps(error_data, default=str)}")
+            raise
+    
+    return wrapper
+
+# System event logging
+def log_system_event(event_type: str, details: Optional[dict] = None):
+    """Log system-level events"""
+    event_data = {
+        "event_type": f"system_{event_type}",
+        "timestamp": datetime.now().isoformat(),
+        "details": details or {}
+    }
+    
+    usage_logger.info(f"SYSTEM_EVENT: {json.dumps(event_data, default=str)}")
+
+# Usage statistics function
+async def get_usage_stats():
+    """Get current usage statistics"""
+    try:
+        # Access middleware from app state if available
+        middleware_instance = None
+        for middleware in app.user_middleware:
+            if isinstance(middleware.cls, type) and issubclass(middleware.cls, UsageTrackingMiddleware):
+                # This is a simplified approach - in practice you'd need better access to the middleware instance
+                break
+        
+        stats = {
+            "timestamp": datetime.now().isoformat(),
+            "message": "Check usage_tracking.log for detailed statistics",
+            "log_file": "usage_tracking.log"
+        }
+        return stats
+    except Exception as e:
+        return {"error": str(e), "timestamp": datetime.now().isoformat()}
 
 # Global state
 agent: Optional[FederalRegistryAgent] = None
@@ -308,33 +598,41 @@ async def initialize_system():
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Enhanced application lifecycle management"""
+    """Enhanced application lifecycle management with usage tracking"""
     # Startup
+    log_system_event("startup", {"message": "RAG Federal Registry System starting up"})
     logger.info("🚀 Starting up RAG Federal Registry System...")
     success = await initialize_system()
     if success:
         logger.info("✅ RAG System initialized successfully")
+        log_system_event("startup_complete", {"success": True, "message": "System ready"})
     else:
         logger.error("❌ Failed to initialize RAG system")
         logger.error(f"Initialization error: {initialization_error}")
+        log_system_event("startup_error", {"success": False, "error": initialization_error})
     yield
     # Shutdown
+    log_system_event("shutdown", {"message": "RAG Federal Registry System shutting down"})
     logger.info("🔄 Shutting down application...")
     global pipeline_running
     if pipeline_running:
         logger.info("⏳ Waiting for pipeline to complete...")
         # Could add more graceful shutdown logic here
     logger.info("👋 Application shutdown complete")
+    log_system_event("shutdown_complete", {"message": "Application shutdown complete"})
 
 # Enhanced FastAPI app initialization
 app = FastAPI(
     title="Federal Registry RAG Agent",
-    description="AI Agent for querying US Federal Registry documents with comprehensive data coverage",
+    description="AI Agent for querying US Federal Registry documents with comprehensive data coverage and usage tracking",
     version="2.0.0",
     lifespan=lifespan,
     docs_url="/docs",
     redoc_url="/redoc"
 )
+
+# Add usage tracking middleware
+app.add_middleware(UsageTrackingMiddleware)
 
 # Templates setup
 templates = Jinja2Templates(directory="templates")
@@ -343,7 +641,7 @@ templates = Jinja2Templates(directory="templates")
 if os.path.exists("static"):
     app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Enhanced endpoints
+# Enhanced endpoints with usage tracking
 
 @app.get("/", response_class=HTMLResponse)
 async def get_chat_interface(request: Request):
@@ -359,6 +657,7 @@ async def get_chat_interface(request: Request):
     })
 
 @app.post("/api/chat", response_model=ChatResponse)
+@log_chat_interaction
 async def chat_with_agent(request: ChatRequest) -> ChatResponse:
     """Enhanced chat endpoint with timing and source information"""
     start_time = datetime.now()
@@ -402,6 +701,7 @@ async def chat_with_agent(request: ChatRequest) -> ChatResponse:
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 @app.post("/api/pipeline/run", response_model=PipelineResponse)
+@log_pipeline_operation
 async def run_data_pipeline(
     background_tasks: BackgroundTasks,
     request: PipelineRequest = Body(default_factory=lambda: PipelineRequest(start_date=None, end_date=None))
