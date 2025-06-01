@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Federal Registry AI Agent</title>
     <style>
         * {
@@ -106,6 +106,7 @@
         .messages {
             flex: 1;
             overflow-y: auto;
+            overflow-x: hidden;
             padding: 15px;
             background: #f8f9fa;
             min-height: 0;
@@ -114,6 +115,7 @@
         .message {
             margin-bottom: 15px;
             animation: fadeIn 0.3s ease-in;
+            width: 100%;
         }
 
         @keyframes fadeIn {
@@ -123,21 +125,29 @@
 
         .message.user {
             text-align: right;
+            display: flex;
+            justify-content: flex-end;
         }
 
         .message.assistant {
             text-align: left;
+            display: flex;
+            justify-content: flex-start;
         }
 
         .message-content {
-            display: inline-block;
             max-width: min(85%, 600px);
             padding: 12px 16px;
             border-radius: 18px;
             font-size: clamp(13px, 2.5vw, 14px);
             line-height: 1.4;
+            /* Fixed word breaking for mobile */
             word-wrap: break-word;
+            overflow-wrap: break-word;
             word-break: break-word;
+            hyphens: auto;
+            /* Prevent horizontal overflow */
+            overflow: hidden;
         }
 
         .message.user .message-content {
@@ -163,6 +173,7 @@
             display: flex;
             gap: 8px;
             align-items: flex-end;
+            width: 100%;
         }
 
         .message-input {
@@ -176,6 +187,18 @@
             resize: none;
             min-height: 44px;
             max-height: 120px;
+            /* Prevent horizontal overflow */
+            overflow-x: hidden;
+            overflow-y: auto;
+            /* Better text handling on mobile */
+            word-wrap: break-word;
+            word-break: break-word;
+            /* Prevent zoom on iOS */
+            -webkit-text-size-adjust: 100%;
+            /* Better mobile input handling */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
         }
 
         .message-input:focus {
@@ -194,6 +217,7 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             white-space: nowrap;
             min-height: 44px;
+            flex-shrink: 0;
         }
 
         .send-button:hover:not(:disabled) {
@@ -264,6 +288,10 @@
             border-top: 1px solid #e0e0e0;
             flex-shrink: 0;
             line-height: 1.3;
+            /* Prevent text overflow */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .developer-credit {
@@ -279,13 +307,14 @@
         /* Mobile-first responsive breakpoints */
         @media (max-width: 480px) {
             body {
-                padding: 5px;
+                padding: 0;
             }
 
             .container {
                 height: 100vh;
                 border-radius: 0;
                 max-height: none;
+                max-width: 100vw;
             }
 
             .header {
@@ -309,8 +338,11 @@
             }
 
             .message-content {
-                max-width: 95%;
+                max-width: calc(100vw - 60px);
                 padding: 10px 14px;
+                /* Better mobile text handling */
+                word-break: break-word;
+                overflow-wrap: anywhere;
             }
 
             .input-container {
@@ -318,22 +350,31 @@
             }
 
             .input-form {
-                gap: 6px;
+                gap: 8px;
             }
 
             .message-input {
-                padding: 10px 14px;
-                border-radius: 20px;
+                padding: 12px 16px;
+                border-radius: 22px;
+                /* Mobile-specific font size to prevent zoom */
+                font-size: 16px;
+                /* Better mobile keyboard handling */
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
             }
 
             .send-button {
-                padding: 10px 16px;
-                border-radius: 20px;
+                padding: 12px 18px;
+                border-radius: 22px;
+                font-size: 14px;
             }
 
             .stats {
-                padding: 6px 8px;
-                font-size: 10px;
+                padding: 8px;
+                font-size: 11px;
+                /* Allow stats to wrap on very small screens */
+                white-space: normal;
+                text-align: center;
             }
 
             .developer-credit {
@@ -343,10 +384,19 @@
             }
         }
 
-        @media (max-width: 320px) {
+        @media (max-width: 360px) {
+            .header h1 {
+                font-size: 16px;
+            }
+
+            .header p {
+                font-size: 12px;
+            }
+
             .message-content {
-                max-width: 98%;
+                max-width: calc(100vw - 40px);
                 padding: 8px 12px;
+                font-size: 13px;
             }
 
             .input-form {
@@ -356,6 +406,12 @@
 
             .send-button {
                 width: 100%;
+                margin-top: 5px;
+            }
+
+            .message-input {
+                width: 100%;
+                padding: 10px 14px;
             }
         }
 
@@ -364,6 +420,10 @@
             .container {
                 max-width: 95%;
                 height: 85vh;
+            }
+
+            .message-input {
+                font-size: 14px;
             }
         }
 
@@ -476,6 +536,43 @@
                 display: none;
             }
         }
+
+        /* Landscape phone orientation */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .container {
+                height: 100vh;
+                max-height: none;
+            }
+
+            .header {
+                padding: 8px 15px;
+            }
+
+            .header h1 {
+                font-size: 18px;
+                margin-bottom: 2px;
+            }
+
+            .header p {
+                font-size: 12px;
+            }
+
+            .pipeline-controls {
+                padding: 6px 10px;
+            }
+
+            .messages {
+                padding: 8px;
+            }
+
+            .input-container {
+                padding: 8px;
+            }
+
+            .stats {
+                padding: 4px 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -530,6 +627,10 @@
                     id="messageInput" 
                     placeholder="Ask me about federal documents..."
                     required
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
                 >
                 <button type="submit" class="send-button" id="sendButton">
                     Send
@@ -563,20 +664,34 @@
             
             const contentDiv = document.createElement('div');
             contentDiv.className = 'message-content';
-            contentDiv.innerHTML = content.replace(/\n/g, '<br>');
+            
+            // Better text processing for mobile
+            let processedContent = content.replace(/\n/g, '<br>');
+            
+            // Ensure proper word wrapping for long words or URLs
+            processedContent = processedContent.replace(
+                /(https?:\/\/[^\s<]+)/g, 
+                '<span style="word-break: break-all;">$1</span>'
+            );
+            
+            contentDiv.innerHTML = processedContent;
             
             messageDiv.appendChild(contentDiv);
             messagesContainer.appendChild(messageDiv);
             
-            // Scroll to bottom
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            // Smooth scroll to bottom
+            setTimeout(() => {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 100);
         }
 
         // Show/hide typing indicator
         function showTyping(show = true) {
             typingIndicator.style.display = show ? 'flex' : 'none';
             if (show) {
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                setTimeout(() => {
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }, 100);
             }
         }
 
@@ -630,22 +745,14 @@
         });
 
         // Load database statistics
-        // Fixed stats loading function for chathtml.py
         async function loadStats() {
             try {
                 const response = await fetch('/api/stats');
                 const data = await response.json();
                 
-                // Use the correct field names from app.py SystemStats model
                 const statsText = `📊 ${data.total_documents || 0} documents • 🏛️ ${data.agency_count || 0} agencies • 📅 Latest: ${data.latest_publication_date || 'N/A'}`;
                 
                 statsDiv.textContent = statsText;
-                
-                // Optional: Add additional stats display
-                if (data.recent_documents) {
-                    const recentStats = `📈 Recent (30 days): ${data.recent_documents}`;
-                    // You could add this to another element or append to statsDiv
-                }
                 
             } catch (error) {
                 console.error('Stats loading error:', error);
@@ -692,10 +799,63 @@
             }
         }
 
+        // Enhanced mobile keyboard handling
+        function handleMobileInput() {
+            // Prevent zoom on focus for iOS
+            if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                const viewport = document.querySelector('meta[name=viewport]');
+                
+                messageInput.addEventListener('focus', function() {
+                    viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+                });
+                
+                messageInput.addEventListener('blur', function() {
+                    viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=no');
+                    // Scroll to top to fix iOS keyboard issues
+                    setTimeout(() => {
+                        window.scrollTo(0, 0);
+                        document.body.scrollTop = 0;
+                    }, 100);
+                });
+            }
+            
+            // Handle Android keyboard issues
+            if (/Android/.test(navigator.userAgent)) {
+                let initialViewportHeight = window.innerHeight;
+                
+                window.addEventListener('resize', () => {
+                    if (window.innerHeight < initialViewportHeight * 0.75) {
+                        // Keyboard is open
+                        document.body.style.height = window.innerHeight + 'px';
+                    } else {
+                        // Keyboard is closed
+                        document.body.style.height = '100vh';
+                    }
+                });
+            }
+        }
+
+        // Better scroll handling for mobile
+        function improveScrolling() {
+            // Prevent overscroll bounce on iOS
+            document.addEventListener('touchmove', function(e) {
+                if (!messagesContainer.contains(e.target)) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            // Better scrolling for message container
+            messagesContainer.addEventListener('touchstart', function() {
+                this.style.webkitOverflowScrolling = 'touch';
+            });
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             messageInput.focus();
             loadStats();
+            handleMobileInput();
+            improveScrolling();
         });
 
         // Auto-refresh stats every 5 minutes
@@ -703,21 +863,35 @@
 
         // Handle window resize for better mobile experience
         window.addEventListener('resize', () => {
-            // Scroll to bottom on resize to maintain chat position
             setTimeout(() => {
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }, 100);
         });
 
-        // Prevent zoom on input focus on iOS
-        if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-            messageInput.addEventListener('focus', function() {
-                messageInput.style.fontSize = '16px';
-            });
-            messageInput.addEventListener('blur', function() {
-                messageInput.style.fontSize = '';
-            });
-        }
+        // Handle orientation change
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 200);
+        });
+
+        // Better touch handling for mobile
+        let touchStartY = 0;
+        
+        document.addEventListener('touchstart', function(e) {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        document.addEventListener('touchmove', function(e) {
+            const touchY = e.touches[0].clientY;
+            const touchDiff = touchStartY - touchY;
+            
+            // Prevent pull-to-refresh on most mobile browsers
+            if (touchDiff < 0 && window.pageYOffset === 0) {
+                e.preventDefault();
+            }
+        }, { passive: false });
     </script>
 </body>
 </html>

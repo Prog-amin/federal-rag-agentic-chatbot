@@ -33,7 +33,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Enhanced logging configuration for usage tracking
+# Enhanced logging configuration for usage tracking with detailed timestamps
 usage_logger = logging.getLogger("usage_tracker")
 
 # Try to create file handler, fallback to console if permission denied
@@ -41,7 +41,8 @@ try:
     # Try writing to /tmp directory (writable in most containers)
     usage_handler = logging.FileHandler('/tmp/usage_tracking.log')
     usage_formatter = logging.Formatter(
-        '%(asctime)s - USAGE - %(levelname)s - %(message)s'
+        '%(asctime)s.%(msecs)03d - USAGE - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
     )
     usage_handler.setFormatter(usage_formatter)
     usage_logger.addHandler(usage_handler)
@@ -49,14 +50,21 @@ try:
 except PermissionError:
     logger.warning("⚠️ Cannot create log file, using console logging only")
 
-# Always add console handler for HF Spaces visibility
+# Always add console handler for HF Spaces visibility with enhanced time format
 console_handler = logging.StreamHandler()
 console_formatter = logging.Formatter(
-    '%(asctime)s - USAGE - %(levelname)s - %(message)s'
+    '%(asctime)s.%(msecs)03d - USAGE - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
 )
 console_handler.setFormatter(console_formatter)
 usage_logger.addHandler(console_handler)
 usage_logger.setLevel(logging.INFO)
+
+# Log startup time with detailed timestamp
+startup_time = datetime.now()
+usage_logger.info(f"SYSTEM_STARTUP: Application started at {startup_time.strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} UTC")
+usage_logger.info(f"SYSTEM_STARTUP: Timezone info - {startup_time.astimezone().strftime('%Y-%m-%d %H:%M:%S %Z %z')}")
+usage_logger.info(f"SYSTEM_STARTUP: Unix timestamp - {startup_time.timestamp()}")
 
 # Enhanced Pydantic models
 class ChatRequest(BaseModel):
