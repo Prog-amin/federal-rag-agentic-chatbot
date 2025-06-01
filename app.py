@@ -35,18 +35,28 @@ logger = logging.getLogger(__name__)
 
 # Enhanced logging configuration for usage tracking
 usage_logger = logging.getLogger("usage_tracker")
-usage_handler = logging.FileHandler('usage_tracking.log')
-usage_formatter = logging.Formatter(
+
+# Try to create file handler, fallback to console if permission denied
+try:
+    # Try writing to /tmp directory (writable in most containers)
+    usage_handler = logging.FileHandler('/tmp/usage_tracking.log')
+    usage_formatter = logging.Formatter(
+        '%(asctime)s - USAGE - %(levelname)s - %(message)s'
+    )
+    usage_handler.setFormatter(usage_formatter)
+    usage_logger.addHandler(usage_handler)
+    logger.info("✅ Usage tracking log file created at /tmp/usage_tracking.log")
+except PermissionError:
+    logger.warning("⚠️ Cannot create log file, using console logging only")
+
+# Always add console handler for HF Spaces visibility
+console_handler = logging.StreamHandler()
+console_formatter = logging.Formatter(
     '%(asctime)s - USAGE - %(levelname)s - %(message)s'
 )
-usage_handler.setFormatter(usage_formatter)
-usage_logger.addHandler(usage_handler)
-usage_logger.setLevel(logging.INFO)
-
-# Also log to console for HF Spaces visibility
-console_handler = logging.StreamHandler()
-console_handler.setFormatter(usage_formatter)
+console_handler.setFormatter(console_formatter)
 usage_logger.addHandler(console_handler)
+usage_logger.setLevel(logging.INFO)
 
 # Enhanced Pydantic models
 class ChatRequest(BaseModel):
