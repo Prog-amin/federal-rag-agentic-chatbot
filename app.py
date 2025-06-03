@@ -766,10 +766,11 @@ async def get_example_queries():
     }
 
 if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 7860))  # Add this line
     uvicorn.run(
         "app:app",
         host="0.0.0.0",
-        port=7860,
+        port=port,  # Change from hardcoded 7860
         reload=False,
         log_level="info",
         access_log=True
