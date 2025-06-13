@@ -184,6 +184,9 @@ class DataPipeline:
 
                     # Process documents
                     processed_docs = []
+                    new_docs_count = 0
+                    existing_docs_count = 0
+                    
                     for i, doc in enumerate(documents):
                         try:
                             # Fetch raw text if available
@@ -195,18 +198,32 @@ class DataPipeline:
                             processed_doc = self.processor.clean_document(doc)
                             processed_docs.append(processed_doc)
 
-                            # Insert into database
-                            success = await db_manager.insert_document(processed_doc)
+                            # Insert into database (only if new)
+                            success, status = await db_manager.insert_document_if_new(processed_doc)
+                            
                             if success:
-                                total_processed += 1
+                                if status == "inserted":
+                                    total_processed += 1
+                                    new_docs_count += 1
+                                    print(f"✅ Inserted new document: {processed_doc.get('document_number', 'unknown')}")
+                                elif status == "exists":
+                                    existing_docs_count += 1
+                                    print(f"📋 Document already exists: {processed_doc.get('document_number', 'unknown')}")
                             else:
-                                print(f"Failed to insert document: {processed_doc.get('document_number', 'unknown')}")
+                                print(f"❌ Failed to insert document: {processed_doc.get('document_number', 'unknown')}")
                                 
                         except Exception as e:
                             print(f"Error processing document {i}: {e}")
                             continue
 
                     all_documents.extend(processed_docs)
+
+                    # Enhanced logging
+                    print(f"📊 Page {page} Summary:")
+                    print(f"   • Total documents: {len(processed_docs)}")
+                    print(f"   • New documents: {new_docs_count}")
+                    print(f"   • Existing documents: {existing_docs_count}")
+                    print(f"   • Running total processed: {total_processed}")
 
                     # Save processed data
                     processed_filename = f"federal_docs_processed_{end_date}_page_{page}.json"

@@ -106,12 +106,33 @@ class DatabaseManager:
             logger.error(f"❌ Error creating tables: {e}")
             raise
     
-    async def insert_document(self, document: Dict) -> bool:
-        """Insert or update a federal document"""
+    async def document_exists(self, document_number: str) -> bool:
+        """Check if a document already exists in the database"""
         await self._ensure_initialized()
         
+        try:
+            async with aiosqlite.connect(self.db_path) as db:
+                async with db.execute(
+                    "SELECT 1 FROM federal_documents WHERE document_number = ? LIMIT 1", 
+                    (document_number,)
+                ) as cursor:
+                    result = await cursor.fetchone()
+                    return result is not None
+        except Exception as e:
+            logger.error(f"Error checking document existence: {e}")
+            return False
+
+    async def insert_document_if_new(self, document: Dict) -> tuple[bool, str]:
+        """Insert document only if it doesn't already exist"""
+        await self._ensure_initialized()
+        
+        # Check if document already exists
+        if await self.document_exists(document.get('document_number', '')):
+            return True, "exists"  # Success but already exists
+        
+        # Insert new document
         query = """
-        INSERT OR REPLACE INTO federal_documents 
+        INSERT INTO federal_documents 
         (id, title, abstract, document_number, publication_date, type, agency, raw_text, html_url, pdf_url, updated_at)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
         """
@@ -131,10 +152,10 @@ class DatabaseManager:
                     document.get('pdf_url')
                 ))
                 await db.commit()
-            return True
+            return True, "inserted"
         except Exception as e:
             logger.error(f"Error inserting document: {e}")
-            return False
+            return False, "error"
     
     async def search_documents(self, query: str, limit: int = 10) -> List[Dict]:
         """Search documents using SQLite LIKE with better search logic"""
@@ -578,7 +599,7 @@ async def test_database():
             'pdf_url': 'https://federalregister.gov/test.pdf'
         }
         
-        success = await db_manager.insert_document(test_doc)
+        success = await db_manager.insert_document_if_new(test_doc)
         print(f"Insert test: {'✅ Success' if success else '❌ Failed'}")
         
         # Test search
