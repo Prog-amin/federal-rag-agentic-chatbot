@@ -17,7 +17,7 @@ class AgentTools:
             JSON string with search results
         """
         try:
-            limit = min(limit, 50)  # Cap at 50 results
+            limit = min(limit, 50)  
             results = await db_manager.search_documents(query, limit)
             
             if not results:
@@ -30,10 +30,8 @@ class AgentTools:
             # Format results for LLM
             formatted_results = []
             for doc in results:
-                # Handle publication_date properly (it's stored as TEXT in SQLite)
                 pub_date = doc.get('publication_date')
                 if pub_date and isinstance(pub_date, str):
-                    # Already in YYYY-MM-DD format from SQLite
                     formatted_date = pub_date
                 else:
                     formatted_date = None
