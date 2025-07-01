@@ -5,7 +5,6 @@ colorFrom: pink
 colorTo: red
 sdk: docker
 pinned: false
-license: cc-by-nc-nd-4.0
 short_description: RAG Agentic System for US Federal Registry
 ---
 
@@ -71,3 +70,18 @@ This system demonstrates:
 Perfect for learning modern AI application development patterns and government data integration.
 
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+
+Example Flow: Behind the Scenes of Federal RAG Agent
+1. User asks: “What new AI regulations came this week?”
+2. Query → converted to Embedding vector
+3. Agent tool triggered:
+   search_federal_docs(query="AI regulations", days=7) if not 7days then takes latest
+4. Relevant results retrieved from SQLite DB using vector similarity
+   (data pulled fresh from Federal Register API i.e, the website)
+5. RAG Prompt formed:
+   You are an AI chatbot. Here are recent documents:
+   - Title: AI Regulation in Healthcare...
+   - Title: Federal Funding for AI...
+   Answer the question using only the above.
+6. Prompt passed to LLM → Generates grounded, accurate answer
+7. Final Answer returned to user
