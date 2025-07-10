@@ -67,10 +67,6 @@ This system demonstrates:
 - API integration and data processing
 - Real-time web interfaces
 
-Perfect for learning modern AI application development patterns and government data integration.
-
-Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
-
 ## Example Flow: Behind the Scenes of Federal RAG Agent
 1. User asks: “What new AI regulations came this week?”
 2. Query → converted to Embedding vector
@@ -85,3 +81,5 @@ Check out the configuration reference at https://huggingface.co/docs/hub/spaces-
    Answer the question using only the above.
 6. Prompt passed to LLM → Generates grounded, accurate answer
 7. Final Answer returned to user
+
+Perfect for learning modern AI application development patterns and government data integration.
