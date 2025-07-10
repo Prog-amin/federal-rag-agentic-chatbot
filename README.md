@@ -38,7 +38,6 @@ An AI-powered Retrieval-Augmented Generation (RAG) system that provides intellig
 - **Agent System**: OpenAI-compatible LLM with function calling capabilities
 - **Data Pipeline**: Asynchronous processing of Federal Register API data
 - **Database**: SQLite for document storage and retrieval
-<!-- - **Interface**: Gradio-based web interface with real-time chat -->
 
 ## Configuration
 
@@ -83,3 +82,8 @@ This system demonstrates:
 7. Final Answer returned to user
 
 Perfect for learning modern AI application development patterns and government data integration.
+
+## Live Demo
+
+The Federal RAG Agentic Chatbot is live and accessible on [Hugging Face Spaces](https://huggingface.co/spaces/Prog-amin/federal-rag-agentic-chatbot)!
+Try it out directly in your browser to interact with federal documents in real time.
