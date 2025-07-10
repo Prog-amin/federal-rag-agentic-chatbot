@@ -67,24 +67,21 @@ This system demonstrates:
 - Real-time web interfaces
 
 ## Example Flow: Behind the Scenes of Federal RAG Agent
-1. User asks: “What new AI regulations came this week?”
-2. Query → converted to Embedding vector
-3. Agent tool triggered:
-   search_federal_docs(query="AI regulations", days=7) if not 7days then takes latest
-4. Relevant results retrieved from SQLite DB using vector similarity
-   (data pulled fresh from Federal Register API i.e, the website)
-5. RAG Prompt formed:
-   You are an AI chatbot. Here are recent documents:
-   - Title: AI Regulation in Healthcare...
-   - Title: Federal Funding for AI...
-   Answer the question using only the above.
-6. Prompt passed to LLM → Generates grounded, accurate answer
-7. Final Answer returned to user
+Data Ingestion: Integrated the official Federal Register API to stream and parse new
+documents automatically.
+Vectorization: Each document is chunked and converted into embeddings using an LLM-based
+encoder.
+Retrieval: Embeddings are stored in a SQLite vector database (now migrating to Pinecone for
+scalability). At query time, the system performs a semantic search to fetch the most relevant
+passages.
+Answer Generation: Retrieved passages are combined with the user’s question and passed to
+an LLM (Meta-Llama-3.2-3B-Instruct) with strict grounding instructions to ensure accuracy.
 
-Perfect for learning modern AI application development patterns and government data integration.
 
 ## Live Demo
 
 The Federal RAG Agentic Chatbot is live and accessible on [Hugging Face Spaces](https://huggingface.co/spaces/Prog-amin/federal-rag-agentic-chatbot)
 
 Try it out directly in your browser to interact with federal documents in real time.
+
+Perfect for learning modern AI application development patterns and government data integration.
