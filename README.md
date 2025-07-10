@@ -67,17 +67,14 @@ This system demonstrates:
 - Real-time web interfaces
 
 ## Example Flow: Behind the Scenes of Federal RAG Agent
-**Data Ingestion**: Integrated the official Federal Register API to stream and parse new
+1. **Data Ingestion**: Integrated the official Federal Register API to stream and parse new
 documents automatically.
-
-**Vectorization**: Each document is chunked and converted into embeddings using an LLM-based
+2. **Vectorization**: Each document is chunked and converted into embeddings using an LLM-based
 encoder.
-
-**Retrieva**: Embeddings are stored in a SQLite vector database (now migrating to Pinecone for
+3. **Retrieva**: Embeddings are stored in a SQLite vector database (now migrating to Pinecone for
 scalability). At query time, the system performs a semantic search to fetch the most relevant
 passages.
-
-**Answer Generation**: Retrieved passages are combined with the user’s question and passed to
+4. **Answer Generation**: Retrieved passages are combined with the user’s question and passed to
 an LLM (Meta-Llama-3.2-3B-Instruct) with strict grounding instructions to ensure accuracy.
 
 
