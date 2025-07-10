@@ -71,7 +71,7 @@ Perfect for learning modern AI application development patterns and government d
 
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
 
-Example Flow: Behind the Scenes of Federal RAG Agent
+## Example Flow: Behind the Scenes of Federal RAG Agent
 1. User asks: “What new AI regulations came this week?”
 2. Query → converted to Embedding vector
 3. Agent tool triggered:
