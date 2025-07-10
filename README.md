@@ -82,6 +82,4 @@ an LLM (Meta-Llama-3.2-3B-Instruct) with strict grounding instructions to ensure
 
 The Federal RAG Agentic Chatbot is live and accessible on [Hugging Face Spaces](https://huggingface.co/spaces/Prog-amin/federal-rag-agentic-chatbot)
 
-Try it out directly in your browser to interact with federal documents in real time.
-
-Perfect for learning modern AI application development patterns and government data integration.
+Try it out directly in your browser to interact with federal documents in real time. Perfect for learning modern AI application development patterns and government data integration.
