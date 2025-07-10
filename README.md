@@ -1,13 +1,3 @@
----
-title: Federal Rag Agentic Chatbot
-emoji: 🐠
-colorFrom: pink
-colorTo: red
-sdk: docker
-pinned: false
-short_description: RAG Agentic System for US Federal Registry
----
-
 # Federal Registry RAG Agent
 
 An AI-powered Retrieval-Augmented Generation (RAG) system that provides intelligent access to US Federal Registry documents including executive orders, regulations, notices, and other government publications.
