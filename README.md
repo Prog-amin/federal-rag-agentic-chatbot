@@ -85,5 +85,5 @@ Perfect for learning modern AI application development patterns and government d
 
 ## Live Demo
 
-The Federal RAG Agentic Chatbot is live and accessible on [Hugging Face Spaces](https://huggingface.co/spaces/Prog-amin/federal-rag-agentic-chatbot)!
+The Federal RAG Agentic Chatbot is live and accessible on [Hugging Face Spaces](https://huggingface.co/spaces/Prog-amin/federal-rag-agentic-chatbot)
 Try it out directly in your browser to interact with federal documents in real time.
